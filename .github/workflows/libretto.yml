@@ -1,0 +1,50 @@
+name: Libretto baseline
+
+on:
+  push:
+    branches: [libretto]
+  pull_request:
+    branches: [master, libretto]
+    paths:
+      - 'scripts/libretto/**'
+      - '.github/workflows/libretto.yml'
+      - 'kernel/**'
+      - 'hdr/**'
+      - 'mkfiles/**'
+      - 'boot/**'
+      - 'drivers/**'
+      - 'utils/**'
+      - 'test/**'
+      - 'makefile'
+      - 'country'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        fat: [16, 32]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Install build and boot test tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends nasm qemu-system-x86 mtools xz-utils
+      - name: Install pinned Open Watcom
+        run: bash scripts/libretto/bootstrap.sh
+      - name: Build and boot on Pentium with 20 and 32 MiB
+        run: bash scripts/libretto/build.sh '${{ matrix.fat }}'
+      - name: Save kernel, map, test images and report
+        uses: actions/upload-artifact@v6
+        with:
+          name: libretto-fat${{ matrix.fat }}-${{ github.sha }}
+          path: _output/libretto-fat${{ matrix.fat }}/
+          if-no-files-found: error
