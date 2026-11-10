@@ -46,6 +46,8 @@ jobs:
         run: bash scripts/libretto/bootstrap.sh
       - name: Build and boot on the target CPU with 20 and 32 MiB
         run: bash scripts/libretto/build.sh '${{ matrix.cpu }}'
+      - name: Check FAT16/FAT32 full-volume recovery, high clusters and injected I/O errors
+        run: python3 scripts/libretto/edges.py '${{ matrix.cpu }}'
       - name: Compare control and candidate with ten samples per workload
         run: python3 scripts/libretto/compare.py '${{ matrix.cpu }}'
       - name: Save kernel, map, test images and report

@@ -209,8 +209,20 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   /* idx is a pointer to an index which is the nibble offset of the FAT
      entry within the sector for FAT12, or word offset for FAT16, or
      dword offset for FAT32 */
-  idx = (unsigned)(clussec % secdiv);
-  clussec /= secdiv;
+#ifdef WITHFAT32
+  /* 512-byte FAT32 sectors contain 128 entries. Avoid two software
+     32-bit divisions on the common path; retain arbitrary sector sizes. */
+  if (secdiv == 128)
+  {
+    idx = (unsigned)clussec & 127;
+    clussec >>= 7;
+  }
+  else
+#endif
+  {
+    idx = (unsigned)(clussec % secdiv);
+    clussec /= secdiv;
+  }
   clussec += dpbp->dpb_fatstrt;
 #ifdef WITHFAT32
   if (ISFAT32(dpbp) && (dpbp->dpb_xflags & FAT_NO_MIRRORING))

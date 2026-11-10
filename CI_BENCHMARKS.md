@@ -33,3 +33,23 @@ difference over 1% labels calibration noisy; all raw samples and ranges are
 kept. Subsequent patches must improve beyond the observed noise, retain
 correctness, and report code/data and memory costs. Native hardware timing
 can confirm the actual speedup later.
+
+
+## Diagnostic counters and filesystem edge cases
+
+Separate profile jobs compile with LIBRETTO_PROFILE. Unique instruction
+markers count map calls, chain steps, backward seeks, FAT reads/writes,
+buffer probes/hits/misses and disk transfer calls inside each workload.
+The QEMU plugin holds the counters. Release builds emit no diagnostic
+markers, carry no counters and retain the DOS structure layouts/ABI.
+Diagnostic instruction totals must not be compared with release totals.
+
+Normal build jobs also boot FAT16 and FAT32 fixtures with almost-full
+volumes and persistent QEMU blkdebug read/write EIO injection. Tests require
+short-write length/data correctness, cleanup and successful allocation after
+freeing space, failure delivery to the DOS application, unchanged fault-target
+data and a clean independent fsck.fat. A FAT32 fixture places a file above
+cluster 65535 and verifies random forward/backward, cross-sector reads.
+The high-cluster fixture is checked independently on the host before boot.
+
+Injection method: https://github.com/qemu/qemu/blob/v8.2.2/docs/devel/blkdebug.txt
