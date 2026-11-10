@@ -78,7 +78,11 @@ MATH_INSERT=
 # -3		optimization for 386 - given in CONFIG.MAK, not here
 #
 
-ALLCFLAGS=-I..$(DIRSEP)hdr $(TARGETOPT) $(ALLCFLAGS) -os-s-e5-j-zl-zp1-wx-we-zgf-zff-r
+!ifdef LIBRETTO_PROFILE
+PROFILEOPT=-DLIBRETTO_PROFILE
+!endif
+
+ALLCFLAGS=-I..$(DIRSEP)hdr $(TARGETOPT) $(ALLCFLAGS) $(PROFILEOPT) -os-s-e5-j-zl-zp1-wx-we-zgf-zff-r
 INITCFLAGS=$(ALLCFLAGS)-ntINIT_TEXT-gTGROUP-ndI
 CFLAGS=$(ALLCFLAGS)-ntHMA_TEXT
 

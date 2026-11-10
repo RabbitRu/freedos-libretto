@@ -29,6 +29,7 @@
 
 #include "portab.h"
 #include "globals.h"
+#include "libretto_profile.h"
 #include "debug.h"
 
 
@@ -964,6 +965,8 @@ COUNT map_cluster(REG f_node_ptr fnp, COUNT mode)
 {
   CLUSTER relcluster, cluster;
 
+  LB_MAP();
+
 #ifdef DISPLAY_GETBLOCK
   printf("map_cluster: current %lu, offset %lu, diff=%lu ",
          (ULONG)fnp->f_cluster_offset, fnp->f_offset,
@@ -993,6 +996,7 @@ COUNT map_cluster(REG f_node_ptr fnp, COUNT mode)
                          fnp->f_dpb->dpb_shftcnt);
   if (relcluster < fnp->f_cluster_offset)
   {
+    LB_BACK();
     /* If seek is to earlier in file than current position, */
     /* we have to follow chain from the beginning again...  */
     /* Set internal index and cluster size.                 */
@@ -1010,6 +1014,7 @@ COUNT map_cluster(REG f_node_ptr fnp, COUNT mode)
 
   while (fnp->f_cluster_offset != relcluster)
   {
+    LB_CHAIN();
     /* get next cluster in the chain */
     cluster = next_cluster(fnp->f_dpb, fnp->f_cluster);
     if (cluster <= 1) /* 1/error or 0/FREE chain into the void */

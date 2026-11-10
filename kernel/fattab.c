@@ -28,6 +28,7 @@
 
 #include "portab.h"
 #include "globals.h"
+#include "libretto_profile.h"
 
 #ifdef VERSION_STRINGS
 static BYTE *RcsId =
@@ -167,6 +168,9 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   unsigned char wasfree;
   CLUSTER clussec = Cluster1;
   CLUSTER max_cluster = dpbp->dpb_size;
+
+  if (Cluster2 == READ_CLUSTER) { LB_FAT_READ(); }
+  else { LB_FAT_WRITE(); }
 
 #ifdef WITHFAT32
   if (ISFAT32(dpbp))
