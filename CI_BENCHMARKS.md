@@ -59,5 +59,6 @@ The checkpoint experiment adds successful backward-seek cache hit/save events.
 The bounded mapper re-entry adds a map-call event; chain_steps records actual
 FAT-chain walking. chains.py tests both control and candidate, including real
 floppy replacement and absolute FAT32 writes. CHECKPOINT_RESULTS.md records
-the local status; the first checkpoint matrix passed in run 42879726816; further source
-changes require their own successful matrix.
+the final successful matrix (run 42883124425), its source hashes and all raw
+data. It also retains the prior experiment that motivated inline write-only
+invalidation. Future code changes require a fresh successful matrix.

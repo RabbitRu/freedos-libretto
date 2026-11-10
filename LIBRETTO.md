@@ -13,8 +13,8 @@ was 72235 bytes and identical in both profiles. See OPTIMIZATION_PLAN.md and
 MEASUREMENTS.md for the plan, completed validation and measured memory baseline.
 The first kernel optimization and raw CI evidence are in OPTIMIZATION_RESULTS.md.
 The comparison method is described in CI_BENCHMARKS.md.
-The backward-seek checkpoint candidate and its pending CI checks are described
-in CHECKPOINT_RESULTS.md.
+The validated backward-seek checkpoints, final CI results and downloadable
+packages are described in CHECKPOINT_RESULTS.md.
 
 ## Packages
 
