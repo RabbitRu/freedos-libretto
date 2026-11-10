@@ -10,7 +10,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / '_downloads' / 'runtime'
 SPECS = [
-    ('freecom', 'com086', 'English.zip', 'https://github.com/FDOS/freecom/releases/download/com086/English.zip', None, 'COMMAND.COM'),
+    ('freecom', 'com086', 'English.zip', 'https://github.com/FDOS/freecom/releases/download/com086/English.zip', '42093a00286f66bf922eebd8204a3b74b429f4c6973cd960ae1ab52ce80b4bd5', 'COMMAND.COM'),
     ('himemx', '3.40', 'HimemX340.zip', 'https://github.com/Baron-von-Riedesel/HimemX/releases/download/v3.40/HimemX340.zip', 'e6e9913f26aec2e264bf514ddd1910cde319122cafeeda1b46cc0756beae25f8', 'HIMEMX.EXE'),
     ('jemm', '5.86', 'JemmB_v586.zip', 'https://github.com/Baron-von-Riedesel/Jemm/releases/download/v5.86/JemmB_v586.zip', '94838a1836f94d95dcf84d250f7968dfca2eb6b5cfa7ac664d6e01f22f0d296e', 'JEMMEX.EXE'),
 ]
@@ -48,6 +48,20 @@ def main():
                     binary=binary, archive_member=members[0], binary_sha256=hashlib.sha256(content).hexdigest())
         manifest.append(item)
         print(json.dumps(item), flush=True)
+    sources = target / 'SOURCES'
+    sources.mkdir(exist_ok=True)
+    source_urls = [
+        ('freecom-com086-source.zip','https://github.com/FDOS/freecom/releases/download/com086/freecom-source.zip'),
+        ('himemx-v3.40-source.zip','https://github.com/Baron-von-Riedesel/HimemX/archive/refs/tags/v3.40.zip'),
+        ('jemm-v5.86-source.zip','https://github.com/Baron-von-Riedesel/Jemm/archive/refs/tags/v5.86.zip'),
+    ]
+    for name, url in source_urls:
+        cached = CACHE / name
+        if not cached.exists():
+            with urllib.request.urlopen(url, timeout=90) as response:
+                cached.write_bytes(response.read())
+        (sources/name).write_bytes(cached.read_bytes())
+        manifest.append(dict(source_archive=name,url=url,sha256=hashlib.sha256(cached.read_bytes()).hexdigest()))
     (target / 'RUNTIME.JSON').write_text(json.dumps(manifest, indent=2) + '\n')
 
 if __name__ == '__main__':

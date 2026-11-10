@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Build standalone FAT32 disks and validate DOS results on fresh image copies."""
 import gzip
+import csv
+import io
 import hashlib
 import json
 import mmap
@@ -48,11 +50,13 @@ MEMSTAT > MEMORY.TXT
 IF EXIST AUTOTEST.RUN GOTO TEST
 ECHO FreeDOS Libretto - interactive FAT32 disk
 TYPE MEMORY.TXT
-ECHO Commands: MEMSTAT, FSVERIFY, DIR, TYPE, COPY
+ECHO Commands: MEMSTAT, FSVERIFY, DOSBENCH 10, DIR, TYPE, COPY
 ECHO FSVERIFY creates its own FSWORK directory and needs a fresh disk.
 GOTO END
 :TEST
 FSVERIFY > FSLOG.TXT
+IF ERRORLEVEL 1 GOTO FAILED
+DOSBENCH 1 > BENCH.CSV
 IF ERRORLEVEL 1 GOTO FAILED
 ECHO PASS > RESULT.TXT
 POWEROFF
@@ -129,11 +133,18 @@ def validate(image, profile, scratch):
     assert values['xms_present'] == int(profile != 'basic'), values
     assert values['ems_present'] == int(profile == 'ems'), values
     assert values['dos_in_hma'] == int(profile != 'basic'), values
-    if profile == 'ems': assert values['umb_chain_linked'] == 1, values
+    if profile == 'ems': assert values['umb_enumeration_supported'] == 1, values
     for name, seed in [('FRAGA',0x5a), ('FRAGB',0xa5)]:
         actual = mread(image,'FSWORK/'+name+'.BIN')
         expected = bytes(((i*17+(i>>8))^seed)&255 for i in range(131072))
         assert actual == expected, 'independent host data verification failed'
+    bench_text = mread(image,'BENCH.CSV').decode('ascii')
+    bench = list(csv.DictReader(io.StringIO(bench_text)))
+    assert {r['scenario'] for r in bench} == {'write_1m_flush','repeated_read_16m','random_read_1m','small_files_100'}
+    assert len(bench) == 4
+    for row in bench:
+        assert int(row['run']) == 1 and int(row['bios_ticks']) >= 0
+    (scratch/'bench.csv').write_text(bench_text)
     counts = fragments(image)
     # fsck.fat receives a filesystem image, not an MBR disk.
     volume = scratch/'volume.img'
@@ -145,7 +156,7 @@ def validate(image, profile, scratch):
     print(checked.stdout, flush=True)
     assert checked.returncode == 0, 'independent fsck.fat check failed'
     return dict(profile=profile, memory=values, fragments=counts,
-                filesystem_test=mread(image,'FSLOG.TXT').decode('ascii').strip(), fsck='pass')
+                filesystem_test=mread(image,'FSLOG.TXT').decode('ascii').strip(), fsck='pass', benchmark=bench, benchmark_environment='QEMU')
 
 
 def main():
@@ -156,13 +167,14 @@ def main():
     runtime = ROOT/'_downloads/runtime-extracted'
     for name in ['mbr','memstat','poweroff']:
         run(['nasm','-f','bin',ROOT/f'scripts/libretto/dos/{name}.asm','-o',tools/(name+'.bin' if name=='mbr' else name.upper()+'.COM')])
-    run(['wcl','-zq','-bt=dos','-ms','-0','-os','-k4096','-I'+str(Path(os.environ['WATCOM'])/'h'),'-fe=FSVERIFY.EXE', ROOT/'scripts/libretto/dos/fsverify.c'], cwd=tools)
+    for utility in ['fsverify','dosbench']:
+        run(['wcl','-zq','-bt=dos','-ms','-0','-os','-k4096','-I'+str(Path(os.environ['WATCOM'])/'h'),'-fe='+utility.upper()+'.EXE', ROOT/f'scripts/libretto/dos/{utility}.c'], cwd=tools)
     run(['python3', ROOT/'scripts/libretto/runtime.py', runtime])
     payload = tools/'payload'
     payload.mkdir(exist_ok=True)
     for name in ['COMMAND.COM','HIMEMX.EXE','JEMMEX.EXE']:
         shutil.copy2(runtime/name,payload/name)
-    for name in ['MEMSTAT.COM','FSVERIFY.EXE','POWEROFF.COM']:
+    for name in ['MEMSTAT.COM','FSVERIFY.EXE','DOSBENCH.EXE','POWEROFF.COM']:
         shutil.copy2(tools/name,payload/name)
     shutil.copy2(output/'KERNEL.SYS',payload/'KERNEL.SYS')
     dos_text(payload/'AUTOEXEC.BAT',AUTOEXEC)
@@ -190,9 +202,11 @@ def main():
                 result = validate(disk,profile,scratch)
                 result['ram_mib'] = ram
                 results.append(result)
+                (output/'fat32-tests.json').write_text(json.dumps(results,indent=2)+'\n')
+                shutil.copy2(scratch/'bench.csv',output/f'bench-{profile}-{ram}.csv')
                 print('FAT32_RESULT '+json.dumps(result),flush=True)
             except Exception:
-                for name in ['MEMORY.TXT','FSLOG.TXT','RESULT.TXT']:
+                for name in ['MEMORY.TXT','FSLOG.TXT','BENCH.CSV','RESULT.TXT']:
                     try: print(name+': '+mread(disk,name).decode('ascii',errors='replace'),flush=True)
                     except subprocess.CalledProcessError: pass
                 raise
@@ -201,6 +215,7 @@ def main():
         image.unlink()
     shutil.copy2(runtime/'RUNTIME.JSON',output/'runtime.json')
     shutil.copytree(runtime/'LICENSES',output/'LICENSES',dirs_exist_ok=True)
+    shutil.copytree(runtime/'SOURCES',output/'SOURCES',dirs_exist_ok=True)
     shutil.copy2(ROOT/'COPYING',output/'COPYING')
     (output/'fat32-tests.json').write_text(json.dumps(results,indent=2)+'\n')
     with interactive.open('rb') as src, gzip.open(str(interactive)+'.gz','wb',compresslevel=9) as dst:

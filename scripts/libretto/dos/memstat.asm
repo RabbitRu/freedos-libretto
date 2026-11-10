@@ -1,5 +1,6 @@
 ; SPDX-License-Identifier: GPL-2.0-or-later
-; Read-only DOS memory probe. Values describe memory WHILE THIS PROBE RUNS.
+; DOS memory probe. Values describe memory WHILE THIS PROBE RUNS.
+; UMBs are temporarily linked for enumeration, then the original link is restored.
 ; Only its own PSP block is shrunk; it never frees another program's block.
 bits 16
 cpu 386
@@ -32,6 +33,11 @@ start:
     jc .no_umb
     and eax, 1
     mov [umb_linked], eax
+    mov ax, 5803h
+    mov bx, 1
+    int 21h
+    jc .no_umb
+    mov dword [umb_enumerated], 1
 .no_umb:
     mov ah, 52h
     int 21h
@@ -72,6 +78,7 @@ start:
     jnz .scan
     jmp failure
 .xms:
+    call restore_umb
     mov ax, 4300h
     int 2fh
     cmp al, 80h
@@ -116,6 +123,7 @@ start:
     pair k_largest, conv_largest
     pair k_linked, umb_linked
     pair k_umb, umb_free
+    pair k_umb_enum, umb_enumerated
     pair k_hma, in_hma
     pair k_xms, xms_present
     pair k_xmsfree, xms_free
@@ -126,11 +134,24 @@ start:
     mov ax, 4c00h
     int 21h
 failure:
+    call restore_umb
     mov dx, err
     mov cx, err.len
     call write
     mov ax, 4c01h
     int 21h
+restore_umb:
+    cmp dword [umb_enumerated], 0
+    je .done
+    push ax
+    push bx
+    mov bx, [umb_linked]
+    mov ax, 5803h
+    int 21h
+    pop bx
+    pop ax
+.done:
+    ret
 write:
     push ax
     push bx
@@ -166,7 +187,8 @@ key k_probe, 'probe_psp_block_bytes'
 key k_conv, 'conventional_free_bytes_while_probe_loaded'
 key k_largest, 'largest_conventional_block_bytes_while_probe_loaded'
 key k_linked, 'umb_chain_linked'
-key k_umb, 'linked_umb_free_bytes'
+key k_umb, 'umb_free_bytes_after_temporary_link'
+key k_umb_enum, 'umb_enumeration_supported'
 key k_hma, 'dos_in_hma'
 key k_xms, 'xms_present'
 key k_xmsfree, 'xms_free_kib'
@@ -184,6 +206,7 @@ conv_free: dd 0
 conv_largest: dd 0
 umb_linked: dd 0
 umb_free: dd 0
+umb_enumerated: dd 0
 in_hma: dd 0
 xms_present: dd 0
 xms_free: dd 0
