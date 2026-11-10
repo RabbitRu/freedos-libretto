@@ -26,8 +26,8 @@ fi
 output="$root/_output/libretto-fat$fat"
 mkdir -p "$output"
 # Upstream makefiles do not track compiler options as prerequisites.
-make clobber COMPILER=owlinux XCPU=386 XFAT="$fat" XUPX=
-make all COMPILER=owlinux XCPU=386 XFAT="$fat" XUPX=
+make clobber COMPILER=owlinux XCPU=386 XFAT="$fat" XUPX= RM='rm -f'
+make all COMPILER=owlinux XCPU=386 XFAT="$fat" XUPX= RM='rm -f'
 cp bin/kwc386"$fat".sys "$output/KERNEL.SYS"
 cp bin/kwc386"$fat".map "$output/kernel.map"
 cp bin/country.sys "$output/COUNTRY.SYS"
