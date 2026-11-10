@@ -14,7 +14,7 @@ esac
 
 export WATCOM=${LIBRETTO_WATCOM:-"$root/_watcom"}
 export PATH="$WATCOM/binl64:$PATH"
-for tool in make wmake wcc wcl386 wlink wlib nasm qemu-system-i386 mtype python3; do
+for tool in make wmake wcc wcl wcl386 wlink wlib nasm qemu-system-i386 mtype fsck.fat python3; do
     command -v "$tool" >/dev/null || { echo "Missing tool: $tool" >&2; exit 1; }
 done
 if [[ ! -f country/country.asm ]]; then
@@ -66,6 +66,7 @@ report = {
     "fat_support": "FAT12/16/32",
     "mmx_specific_routines": False,
     "upx": False,
+    "fat32_validation": "pending",
     "kernel_file_bytes": len(kernel),
     "kernel_sha256": hashlib.sha256(kernel).hexdigest(),
     "boot_tests": {"qemu_" + sys.argv[2] + "_20_mib": "pass", "qemu_" + sys.argv[2] + "_32_mib": "pass"},
@@ -79,3 +80,5 @@ report = {
 (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 print(json.dumps(report, indent=2))
 PY
+
+python3 scripts/libretto/images.py "$output" "$cpu"
