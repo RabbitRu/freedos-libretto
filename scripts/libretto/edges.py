@@ -87,6 +87,7 @@ def main():
     tools=output/'tools'; tools.mkdir()
     env=dict(os.environ,LIBRETTO_CPU=cpu,LIBRETTO_RAM_MB='20')
     watcom=Path(env.get('WATCOM',str(ROOT/'_watcom')))
+    env['WATCOM']=str(watcom)
     env['PATH']=str(watcom/'binl64')+os.pathsep+env['PATH']
     images.run(['wcl','-zq','-bt=dos','-ms','-0','-os','-k4096','-I'+str(watcom/'h'),
                 '-fe=FSEDGE.EXE',ROOT/'scripts/libretto/dos/fsedge.c'],cwd=tools,env=env)

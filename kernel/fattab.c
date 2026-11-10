@@ -153,6 +153,15 @@ void write_fsinfo(struct dpb FAR * dpbp)
 /*      12 bytes are compressed to 9 bytes                      */
 /*                                                              */
 
+/* Keep the 386+ Watcom fast path inline: its size-oriented C backend
+   otherwise emits a seven-iteration loop for a 32-bit right shift. */
+#if defined(WITHFAT32) && defined(__WATCOMC__) && defined(I386)
+ULONG fat_div128(ULONG value);
+#pragma aux fat_div128 = "shrd ax,dx,7" "shr dx,7" parm [dx ax] value [dx ax] modify exact [dx ax];
+#else
+#define fat_div128(value) ((value) >> 7)
+#endif
+
 /* either read the value at Cluster1 (if Cluster2 is READ_CLUSTER) */
 /* or write the Cluster2 value to the FAT entry at Cluster1        */
 /* Read is always via next_cluster wrapper which has extra checks  */
@@ -215,7 +224,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   if (secdiv == 128)
   {
     idx = (unsigned)clussec & 127;
-    clussec >>= 7;
+    clussec = fat_div128(clussec);
   }
   else
 #endif
