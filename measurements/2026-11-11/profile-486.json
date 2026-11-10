@@ -1,0 +1,65 @@
+{
+  "cpu": "486",
+  "commit": "75d13febc3605e21bf58d7a9bcaef7855868cf4d",
+  "diagnostic_only": true,
+  "ram_mib": 20,
+  "memory_profile": "xms",
+  "workloads": [
+    {
+      "scenario": "write_1m_flush",
+      "map_calls": 2048,
+      "chain_steps": 2047,
+      "backward_seeks": 0,
+      "fat_reads": 8190,
+      "fat_writes": 4095,
+      "buffer_probes": 25317,
+      "buffer_hits": 16366,
+      "buffer_misses": 16,
+      "disk_calls": 308,
+      "seek_hits": 0,
+      "seek_saves": 0
+    },
+    {
+      "scenario": "repeated_read_16m",
+      "map_calls": 32768,
+      "chain_steps": 32752,
+      "backward_seeks": 15,
+      "fat_reads": 65504,
+      "fat_writes": 0,
+      "buffer_probes": 70264,
+      "buffer_hits": 65487,
+      "buffer_misses": 17,
+      "disk_calls": 4113,
+      "seek_hits": 0,
+      "seek_saves": 0
+    },
+    {
+      "scenario": "random_read_1m",
+      "map_calls": 3073,
+      "chain_steps": 873173,
+      "backward_seeks": 1026,
+      "fat_reads": 1746346,
+      "fat_writes": 0,
+      "buffer_probes": 1825586,
+      "buffer_hits": 1746346,
+      "buffer_misses": 0,
+      "disk_calls": 2048,
+      "seek_hits": 909,
+      "seek_saves": 1025
+    },
+    {
+      "scenario": "small_files_100",
+      "map_calls": 27608,
+      "chain_steps": 1131,
+      "backward_seeks": 6,
+      "fat_reads": 2561,
+      "fat_writes": 212,
+      "buffer_probes": 55246,
+      "buffer_hits": 30975,
+      "buffer_misses": 106,
+      "disk_calls": 1126,
+      "seek_hits": 0,
+      "seek_saves": 0
+    }
+  ]
+}
