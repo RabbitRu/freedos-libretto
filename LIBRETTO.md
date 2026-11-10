@@ -11,6 +11,8 @@ The profiles preserve DOS APIs, ABI, packed structures and 386-compatible
 assembly. No MMX-specific kernel routines have been added. The starting kernel
 was 72235 bytes and identical in both profiles. See OPTIMIZATION_PLAN.md and
 MEASUREMENTS.md for the plan, completed validation and measured memory baseline.
+The first kernel optimization and raw CI evidence are in OPTIMIZATION_RESULTS.md.
+The comparison method is described in CI_BENCHMARKS.md.
 
 ## Packages
 
@@ -21,6 +23,8 @@ Each successful CI artifact contains:
 - dos-tools.zip: standalone MEMSTAT.COM, FSVERIFY.EXE and DOSBENCH.EXE;
 - KERNEL.SYS, COUNTRY.SYS, linker map and original FAT12 test images;
 - report.json, fat32-tests.json, runtime.json and benchmark CSV files;
+- comparison/: control/candidate kernels, ten-sample comparisons and raw CSV;
+- edge-tests/: FAT16/FAT32 full-volume, high-cluster and injected-I/O results;
 - licenses and source archives for the external DOS components.
 
 The disk has a boot menu: **0 Basic**, **1 XMS/HMA**, **2 XMS/EMS/UMB**.
@@ -83,13 +87,15 @@ mkdir/chdir/rmdir, sizes around 512 bytes, 4 KiB and 64 KiB, and two interleaved
 to verify fragmentation and runs fsck.fat -n on the volume. Partial artifacts
 from failed jobs retain fat32_validation=pending; use successful runs.
 
-Game compatibility, DOS extenders, full-volume failures and injected I/O errors
-remain separate work items. QEMU verifies correctness; emulator benchmark
-timings do not establish performance on actual Libretto hardware.
+CI also tests FAT16/FAT32 full-volume short writes and recovery, persistent
+read/write EIO, and files above FAT32 cluster 65535. Data and filesystem
+structure are checked independently after shutdown. Game compatibility and
+DOS extenders remain separate work items. QEMU instruction counts do not
+establish native Libretto performance.
 
 ## Rebuild
 
-Linux dependencies: make, curl, xz-utils, NASM, QEMU system x86, mtools,
+Linux dependencies: GCC, make, curl, xz-utils, NASM, QEMU system x86, mtools,
 dosfstools, Python 3. The compiler snapshot and runtime binary archives have
 pinned SHA-256 values. Distribution package versions appear in CI logs.
 
@@ -103,4 +109,7 @@ bash scripts/libretto/build.sh pentium-mmx
 The compiler installs in _watcom/; LIBRETTO_WATCOM overrides it. Move a personal
 config.mak aside for comparable builds. Outputs are under
 _output/libretto-486-fat32/ and _output/libretto-pentium-mmx-fat32/.
+Instruction comparison requires QEMU 8.2 matching the vendored plugin header.
+After build.sh, run edges.py and compare.py with the same CPU argument for
+the full CI checks; profile.py builds a separate diagnostic kernel.
 Kernel license: COPYING. Runtime versions and hashes: runtime.json.
