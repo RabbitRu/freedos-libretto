@@ -13,6 +13,9 @@ import struct
 import subprocess
 import sys
 import tempfile
+import socket
+import time
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 OFFSET = 2048 * 512
@@ -159,6 +162,51 @@ def validate(image, profile, scratch):
                 filesystem_test=mread(image,'FSLOG.TXT').decode('ascii').strip(), fsck='pass', benchmark=bench, benchmark_environment='QEMU')
 
 
+def interactive_smoke(image, cpu, tools):
+    """Check the real menu image reaches a prompt and accepts a command."""
+    scratch = tools/'interactive-smoke'
+    scratch.mkdir(exist_ok=True)
+    disk = scratch/'disk.img'
+    shutil.copy2(image,disk)
+    batch = scratch/'SMOKE.BAT'
+    dos_text(batch,'@ECHO OFF\nECHO PROMPT_OK > READY.TXT\nPOWEROFF\n')
+    run(['mcopy','-i',str(disk)+'@@'+str(OFFSET),batch,'::SMOKE.BAT'])
+    with tempfile.TemporaryDirectory(prefix='lb-smoke-') as tmp:
+        monitor = Path(tmp)/'monitor'
+        command = [str(ROOT/'scripts/libretto/qemu-target.sh'),'-drive',f'file={disk},format=raw,if=ide',
+                   '-boot','c','-display','none','-no-reboot','-monitor',f'unix:{monitor},server=on,wait=off']
+        env = dict(os.environ,LIBRETTO_CPU=cpu,LIBRETTO_RAM_MB='20')
+        with (scratch/'qemu.txt').open('wb') as log:
+            process = subprocess.Popen(command,env=env,stdout=log,stderr=subprocess.STDOUT)
+            try:
+                deadline = time.monotonic()+40
+                while time.monotonic()<deadline:
+                    probe = subprocess.run(['mtype','-i',str(disk)+'@@'+str(OFFSET),'::MEMORY.TXT'],capture_output=True)
+                    if probe.returncode==0 and b'ems_total_16k_pages=' in probe.stdout:
+                        break
+                    assert process.poll() is None, 'interactive QEMU exited before startup'
+                    time.sleep(0.25)
+                else:
+                    raise AssertionError('interactive shell startup timed out')
+                time.sleep(0.5)
+                with socket.socket(socket.AF_UNIX) as connection:
+                    connection.settimeout(3)
+                    connection.connect(str(monitor))
+                    connection.recv(4096)
+                    for key in ['s','m','o','k','e','ret']:
+                        connection.sendall(('sendkey '+key+' 30\n').encode())
+                        time.sleep(0.10)
+                        connection.recv(4096)
+                assert process.wait(timeout=30)==0, 'interactive prompt command failed'
+                assert mread(disk,'READY.TXT').strip()==b'PROMPT_OK'
+            finally:
+                if process.poll() is None:
+                    process.kill()
+                    process.wait()
+    disk.unlink()
+    return 'pass'
+
+
 def main():
     output = Path(sys.argv[1]).resolve()
     cpu = sys.argv[2]
@@ -217,12 +265,19 @@ def main():
     shutil.copytree(runtime/'LICENSES',output/'LICENSES',dirs_exist_ok=True)
     shutil.copytree(runtime/'SOURCES',output/'SOURCES',dirs_exist_ok=True)
     shutil.copy2(ROOT/'COPYING',output/'COPYING')
+    with zipfile.ZipFile(output/'dos-tools.zip','w',compression=zipfile.ZIP_DEFLATED) as archive:
+        for name in ['MEMSTAT.COM','FSVERIFY.EXE','DOSBENCH.EXE']:
+            archive.write(tools/name,name)
+        archive.writestr('README.TXT','Run in a writable DOS directory. MEMSTAT reports memory while the probe runs. FSVERIFY requires a fresh FSWORK directory. DOSBENCH 10 writes ten repeated workloads to stdout. Sources: https://github.com/RabbitRu/freedos-libretto/tree/libretto/scripts/libretto/dos\r\n')
+        archive.write(ROOT/'COPYING','COPYING')
     (output/'fat32-tests.json').write_text(json.dumps(results,indent=2)+'\n')
+    smoke = interactive_smoke(interactive,cpu,tools)
     with interactive.open('rb') as src, gzip.open(str(interactive)+'.gz','wb',compresslevel=9) as dst:
         shutil.copyfileobj(src,dst)
     interactive.unlink()
     summary = json.loads((output/'report.json').read_text())
     summary['fat32_validation'] = 'pass'
+    summary['interactive_prompt_smoke'] = smoke
     summary['fat32_test_runs'] = len(results)
     summary['limitations'] = ['Game compatibility and DOS extenders are not tested yet.', 'Memory is measured while MEMSTAT runs under FreeCOM.', 'Full-volume and injected I/O error cases are not tested yet.', 'QEMU timings are not real Libretto performance measurements.']
     (output/'report.json').write_text(json.dumps(summary,indent=2)+'\n')
