@@ -9,6 +9,13 @@
 #include <direct.h>
 #include <sys/stat.h>
 #include <dos.h>
+/* Harmless 386+ MOV EAX markers for the optional QEMU counter plugin.
+ * Values are unique signatures; they do not call an emulator-specific API.
+ */
+static void phase_begin(void);
+static void phase_end(void);
+#pragma aux phase_begin = 0x66 0xb8 0x47 0x45 0x42 0x4c modify exact [ax];
+#pragma aux phase_end = 0x66 0xb8 0x44 0x4e 0x45 0x4c modify exact [ax];
 static unsigned char data[4096];
 static void need(int ok)
 {
@@ -44,35 +51,35 @@ int main(int argc,char **argv)
     puts("scenario,run,bios_ticks,bytes,operations");
     for (trial=1;trial<=repeats;++trial) {
         fd=open("BENCH.BIN",O_CREAT|O_TRUNC|O_RDWR|O_BINARY,S_IREAD|S_IWRITE); need(fd>=0);
-        start=clock_ticks();
+        start=clock_ticks(); phase_begin();
         for (i=0;i<256;++i) need(write(fd,data,sizeof(data))==sizeof(data));
-        need(close(fd)==0); reset_disk(); ticks=elapsed(start);
+        need(close(fd)==0); reset_disk(); phase_end(); ticks=elapsed(start);
         printf("write_1m_flush,%u,%lu,1048576,256\n",trial,ticks);
         fd=open("BENCH.BIN",O_RDONLY|O_BINARY); need(fd>=0);
-        start=clock_ticks();
+        start=clock_ticks(); phase_begin();
         for (j=0;j<16;++j) {
             need(lseek(fd,0,SEEK_SET)==0);
             for (i=0;i<256;++i) need(read(fd,data,sizeof(data))==sizeof(data));
         }
-        ticks=elapsed(start);
+        phase_end(); ticks=elapsed(start);
         printf("repeated_read_16m,%u,%lu,16777216,4096\n",trial,ticks);
-        seed=1; start=clock_ticks();
+        seed=1; start=clock_ticks(); phase_begin();
         for (i=0;i<2048;++i) {
             seed=seed*1664525UL+1013904223UL;
             need(lseek(fd,(long)((seed%2048)*512UL),SEEK_SET)>=0);
             need(read(fd,data,512)==512);
         }
-        ticks=elapsed(start); need(close(fd)==0);
+        phase_end(); ticks=elapsed(start); need(close(fd)==0);
         printf("random_read_1m,%u,%lu,1048576,2048\n",trial,ticks);
         need(unlink("BENCH.BIN")==0);
-        start=clock_ticks();
+        start=clock_ticks(); phase_begin();
         for (i=0;i<100;++i) {
             sprintf(name,"F%03u.BIN",i);
             fd=open(name,O_CREAT|O_TRUNC|O_RDWR|O_BINARY,S_IREAD|S_IWRITE); need(fd>=0);
             need(write(fd,data,17)==17); need(close(fd)==0);
         }
         for (i=0;i<100;++i) { sprintf(name,"F%03u.BIN",i); need(unlink(name)==0); }
-        reset_disk(); ticks=elapsed(start);
+        reset_disk(); phase_end(); ticks=elapsed(start);
         printf("small_files_100,%u,%lu,1700,100\n",trial,ticks);
     }
     need(chdir("..")==0); need(rmdir("LBBENCH")==0);

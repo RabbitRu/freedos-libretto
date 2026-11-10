@@ -29,7 +29,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
@@ -46,6 +46,8 @@ jobs:
         run: bash scripts/libretto/bootstrap.sh
       - name: Build and boot on the target CPU with 20 and 32 MiB
         run: bash scripts/libretto/build.sh '${{ matrix.cpu }}'
+      - name: Compare control and candidate with ten samples per workload
+        run: python3 scripts/libretto/compare.py '${{ matrix.cpu }}'
       - name: Save kernel, map, test images and report
         if: always()
         uses: actions/upload-artifact@v6
