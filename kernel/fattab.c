@@ -179,7 +179,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   CLUSTER max_cluster = dpbp->dpb_size;
 
   if (Cluster2 == READ_CLUSTER) { LB_FAT_READ(); }
-  else { LB_FAT_WRITE(); fat_seek_invalidate(); }
+  else { LB_FAT_WRITE(); }
 
 #ifdef WITHFAT32
   if (ISFAT32(dpbp))
@@ -301,6 +301,8 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
         return cluster;
       }
 
+      /* Reads have returned. Invalidate before any FAT entry bytes change. */
+      fat_seek_invalidate();
       wasfree = 0;
       if (cluster == FREE)
         wasfree = 1;
@@ -343,6 +345,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
     }
     /* Finally, put the word into the buffer and mark the   */
     /* buffer as dirty.                                     */
+    fat_seek_invalidate();
     fputword(&bp->b_buffer[idx * 2], (UWORD)Cluster2);
     wasfree = 0;
     if (res == FREE)
@@ -363,6 +366,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
     }
     /* Finally, put the word into the buffer and mark the   */
     /* buffer as dirty.                                     */
+    fat_seek_invalidate();
     fputlong(&bp->b_buffer[idx * 4], Cluster2 & LONG_LAST_CLUSTER);
     wasfree = 0;
     if (res == FREE)

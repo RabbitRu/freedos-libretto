@@ -964,8 +964,8 @@ STATIC COUNT extend_dir(f_node_ptr fnp)
 #ifdef WITHFAT32
 /* Eight read checkpoints for one file chain. No SFT/fnode ABI changes.
  * Only backward nonzero file reads consult/update them; sequential I/O and
- * directory traversal keep their original path. FAT changes, raw writes,
- * media invalidation and block IOCTLs discard all checkpoints, even on error.
+ * directory traversal keep their original path. Invalidate before FAT entry
+ * changes, on raw-write attempts, media invalidation and block IOCTLs.
  * Cache only successfully reached positions, never another SFT's old cursor.
  */
 STATIC struct {
@@ -975,20 +975,19 @@ STATIC struct {
   UBYTE used, hand;
 } seek_cache;
 
-VOID fat_seek_invalidate(VOID)
-{
-  seek_cache.start = FREE;
-}
+UBYTE fat_seek_valid = FALSE;
 
 STATIC COUNT seek_read(f_node_ptr fnp, CLUSTER relcluster)
 {
   unsigned i;
   COUNT result;
-  if (seek_cache.start != fnp->f_cluster || seek_cache.dpb != fnp->f_dpb)
+  if (!fat_seek_valid || seek_cache.start != fnp->f_cluster ||
+      seek_cache.dpb != fnp->f_dpb)
   {
     seek_cache.start = fnp->f_cluster;
     seek_cache.dpb = fnp->f_dpb;
     seek_cache.used = seek_cache.hand = 0;
+    fat_seek_valid = TRUE;
   }
   for (i = 0; i < seek_cache.used; i++)
   {
@@ -1005,7 +1004,7 @@ STATIC COUNT seek_read(f_node_ptr fnp, CLUSTER relcluster)
    * No further backward branch is possible in that call.
    */
   result = map_cluster(fnp, XFR_READ);
-  if (result == SUCCESS &&
+  if (result == SUCCESS && fat_seek_valid &&
       seek_cache.start == getdstart(fnp->f_dpb, &fnp->f_dir) &&
       seek_cache.dpb == fnp->f_dpb)
   {
