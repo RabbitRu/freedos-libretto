@@ -165,6 +165,9 @@ int DosDevIOctl(lregs * r)
     {
       struct dpb FAR *dpbp;
       unsigned attr;
+
+      /* Generic block controls can write/format sectors behind the FAT API. */
+      fat_seek_invalidate();
 /*
    This line previously returned the deviceheader at r->bl. But,
    DOS numbers its drives starting at 1, not 0. A=1, B=2, and so

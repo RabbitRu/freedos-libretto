@@ -14,7 +14,7 @@ import time
 import images
 
 ROOT=Path(__file__).resolve().parents[2]
-BASELINE='4e438f419652fef6975b8e7bb0e7ab6835de8ad0'
+BASELINE='5f17969cd603eeef159f8706e63ee7631ecd5419'
 ORDER=['control','candidate','candidate','control']
 REPEATS=5
 SCENARIOS=['write_1m_flush','repeated_read_16m','random_read_1m','small_files_100']
@@ -90,7 +90,7 @@ def main():
         started=time.monotonic()
         try:
             with log.open('wb') as stream:
-                run(command,env=env,timeout=420,stdout=stream,stderr=subprocess.STDOUT)
+                run(command,env=env,timeout=int(os.environ.get("LIBRETTO_COMPARE_TIMEOUT","420")),stdout=stream,stderr=subprocess.STDOUT)
             assert images.mread(disk,'RESULT.TXT').strip()==b'PASS'
             memory=dict((k,int(v)) for k,v in (line.split('=',1) for line in images.mread(disk,'MEMORY.TXT').decode('ascii').splitlines()))
             assert memory['xms_present']==1 and memory['dos_in_hma']==1

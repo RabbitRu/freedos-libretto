@@ -163,6 +163,11 @@ dtime dos_gettime(void);
 COUNT dos_mkdir(BYTE * dir);
 BOOL last_link(f_node_ptr fnp);
 COUNT map_cluster(REG f_node_ptr fnp, COUNT mode);
+#ifdef WITHFAT32
+VOID fat_seek_invalidate(VOID);
+#else
+#define fat_seek_invalidate() ((void)0)
+#endif
 long rwblock(COUNT fd, VOID FAR * buffer, UCOUNT count, int mode);
 COUNT dos_read(COUNT fd, VOID FAR * buffer, UCOUNT count);
 COUNT dos_write(COUNT fd, const VOID FAR * buffer, UCOUNT count);

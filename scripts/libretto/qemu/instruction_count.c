@@ -12,7 +12,7 @@ static uint64_t total, non_rom, first_total, first_non_rom, interval;
 static bool active;
 static unsigned errors;
 static FILE *output;
-static uint64_t events[9];
+static uint64_t events[11];
 static void event(unsigned int cpu, void *which)
 {
     (void)cpu;
@@ -32,7 +32,7 @@ static void end(unsigned int cpu, void *udata)
     if (!active) { errors++; return; }
     fprintf(output,"%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%u",
             ++interval,total-first_total,non_rom-first_non_rom,errors);
-    for (size_t i=0;i<9;i++) fprintf(output,",%" PRIu64,events[i]);
+    for (size_t i=0;i<11;i++) fprintf(output,",%" PRIu64,events[i]);
     fputc('\n',output);
     fflush(output); active=false;
 }
@@ -50,7 +50,7 @@ static void translate(qemu_plugin_id_t id,struct qemu_plugin_tb *tb)
             qemu_plugin_register_vcpu_insn_exec_inline(insn,QEMU_PLUGIN_INLINE_ADD_U64,&non_rom,1);
         if (qemu_plugin_insn_size(insn)==sizeof(begin_bytes)) {
             const unsigned char *bytes=qemu_plugin_insn_data(insn);
-            if (bytes[0]==0x66 && bytes[1]==0xb8 && bytes[2]>=1 && bytes[2]<=9 &&
+            if (bytes[0]==0x66 && bytes[1]==0xb8 && bytes[2]>=1 && bytes[2]<=11 &&
                 bytes[3]==0x50 && bytes[4]==0x42 && bytes[5]==0x4c)
                 qemu_plugin_register_vcpu_insn_exec_cb(insn,event,QEMU_PLUGIN_CB_NO_REGS,(void *)(uintptr_t)(bytes[2]-1));
             if (!memcmp(bytes,begin_bytes,sizeof(begin_bytes)))
@@ -78,7 +78,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,const qemu_info_t
         else return -1;
     }
     if (!path || !(output=fopen(path,"w"))) return -1;
-    fputs("interval,guest_instructions,non_rom_instructions,marker_errors,map_calls,chain_steps,backward_seeks,fat_reads,fat_writes,buffer_probes,buffer_hits,buffer_misses,disk_calls\n",output);
+    fputs("interval,guest_instructions,non_rom_instructions,marker_errors,map_calls,chain_steps,backward_seeks,fat_reads,fat_writes,buffer_probes,buffer_hits,buffer_misses,disk_calls,seek_hits,seek_saves\n",output);
     qemu_plugin_register_vcpu_tb_trans_cb(id,translate);
     qemu_plugin_register_atexit_cb(id,finish,NULL);
     return 0;

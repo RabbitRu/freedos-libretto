@@ -50,6 +50,8 @@ jobs:
         run: python3 scripts/libretto/edges.py '${{ matrix.cpu }}'
       - name: Compare control and candidate with ten samples per workload
         run: python3 scripts/libretto/compare.py '${{ matrix.cpu }}'
+      - name: Check chain invalidation, handles, raw FAT writes and real floppy change on both kernels
+        run: python3 scripts/libretto/chains.py '${{ matrix.cpu }}'
       - name: Save kernel, map, test images and report
         if: always()
         uses: actions/upload-artifact@v6

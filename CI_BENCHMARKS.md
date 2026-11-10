@@ -2,7 +2,7 @@
 
 The existing GitHub Actions workflow builds both FAT32 CPU profiles, runs
 correctness checks, and compares each candidate with the fixed control commit
-4e438f419652fef6975b8e7bb0e7ab6835de8ad0. Physical Libretto measurements are a
+5f17969cd603eeef159f8706e63ee7631ecd5419. Physical Libretto measurements are a
 later validation step; they do not block early kernel work.
 
 The control is rebuilt with the same compiler, FAT32/CPU settings and date.
@@ -53,3 +53,10 @@ cluster 65535 and verifies random forward/backward, cross-sector reads.
 The high-cluster fixture is checked independently on the host before boot.
 
 Injection method: https://github.com/qemu/qemu/blob/v8.2.2/docs/devel/blkdebug.txt
+
+
+The checkpoint experiment adds successful backward-seek cache hit/save events.
+The bounded mapper re-entry adds a map-call event; chain_steps records actual
+FAT-chain walking. chains.py tests both control and candidate, including real
+floppy replacement and absolute FAT32 writes. CHECKPOINT_RESULTS.md records
+the local status; a successful final CI run is still required.

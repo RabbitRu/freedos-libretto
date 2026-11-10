@@ -254,6 +254,8 @@ VOID setinvld(REG COUNT dsk)
 {
   struct buffer FAR *bp = firstbuf;
 
+  fat_seek_invalidate();
+
   do
   {
     if (bp->b_unit == dsk)
@@ -379,6 +381,8 @@ UWORD dskxfer(COUNT dsk, ULONG blkno, VOID FAR * buf, UWORD numblocks,
 {
   register struct dpb FAR *dpbp = get_dpb(dsk);
   LB_DISK();
+  if (mode == DSKWRITEINT26)
+    fat_seek_invalidate();
   if (dpbp == NULL)
   {
     return 0x0201;              /* illegal command */

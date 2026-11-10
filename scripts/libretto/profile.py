@@ -12,7 +12,7 @@ import images
 
 ROOT = Path(__file__).resolve().parents[2]
 EVENTS = ['map_calls','chain_steps','backward_seeks','fat_reads','fat_writes',
-          'buffer_probes','buffer_hits','buffer_misses','disk_calls']
+          'buffer_probes','buffer_hits','buffer_misses','disk_calls','seek_hits','seek_saves']
 
 def main():
     cpu = sys.argv[1]

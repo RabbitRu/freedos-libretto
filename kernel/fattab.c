@@ -179,7 +179,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   CLUSTER max_cluster = dpbp->dpb_size;
 
   if (Cluster2 == READ_CLUSTER) { LB_FAT_READ(); }
-  else { LB_FAT_WRITE(); }
+  else { LB_FAT_WRITE(); fat_seek_invalidate(); }
 
 #ifdef WITHFAT32
   if (ISFAT32(dpbp))

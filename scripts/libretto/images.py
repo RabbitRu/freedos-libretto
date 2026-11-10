@@ -12,8 +12,6 @@ import shutil
 import struct
 import subprocess
 import sys
-import tempfile
-import socket
 import time
 import zipfile
 
@@ -24,6 +22,8 @@ SECTORS = 131072
 
 def run(args, **kw):
     print('+', ' '.join(map(str, args)), flush=True)
+    if 'timeout' in kw:
+        kw['timeout'] = max(kw['timeout'], float(os.environ.get('LIBRETTO_TEST_TIMEOUT','0')))
     return subprocess.run(list(map(str, args)), check=True, **kw)
 
 
@@ -171,38 +171,29 @@ def interactive_smoke(image, cpu, tools):
     batch = scratch/'SMOKE.BAT'
     dos_text(batch,'@ECHO OFF\nECHO PROMPT_OK > READY.TXT\nPOWEROFF\n')
     run(['mcopy','-i',str(disk)+'@@'+str(OFFSET),batch,'::SMOKE.BAT'])
-    with tempfile.TemporaryDirectory(prefix='lb-smoke-') as tmp:
-        monitor = Path(tmp)/'monitor'
-        command = [str(ROOT/'scripts/libretto/qemu-target.sh'),'-drive',f'file={disk},format=raw,if=ide',
-                   '-boot','c','-display','none','-no-reboot','-monitor',f'unix:{monitor},server=on,wait=off']
-        env = dict(os.environ,LIBRETTO_CPU=cpu,LIBRETTO_RAM_MB='20')
-        with (scratch/'qemu.txt').open('wb') as log:
-            process = subprocess.Popen(command,env=env,stdout=log,stderr=subprocess.STDOUT)
-            try:
-                deadline = time.monotonic()+40
-                while time.monotonic()<deadline:
-                    probe = subprocess.run(['mtype','-i',str(disk)+'@@'+str(OFFSET),'::MEMORY.TXT'],capture_output=True)
-                    if probe.returncode==0 and b'ems_total_16k_pages=' in probe.stdout:
-                        break
-                    assert process.poll() is None, 'interactive QEMU exited before startup'
-                    time.sleep(0.25)
-                else:
-                    raise AssertionError('interactive shell startup timed out')
-                time.sleep(0.5)
-                with socket.socket(socket.AF_UNIX) as connection:
-                    connection.settimeout(3)
-                    connection.connect(str(monitor))
-                    connection.recv(4096)
-                    for key in ['s','m','o','k','e','ret']:
-                        connection.sendall(('sendkey '+key+' 30\n').encode())
-                        time.sleep(0.10)
-                        connection.recv(4096)
-                assert process.wait(timeout=30)==0, 'interactive prompt command failed'
-                assert mread(disk,'READY.TXT').strip()==b'PROMPT_OK'
-            finally:
-                if process.poll() is None:
-                    process.kill()
-                    process.wait()
+    command = [str(ROOT/'scripts/libretto/qemu-target.sh'),'-drive',f'file={disk},format=raw,if=ide',
+               '-boot','c','-display','none','-no-reboot','-monitor','stdio']
+    env = dict(os.environ,LIBRETTO_CPU=cpu,LIBRETTO_RAM_MB='20')
+    with (scratch/'qemu.txt').open('wb') as log:
+        process = subprocess.Popen(command,env=env,stdin=subprocess.PIPE,stdout=log,stderr=subprocess.STDOUT)
+        try:
+            deadline = time.monotonic()+40
+            while time.monotonic()<deadline:
+                probe = subprocess.run(['mtype','-i',str(disk)+'@@'+str(OFFSET),'::MEMORY.TXT'],capture_output=True)
+                if probe.returncode==0 and b'ems_total_16k_pages=' in probe.stdout: break
+                assert process.poll() is None, 'interactive QEMU exited before startup'
+                time.sleep(0.25)
+            else:
+                raise AssertionError('interactive shell startup timed out')
+            time.sleep(0.5)
+            for key in ['s','m','o','k','e','ret']:
+                process.stdin.write(('sendkey '+key+' 30\n').encode()); process.stdin.flush()
+                time.sleep(0.10)
+            assert process.wait(timeout=30)==0, 'interactive prompt command failed'
+            assert mread(disk,'READY.TXT').strip()==b'PROMPT_OK'
+        finally:
+            if process.poll() is None: process.kill(); process.wait()
+            process.stdin.close()
     disk.unlink()
     return 'pass'
 
