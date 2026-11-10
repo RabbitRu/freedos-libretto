@@ -73,19 +73,15 @@ static void high(void)
 static void fault(int writing)
 {
     int fd=open("BROKEN.BIN",(writing?O_RDWR:O_RDONLY)|O_BINARY),result,closed;
-    unsigned i;
     require(fd>=0,"open fault target");
     _harderr(disk_error);
     memset(data,0xcc,512);
     result=writing?write(fd,data,512):read(fd,got,512);
     closed=close(fd);
     require(result<512 || closed!=0,"injected I/O error must reach application");
-    if (writing) {
-        fd=open("BROKEN.BIN",O_RDONLY|O_BINARY); require(fd>=0,"reopen after failed write");
-        require(read(fd,got,512)==512,"read after failed write");
-        for (i=0;i<512;i++) require(got[i]==pattern(i),"failed write preserved data");
-        require(close(fd)==0,"close after failed write");
-    }
+    /* A read may flush pending writes, so a persistently failed device
+       need not accept another read. The host verifies the file's exact
+       length/data and filesystem after shutdown, outside blkdebug. */
     printf("PASS: injected %s error returned to application\n",writing?"write":"read");
 }
 int main(int argc,char **argv)
