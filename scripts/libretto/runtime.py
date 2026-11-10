@@ -29,8 +29,11 @@ def main():
         digest = hashlib.sha256(archive.read_bytes()).hexdigest()
         if expected and digest != expected:
             raise ValueError(f'{name}: upstream archive hash mismatch')
+        print(f'RUNTIME_ARCHIVE {name} {digest}', flush=True)
         with zipfile.ZipFile(archive) as z:
             members = [n for n in z.namelist() if Path(n.replace('\\', '/')).name.upper() == binary]
+            if name == 'freecom':
+                members = [n for n in members if n.replace('\\', '/').lower() == 'xmsswap/command.com']
             if len(members) != 1:
                 raise ValueError(f'{name}: expected one {binary}; archive contains {z.namelist()}')
             content = z.read(members[0])
@@ -42,7 +45,7 @@ def main():
                 if base and any(k in base.lower() for k in ('license', 'copying', 'readme')):
                     (docs / base).write_bytes(z.read(n))
         item = dict(name=name, version=version, url=url, archive_sha256=digest,
-                    binary=binary, binary_sha256=hashlib.sha256(content).hexdigest())
+                    binary=binary, archive_member=members[0], binary_sha256=hashlib.sha256(content).hexdigest())
         manifest.append(item)
         print(json.dumps(item), flush=True)
     (target / 'RUNTIME.JSON').write_text(json.dumps(manifest, indent=2) + '\n')

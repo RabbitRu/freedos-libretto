@@ -154,10 +154,10 @@ def main():
     tools = output/'tools'
     tools.mkdir(exist_ok=True)
     runtime = ROOT/'_downloads/runtime-extracted'
-    run(['python3', ROOT/'scripts/libretto/runtime.py', runtime])
     for name in ['mbr','memstat','poweroff']:
         run(['nasm','-f','bin',ROOT/f'scripts/libretto/dos/{name}.asm','-o',tools/(name+'.bin' if name=='mbr' else name.upper()+'.COM')])
     run(['wcl','-zq','-bt=dos','-ms','-0','-os','-k4096','-I'+str(Path(os.environ['WATCOM'])/'h'),'-fe=FSVERIFY.EXE', ROOT/'scripts/libretto/dos/fsverify.c'], cwd=tools)
+    run(['python3', ROOT/'scripts/libretto/runtime.py', runtime])
     payload = tools/'payload'
     payload.mkdir(exist_ok=True)
     for name in ['COMMAND.COM','HIMEMX.EXE','JEMMEX.EXE']:
