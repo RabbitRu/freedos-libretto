@@ -3,16 +3,13 @@ set -euo pipefail
 
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
 cd "$root"
-fat=${1:-32}
-cpu=${2:-386}
-case "$fat" in
-    16|32) ;;
-    *) echo 'Usage: build.sh [16|32] [386|pentium]' >&2; exit 2 ;;
-esac
+fat=32
+cpu=${1:-486}
+[[ $# -le 1 ]] || { echo 'Usage: build.sh [486|pentium-mmx]' >&2; exit 2; }
 case "$cpu" in
-    386) unset LIBRETTO_PENTIUM ;;
-    pentium) export LIBRETTO_PENTIUM=1 ;;
-    *) echo 'Usage: build.sh [16|32] [386|pentium]' >&2; exit 2 ;;
+    486) export LIBRETTO_TUNE=4 ;;
+    pentium-mmx) export LIBRETTO_TUNE=5 ;;
+    *) echo 'Usage: build.sh [486|pentium-mmx]' >&2; exit 2 ;;
 esac
 
 export WATCOM=${LIBRETTO_WATCOM:-"$root/_watcom"}
@@ -42,14 +39,15 @@ for ram in 20 32; do
     (
         cd test
         export LIBRETTO_RAM_MB=$ram
-        export QEMU="$root/scripts/libretto/qemu-pentium.sh"
+        export LIBRETTO_CPU=$cpu
+        export QEMU="$root/scripts/libretto/qemu-target.sh"
         ./test.sh "$output/KERNEL.SYS" "libretto-$ram" "libretto-boot-$ram" \
-            "C target $cpu / Pentium / $ram MiB / FAT$fat: "
+            "$cpu / $ram MiB / FAT$fat: "
         cp "libretto-$ram.img" "$output/boot-test-$ram.img"
     )
 done
 
-python3 - "$output" "$fat" "$cpu" <<'PY'
+python3 - "$output" "$cpu" "$LIBRETTO_TUNE" <<'PY'
 import hashlib
 import json
 from pathlib import Path
@@ -62,14 +60,15 @@ report = {
     "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
     "working_tree_dirty": bool(subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=no"], text=True).strip()),
     "compiler": "Open Watcom 2026-11-01-Build",
-    "c_cpu_target": sys.argv[3],
-    "compiler_cpu_option": "-5" if sys.argv[3] == "pentium" else "-3",
+    "c_cpu_target": sys.argv[2],
+    "compiler_cpu_option": "-" + sys.argv[3],
     "assembly_cpu_target": "386",
-    "fat_support": "FAT12/16" + ("/32" if sys.argv[2] == "32" else ""),
+    "fat_support": "FAT12/16/32",
+    "mmx_specific_routines": False,
     "upx": False,
     "kernel_file_bytes": len(kernel),
     "kernel_sha256": hashlib.sha256(kernel).hexdigest(),
-    "boot_tests": {"qemu_pentium_20_mib": "pass", "qemu_pentium_32_mib": "pass"},
+    "boot_tests": {"qemu_" + sys.argv[2] + "_20_mib": "pass", "qemu_" + sys.argv[2] + "_32_mib": "pass"},
     "limitations": [
         "File size is not resident memory consumption.",
         "Both boot images use FAT12; FAT16/FAT32 filesystem I/O is not tested here.",

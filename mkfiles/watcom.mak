@@ -27,13 +27,21 @@ CFLAGSC=-mc-zp1-os-s-we-e3-wx-bt=DOS
 
 TARGET=kwc
 
-# Optional Libretto experiment: retain the 386 assembly/ABI configuration,
-# but select Pentium instruction generation/timings for the 16-bit C code.
-!ifdef LIBRETTO_PENTIUM
+# Optional Libretto profiles retain the 386 assembly/ABI configuration.
+# LIBRETTO_TUNE selects 486 (4) or Pentium/Pentium MMX (5) C code.
+!ifdef LIBRETTO_TUNE
 !if $(XCPU) != 386
-!error LIBRETTO_PENTIUM requires XCPU=386
+!error LIBRETTO_TUNE requires XCPU=386
 !endif
+!if $(LIBRETTO_TUNE) == 4
+TARGETOPT=-4
+!else
+!if $(LIBRETTO_TUNE) == 5
 TARGETOPT=-5
+!else
+!error LIBRETTO_TUNE must be 4 or 5
+!endif
+!endif
 !endif
 
 # used for building the library

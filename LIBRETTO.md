@@ -1,41 +1,26 @@
-# FreeDOS for Libretto: starting point
+# FreeDOS for Libretto
 
-This fork targets a small DOS gaming system on the Libretto, initially a
-Pentium with 20 MiB RAM. A 32 MiB emulator configuration is also checked.
-The baseline targets 386+; an experimental C build targets Pentium.
-No MMX requirement is introduced.
+This fork provides exactly two Libretto build profiles, both with FAT32
+support. They retain the existing DOS APIs, calling conventions, packed
+structures and 386-compatible kernel assembly.
 
 Upstream starting commit: `ca25e3b26695074f754e1baffdfb4fd1452a6dbc`
 from [FDOS/kernel](https://github.com/FDOS/kernel).
 
-## First milestone
-
-Establish build and boot baselines before changing kernel behavior. The
-`libretto` branch adds a separate GitHub Actions workflow and leaves the
-kernel's C and assembly source unchanged. These build configurations are compared:
-
-| Profile | CPU target | Filesystem support | Compression |
+| Profile | C compiler target | Filesystem support | QEMU CPU |
 | --- | --- | --- | --- |
-| Full | 386+ | FAT12, FAT16, FAT32 | None |
-| Compact | 386+ | FAT12, FAT16 | None |
-| Pentium full | Pentium | FAT12, FAT16, FAT32 | None |
-| Pentium compact | Pentium | FAT12, FAT16 | None |
+| `486` | Open Watcom `-4` | FAT12, FAT16, FAT32 | `486` |
+| `pentium-mmx` | Open Watcom `-5` | FAT12, FAT16, FAT32 | `pentium,mmx=on` |
 
-The compact profile uses an existing upstream option; it is not a new kernel
-optimization. Choose the full profile if the intended disk uses FAT32.
-
-The Pentium profiles select Open Watcom's `-5` C compiler option through
-`LIBRETTO_PENTIUM=1`. They keep the existing 386 assembly configuration,
-calling conventions, structure packing and size optimization (`-os`). The
-default build remains unchanged. This is a compiler tuning experiment;
-it does not establish faster games or disk access.
+The Pentium MMX profile uses the compiler's Pentium instruction selection
+and timings. It does not yet contain new MMX-specific routines. Such routines
+require separate correctness, x87-state preservation and performance tests.
 See the official [Open Watcom C/C++ User's Guide](https://open-watcom.github.io/open-watcom-v2-wikidocs/cguide.html)
-for the processor selection options.
+for processor selection options.
 
-Open Watcom is pinned to the official 2026-11-01 release and the download's
-SHA-256 is verified. Distribution packages provide NASM, QEMU and mtools;
-their exact versions are visible in the CI package installation log.
-This establishes comparable builds, not a bit-for-bit reproducibility claim.
+The profile is passed through `LIBRETTO_TUNE=4` or `5`; ordinary upstream
+builds without this variable retain their existing settings. Both profiles
+keep size optimization (`-os`) and disable UPX so binary sizes can be compared.
 
 ## Build on Linux
 
@@ -45,36 +30,36 @@ Python 3. Then, from a clean checkout:
 ```sh
 git submodule update --init --recursive
 bash scripts/libretto/bootstrap.sh
-bash scripts/libretto/build.sh 32
-bash scripts/libretto/build.sh 16
-bash scripts/libretto/build.sh 32 pentium
-bash scripts/libretto/build.sh 16 pentium
+bash scripts/libretto/build.sh 486
+bash scripts/libretto/build.sh pentium-mmx
 ```
 
-The build uses `_watcom/` by default; `LIBRETTO_WATCOM` can select a separate
-compiler installation. A personal `config.mak` must be moved aside first.
+Open Watcom is pinned to the official 2026-11-01 release, and its archive's
+SHA-256 is verified before extraction. `_watcom/` is the default destination;
+`LIBRETTO_WATCOM` can select a separate installation. A personal `config.mak`
+must be moved aside first.
 
-Each build uses the upstream boot test on QEMU's Pentium model at 20 and
-32 MiB. Successful boot and file creation/write/close are required. Outputs
-go to `_output/libretto-<386|pentium>-fat<16|32>/` and include:
+GitHub Actions builds both profiles. Each must boot and create/write/close
+a file on its target CPU model with both 20 and 32 MiB of RAM. Outputs go to
+`_output/libretto-486-fat32/` and `_output/libretto-pentium-mmx-fat32/`:
 
 - `KERNEL.SYS`, linker map and `COUNTRY.SYS`;
 - two FAT12 floppy images containing the upstream test program;
-- `report.json` with kernel file size, checksum and test results.
+- `report.json` recording the CPU option, kernel size, checksum and results.
 
-The images run a test and shut down. They do **not** include a command shell
-or an installer. No hard disk installation or formatting is performed.
+These are test images: they run a test and shut down. They contain neither
+a command shell nor an installer and do not install or format a hard disk.
 
-## What remains to measure
+## Measurement limits
 
-Kernel file size does not establish the amount of conventional memory left
-for games. The current tests do not establish FAT16/FAT32 disk correctness,
-XMS/EMS compatibility, sound support, or compatibility with particular games.
+FAT32 is enabled in both kernels. The current boot test uses a FAT12 floppy;
+it does not yet validate reads and writes on a FAT32 volume. Game compatibility,
+XMS/EMS and sound support also require further tests.
 
-Next steps are to collect resident/conventional memory measurements, add
-file operation and game compatibility tests, and profile DOS file access.
-Any assembly optimization should be isolated and compared against this
-baseline. Timing on an actual Libretto is required for performance claims;
-QEMU does not accurately model its CPU, disk or graphics timing.
+Kernel file size does not measure resident memory or conventional memory
+available to games. QEMU is not a cycle-accurate Libretto benchmark; speed
+claims require measurements on the actual machine. Distribution packages
+supply NASM, QEMU and mtools, with their versions visible in CI logs; this
+is not a bit-for-bit reproducibility claim.
 
 The fork retains upstream's license; see `COPYING`.
