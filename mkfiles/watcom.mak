@@ -27,6 +27,15 @@ CFLAGSC=-mc-zp1-os-s-we-e3-wx-bt=DOS
 
 TARGET=kwc
 
+# Optional Libretto experiment: retain the 386 assembly/ABI configuration,
+# but select Pentium instruction generation/timings for the 16-bit C code.
+!ifdef LIBRETTO_PENTIUM
+!if $(XCPU) != 386
+!error LIBRETTO_PENTIUM requires XCPU=386
+!endif
+TARGETOPT=-5
+!endif
+
 # used for building the library
 
 CLIB=$(COMPILERPATH)\lib286\dos\clibm.lib

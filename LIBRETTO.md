@@ -2,7 +2,8 @@
 
 This fork targets a small DOS gaming system on the Libretto, initially a
 Pentium with 20 MiB RAM. A 32 MiB emulator configuration is also checked.
-The kernel is built for 386+; no MMX requirement is introduced.
+The baseline targets 386+; an experimental C build targets Pentium.
+No MMX requirement is introduced.
 
 Upstream starting commit: `ca25e3b26695074f754e1baffdfb4fd1452a6dbc`
 from [FDOS/kernel](https://github.com/FDOS/kernel).
@@ -10,16 +11,26 @@ from [FDOS/kernel](https://github.com/FDOS/kernel).
 ## First milestone
 
 Establish build and boot baselines before changing kernel behavior. The
-`libretto` branch adds a separate GitHub Actions workflow and leaves upstream
-kernel sources unchanged. Two existing build configurations are compared:
+`libretto` branch adds a separate GitHub Actions workflow and leaves the
+kernel's C and assembly source unchanged. These build configurations are compared:
 
 | Profile | CPU target | Filesystem support | Compression |
 | --- | --- | --- | --- |
 | Full | 386+ | FAT12, FAT16, FAT32 | None |
 | Compact | 386+ | FAT12, FAT16 | None |
+| Pentium full | Pentium | FAT12, FAT16, FAT32 | None |
+| Pentium compact | Pentium | FAT12, FAT16 | None |
 
 The compact profile uses an existing upstream option; it is not a new kernel
 optimization. Choose the full profile if the intended disk uses FAT32.
+
+The Pentium profiles select Open Watcom's `-5` C compiler option through
+`LIBRETTO_PENTIUM=1`. They keep the existing 386 assembly configuration,
+calling conventions, structure packing and size optimization (`-os`). The
+default build remains unchanged. This is a compiler tuning experiment;
+it does not establish faster games or disk access.
+See the official [Open Watcom C/C++ User's Guide](https://open-watcom.github.io/open-watcom-v2-wikidocs/cguide.html)
+for the processor selection options.
 
 Open Watcom is pinned to the official 2026-11-01 release and the download's
 SHA-256 is verified. Distribution packages provide NASM, QEMU and mtools;
@@ -36,6 +47,8 @@ git submodule update --init --recursive
 bash scripts/libretto/bootstrap.sh
 bash scripts/libretto/build.sh 32
 bash scripts/libretto/build.sh 16
+bash scripts/libretto/build.sh 32 pentium
+bash scripts/libretto/build.sh 16 pentium
 ```
 
 The build uses `_watcom/` by default; `LIBRETTO_WATCOM` can select a separate
@@ -43,7 +56,7 @@ compiler installation. A personal `config.mak` must be moved aside first.
 
 Each build uses the upstream boot test on QEMU's Pentium model at 20 and
 32 MiB. Successful boot and file creation/write/close are required. Outputs
-go to `_output/libretto-fat16/` or `_output/libretto-fat32/` and include:
+go to `_output/libretto-<386|pentium>-fat<16|32>/` and include:
 
 - `KERNEL.SYS`, linker map and `COUNTRY.SYS`;
 - two FAT12 floppy images containing the upstream test program;

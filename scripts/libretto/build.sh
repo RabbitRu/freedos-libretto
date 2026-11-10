@@ -4,9 +4,15 @@ set -euo pipefail
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
 cd "$root"
 fat=${1:-32}
+cpu=${2:-386}
 case "$fat" in
     16|32) ;;
-    *) echo 'Usage: build.sh [16|32]' >&2; exit 2 ;;
+    *) echo 'Usage: build.sh [16|32] [386|pentium]' >&2; exit 2 ;;
+esac
+case "$cpu" in
+    386) unset LIBRETTO_PENTIUM ;;
+    pentium) export LIBRETTO_PENTIUM=1 ;;
+    *) echo 'Usage: build.sh [16|32] [386|pentium]' >&2; exit 2 ;;
 esac
 
 export WATCOM=${LIBRETTO_WATCOM:-"$root/_watcom"}
@@ -23,7 +29,7 @@ if [[ -f config.mak ]]; then
     exit 1
 fi
 
-output="$root/_output/libretto-fat$fat"
+output="$root/_output/libretto-$cpu-fat$fat"
 mkdir -p "$output"
 # Upstream makefiles do not track compiler options as prerequisites.
 make clobber COMPILER=owlinux XCPU=386 XFAT="$fat" XUPX= RM='rm -f'
@@ -38,12 +44,12 @@ for ram in 20 32; do
         export LIBRETTO_RAM_MB=$ram
         export QEMU="$root/scripts/libretto/qemu-pentium.sh"
         ./test.sh "$output/KERNEL.SYS" "libretto-$ram" "libretto-boot-$ram" \
-            "Pentium / $ram MiB / FAT$fat: "
+            "C target $cpu / Pentium / $ram MiB / FAT$fat: "
         cp "libretto-$ram.img" "$output/boot-test-$ram.img"
     )
 done
 
-python3 - "$output" "$fat" <<'PY'
+python3 - "$output" "$fat" "$cpu" <<'PY'
 import hashlib
 import json
 from pathlib import Path
@@ -56,7 +62,9 @@ report = {
     "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
     "working_tree_dirty": bool(subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=no"], text=True).strip()),
     "compiler": "Open Watcom 2026-11-01-Build",
-    "cpu_target": "386",
+    "c_cpu_target": sys.argv[3],
+    "compiler_cpu_option": "-5" if sys.argv[3] == "pentium" else "-3",
+    "assembly_cpu_target": "386",
     "fat_support": "FAT12/16" + ("/32" if sys.argv[2] == "32" else ""),
     "upx": False,
     "kernel_file_bytes": len(kernel),

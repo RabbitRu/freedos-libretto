@@ -34,6 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         fat: [16, 32]
+        cpu: ['386', pentium]
     steps:
       - uses: actions/checkout@v6
         with:
@@ -45,10 +46,10 @@ jobs:
       - name: Install pinned Open Watcom
         run: bash scripts/libretto/bootstrap.sh
       - name: Build and boot on Pentium with 20 and 32 MiB
-        run: bash scripts/libretto/build.sh '${{ matrix.fat }}'
+        run: bash scripts/libretto/build.sh '${{ matrix.fat }}' '${{ matrix.cpu }}'
       - name: Save kernel, map, test images and report
         uses: actions/upload-artifact@v6
         with:
-          name: libretto-fat${{ matrix.fat }}-${{ github.sha }}
-          path: _output/libretto-fat${{ matrix.fat }}/
+          name: libretto-${{ matrix.cpu }}-fat${{ matrix.fat }}-${{ github.sha }}
+          path: _output/libretto-${{ matrix.cpu }}-fat${{ matrix.fat }}/
           if-no-files-found: error
