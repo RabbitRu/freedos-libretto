@@ -82,7 +82,12 @@ MATH_INSERT=
 PROFILEOPT=-DLIBRETTO_PROFILE
 !endif
 
-ALLCFLAGS=-I..$(DIRSEP)hdr $(TARGETOPT) $(ALLCFLAGS) $(PROFILEOPT) -os-s-e5-j-zl-zp1-wx-we-zgf-zff-r
+# Explicit optimization bundle for controlled experiments; ABI flags stay fixed.
+!ifndef LIBRETTO_OPT
+LIBRETTO_OPT=-os
+!endif
+
+ALLCFLAGS=-I..$(DIRSEP)hdr $(TARGETOPT) $(ALLCFLAGS) $(PROFILEOPT) $(LIBRETTO_OPT) -s-e5-j-zl-zp1-wx-we-zgf-zff-r
 INITCFLAGS=$(ALLCFLAGS)-ntINIT_TEXT-gTGROUP-ndI
 CFLAGS=$(ALLCFLAGS)-ntHMA_TEXT
 

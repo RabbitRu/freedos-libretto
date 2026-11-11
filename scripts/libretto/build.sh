@@ -62,6 +62,7 @@ report = {
     "compiler": "Open Watcom 2026-11-01-Build",
     "c_cpu_target": sys.argv[2],
     "compiler_cpu_option": "-" + sys.argv[3],
+    "compiler_optimization": __import__("os").environ.get("LIBRETTO_OPT", "-os"),
     "assembly_cpu_target": "386",
     "fat_support": "FAT12/16/32",
     "mmx_specific_routines": False,

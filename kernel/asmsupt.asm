@@ -161,6 +161,11 @@ MEMCPY:
 
 
 domemcpy:
+%if XCPU >= 386
+                cmp     cx,64
+                jae     memcpy_large
+%endif
+memcpy_words:
                 ; And do the built-in byte copy, but do a 16-bit transfer
                 ; whenever possible.
                 shr     cx,1
@@ -230,7 +235,12 @@ arg {d,4}, ch, n
                 les     di,[.d]
 		mov	bl,8
 
-domemset:                
+domemset:
+%if XCPU >= 386
+                cmp     cx,64
+                jae     memset_large
+%endif
+memset_words:
                 mov	ah, al
 
                 shr	cx,1
@@ -567,5 +577,59 @@ strncmp_done:
                 lahf
 		ror  ah,1
 strncmp_done2:  jmp  pascal_return
+
+; Long, aligned blocks use 32-bit operands with 16-bit addresses/counts.
+; Keep the word path for short/unaligned blocks and segment-offset wrap.
+; In particular, no dword may straddle offset FFFF in real mode.
+%if XCPU >= 386
+memcpy_large:
+                mov     ax,si
+                or      ax,di
+                test    al,3
+                jnz     memcpy_words
+                mov     ax,si
+                add     ax,cx
+                jc      memcpy_words
+                mov     ax,di
+                add     ax,cx
+                jc      memcpy_words
+                mov     ax,cx
+                shr     cx,2
+                rep     movsd
+                jnc     .byte
+                movsw
+.byte:
+                test    al,1
+                jz      .done
+                movsb
+.done:
+                jmp     pascal_return
+
+memset_large:
+                test    di,3
+                jnz     memset_words
+                mov     si,di
+                add     si,cx
+                jc      memset_words
+                mov     ah,al
+                ; Watcom's kernel entry does not save high GPR halves.
+                ; Preserve high EAX while forming the four-byte pattern.
+                push    eax
+                push    ax
+                push    ax
+                pop     eax
+                mov     si,cx
+                shr     cx,2
+                rep     stosd
+                jnc     .byte
+                stosw
+.byte:
+                test    si,1
+                jz      .done
+                stosb
+.done:
+                pop     eax
+                jmp     pascal_return
+%endif
 
 %endif
