@@ -37,7 +37,10 @@ def main():
     run(['git', 'fetch', '--depth=1', 'origin', BASELINE])
     control = subprocess.check_output(['git', 'show', BASELINE+':kernel/asmsupt.asm'], cwd=ROOT)
     (tools/'control.asm').write_bytes(control)
-    for variant, source in [('REF', tools/'control.asm'), ('NEW', ROOT/'kernel/asmsupt.asm')]:
+    candidate = (ROOT/'kernel/asmsupt.asm').read_bytes()
+    (tools/'candidate.asm').write_bytes(candidate)
+    candidate_commit = subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+    for variant, source in [('REF', tools/'control.asm'), ('NEW', tools/'candidate.asm')]:
         obj = tools/(variant+'.obj')
         run(['nasm', '-f', 'obj', '-Dowlinux', '-DXCPU=386', '-I'+str(ROOT/'hdr')+'/',
              '-I'+str(ROOT/'kernel')+'/', source, '-o', obj])
@@ -118,8 +121,8 @@ def main():
         summaries.append(dict(op=key[0], bytes=key[1], dest_alignment=key[2], source_alignment=key[3], control=a, candidate=b,
                               change_percent=(b/a-1)*100))
     report = dict(cpu=cpu, baseline_commit=BASELINE, qemu_version=version,
-                  candidate_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
-                  candidate_assembly_sha256=hashlib.sha256((ROOT/'kernel/asmsupt.asm').read_bytes()).hexdigest(),
+                  candidate_commit=candidate_commit,
+                  candidate_assembly_sha256=hashlib.sha256(candidate).hexdigest(),
                   correctness={k:v for k,v in reports.items() if k.endswith('.TXT')},
                   rep_calibration=calibration, summaries=summaries, raw=rows,
                   limitations=['QEMU REP accounting is calibrated separately; instruction counts are not CPU cycles.',

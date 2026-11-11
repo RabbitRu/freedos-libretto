@@ -18,6 +18,11 @@ on:
       - 'makefile'
       - 'country'
   workflow_dispatch:
+    inputs:
+      compiler_scout:
+        description: Run the optional Watcom settings experiment
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -90,6 +95,7 @@ jobs:
           if-no-files-found: error
 
   compiler:
+    if: github.event_name == 'workflow_dispatch' && inputs.compiler_scout
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     strategy:

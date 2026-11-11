@@ -7,6 +7,7 @@ normal ten-sample comparison and all filesystem/boot checks before acceptance.
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -51,6 +52,16 @@ def main():
                                     error=next(l for l in text.splitlines() if 'Error! E2020:' in l)))
                 print('COMPILER_VARIANT '+json.dumps(reports[-1]), flush=True)
                 continue
+            # Kernel entry assumes Watcom leaves high GPR halves alone.
+            # Archive and check C disassembly for every successful setting.
+            disassembly = directory/'disassembly'; disassembly.mkdir(exist_ok=True)
+            for source in (ROOT/'kernel').glob('*.c'):
+                obj = source.with_suffix('.obj')
+                if not obj.exists(): continue
+                listing = disassembly/(source.stem+'.txt')
+                images.run(['wdis','-l='+str(listing),obj], stdout=subprocess.DEVNULL, env=env)
+                assert not re.search(r'\b(eax|ebx|ecx|edx|esi|edi|ebp|esp|mm[0-7]|xmm\d+)\b',
+                                     listing.read_text(), re.I), listing
             kernel = (ROOT/'bin/kwc38632.sys').read_bytes()
             (directory/'KERNEL.SYS').write_bytes(kernel)
             shutil.copy2(ROOT/'bin/kwc38632.map', directory/'kernel.map')
@@ -64,7 +75,7 @@ def main():
                            env=compare_env, stdout=log, stderr=subprocess.STDOUT)
             comparison = json.loads((directory/'comparison/comparison.json').read_text())
             reports.append(dict(name=name, options=options, hot_options=hot_options, status="pass",
-                                kernel_bytes=len(kernel),
+                                kernel_bytes=len(kernel), high_gpr_mmx_uses_in_c=False,
                                 kernel_sha256=hashlib.sha256(kernel).hexdigest(),
                                 calibration=comparison['calibration'],
                                 memory=comparison['memory_reports'], summaries=comparison['summaries']))

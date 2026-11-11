@@ -161,6 +161,30 @@ arg arg1, arg2, arg3
                 cld
 %endmacro
 
+; Watcom promises preservation of BX, which memory_setup has already saved.
+; Use it to select a fixed Pascal return instead of moving stack arguments.
+%macro memory_cleanup 1
+%ifdef WATCOM
+                ; Derive a CS-relative target at runtime: the test EXE
+                ; can place HMA_TEXT after its C runtime's code segment.
+                call    %%ip
+%%ip:
+                pop     bx
+                add     bx,memory_return%1-%%ip
+%else
+                mov     bl,%1
+%endif
+%endmacro
+
+%macro memory_finish 0
+%ifdef WATCOM
+                jmp     bx
+%else
+                jmp     pascal_return
+%endif
+%endmacro
+
+
 ;***********************************************
 ;
 ;       VOID memcpy(REG BYTE *s, REG BYTE *d, REG COUNT n);
@@ -174,7 +198,7 @@ arg d, s, n
                 mov     cx,[.n]
                 mov     si,[.s]
                 mov     di,[.d]
-                mov     bl,6
+                memory_cleanup 6
 
 domemcpy:
 %if XCPU >= 386
@@ -197,7 +221,7 @@ memcpy_return:
 ; pascal_return - pop saved registers and do return
 ;
         
-                jmp short pascal_return
+                memory_finish
 
 
 
@@ -218,7 +242,7 @@ arg {d,4}, {s,4}, n
                 mov     cx,[.n]
                 lds     si,[.s]
                 les     di,[.d]
-                mov     bl,10
+                memory_cleanup 10
                 jmp     domemcpy
 
 ;***************************************************************
@@ -232,7 +256,7 @@ arg {d,4}, ch, n
                 mov     cx,[.n]
                 mov     ax,[.ch]
                 les     di,[.d]
-                mov     bl,8
+                memory_cleanup 8
 
 domemset:
 %if XCPU >= 386
@@ -243,9 +267,10 @@ memset_words:
                 mov     ah,al
                 shr     cx,1
                 rep     stosw
-                jnc     pascal_return
+                jnc     .return
                 stosb
-                jmp     short pascal_return
+.return:
+                memory_finish
 
 ; Near fill uses the same destination segment as the C data segment.
                 global  MEMSET
@@ -257,7 +282,7 @@ arg d, ch, n
                 mov     cx,[.n]
                 mov     ax,[.ch]
                 mov     di,[.d]
-                mov     bl,6
+                memory_cleanup 6
                 jmp     domemset
 
 ;*****
@@ -615,7 +640,7 @@ memcpy_large:
                 jz      .done
                 movsb
 .done:
-                jmp     pascal_return
+                memory_finish
 
 memset_large:
                 mov     si,di
@@ -651,7 +676,26 @@ memset_large:
                 stosb
 .done:
                 pop     eax
-                jmp     pascal_return
+                memory_finish
+%endif
+
+%ifdef WATCOM
+%macro memory_restore 1
+                pop     ds
+                pop     di
+                pop     si
+                pop     es
+                pop     cx
+                pop     bx
+                pop     bp
+                ret     %1
+%endmacro
+memory_return6:
+                memory_restore 6
+memory_return8:
+                memory_restore 8
+memory_return10:
+                memory_restore 10
 %endif
 
 %endif
