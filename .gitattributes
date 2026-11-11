@@ -3,4 +3,6 @@
 *.UP -text
 ci_*.sh text eol=lf
 .github/workflows/*.yml text eol=lf
+scripts/libretto/** text eol=lf
+LIBRETTO.md text eol=lf
 test/** binary diff

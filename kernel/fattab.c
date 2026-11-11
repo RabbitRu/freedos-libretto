@@ -28,6 +28,7 @@
 
 #include "portab.h"
 #include "globals.h"
+#include "libretto_profile.h"
 
 #ifdef VERSION_STRINGS
 static BYTE *RcsId =
@@ -152,6 +153,15 @@ void write_fsinfo(struct dpb FAR * dpbp)
 /*      12 bytes are compressed to 9 bytes                      */
 /*                                                              */
 
+/* Keep the 386+ Watcom fast path inline: its size-oriented C backend
+   otherwise emits a seven-iteration loop for a 32-bit right shift. */
+#if defined(WITHFAT32) && defined(__WATCOMC__) && defined(I386)
+ULONG fat_div128(ULONG value);
+#pragma aux fat_div128 = "shrd ax,dx,7" "shr dx,7" parm [dx ax] value [dx ax] modify exact [dx ax];
+#else
+#define fat_div128(value) ((value) >> 7)
+#endif
+
 /* either read the value at Cluster1 (if Cluster2 is READ_CLUSTER) */
 /* or write the Cluster2 value to the FAT entry at Cluster1        */
 /* Read is always via next_cluster wrapper which has extra checks  */
@@ -167,6 +177,9 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   unsigned char wasfree;
   CLUSTER clussec = Cluster1;
   CLUSTER max_cluster = dpbp->dpb_size;
+
+  if (Cluster2 == READ_CLUSTER) { LB_FAT_READ(); }
+  else { LB_FAT_WRITE(); }
 
 #ifdef WITHFAT32
   if (ISFAT32(dpbp))
@@ -205,8 +218,20 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
   /* idx is a pointer to an index which is the nibble offset of the FAT
      entry within the sector for FAT12, or word offset for FAT16, or
      dword offset for FAT32 */
-  idx = (unsigned)(clussec % secdiv);
-  clussec /= secdiv;
+#ifdef WITHFAT32
+  /* 512-byte FAT32 sectors contain 128 entries. Avoid two software
+     32-bit divisions on the common path; retain arbitrary sector sizes. */
+  if (secdiv == 128)
+  {
+    idx = (unsigned)clussec & 127;
+    clussec = fat_div128(clussec);
+  }
+  else
+#endif
+  {
+    idx = (unsigned)(clussec % secdiv);
+    clussec /= secdiv;
+  }
   clussec += dpbp->dpb_fatstrt;
 #ifdef WITHFAT32
   if (ISFAT32(dpbp) && (dpbp->dpb_xflags & FAT_NO_MIRRORING))
@@ -276,6 +301,8 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
         return cluster;
       }
 
+      /* Reads have returned. Invalidate before any FAT entry bytes change. */
+      fat_seek_invalidate();
       wasfree = 0;
       if (cluster == FREE)
         wasfree = 1;
@@ -318,6 +345,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
     }
     /* Finally, put the word into the buffer and mark the   */
     /* buffer as dirty.                                     */
+    fat_seek_invalidate();
     fputword(&bp->b_buffer[idx * 2], (UWORD)Cluster2);
     wasfree = 0;
     if (res == FREE)
@@ -338,6 +366,7 @@ CLUSTER link_fat(struct dpb FAR * dpbp, CLUSTER Cluster1,
     }
     /* Finally, put the word into the buffer and mark the   */
     /* buffer as dirty.                                     */
+    fat_seek_invalidate();
     fputlong(&bp->b_buffer[idx * 4], Cluster2 & LONG_LAST_CLUSTER);
     wasfree = 0;
     if (res == FREE)

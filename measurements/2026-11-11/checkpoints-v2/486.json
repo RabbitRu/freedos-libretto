@@ -1,0 +1,1592 @@
+{
+  "schema_version": 2,
+  "workflow_url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/42883124425",
+  "source_head": "83aa1e1d852ef28aba721acbf4f13a1737310691",
+  "tested_commit": "4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+  "source_tree": "47bd29695287db684f246c0440a174ac5a1a5ede",
+  "jobs": [
+    {
+      "id": 130064378123,
+      "name": "profile (486)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 130064378756,
+      "name": "profile (pentium-mmx)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 130064378768,
+      "name": "build (pentium-mmx)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 130064378798,
+      "name": "build (486)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13795841462,
+      "name": "libretto-pentium-mmx-fat32-4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+      "size_in_bytes": 2057219,
+      "digest": "sha256:b028a77e52ef53b4d6a08c997df8cb1a3b34a008930b2b996658f3449bde8e09",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/42883124425/artifacts/13795841462"
+    },
+    {
+      "id": 13795466537,
+      "name": "profile-pentium-mmx-4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+      "size_in_bytes": 3462,
+      "digest": "sha256:285e8701239598579d1f62e4ed664e94795d642e8110a42a70719bf552e16172",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/42883124425/artifacts/13795466537"
+    },
+    {
+      "id": 13795178495,
+      "name": "libretto-486-fat32-4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+      "size_in_bytes": 2057727,
+      "digest": "sha256:4155535109c1caa5a775fd52afa11e2451afdd4e884e1da08c28dbfb977f2323",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/42883124425/artifacts/13795178495"
+    },
+    {
+      "id": 13793989802,
+      "name": "profile-486-4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+      "size_in_bytes": 3453,
+      "digest": "sha256:3838aa28e5d4006f5ae3a7db238d166e822a037bc3969a19110861f857b088ab",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/42883124425/artifacts/13793989802"
+    }
+  ],
+  "build_stage_scope": "Build report precedes separate edge and chain tests; their completed results are included below.",
+  "build_report": {
+    "commit": "4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+    "working_tree_dirty": false,
+    "compiler": "Open Watcom 2026-11-01-Build",
+    "c_cpu_target": "486",
+    "compiler_cpu_option": "-4",
+    "assembly_cpu_target": "386",
+    "fat_support": "FAT12/16/32",
+    "mmx_specific_routines": false,
+    "upx": false,
+    "fat32_validation": "pass",
+    "kernel_file_bytes": 72763,
+    "kernel_sha256": "d2d2fcb037bcb1115777267e2f635f8743b6d5953628c78bd17e04385e890fd2",
+    "boot_tests": {
+      "qemu_486_20_mib": "pass",
+      "qemu_486_32_mib": "pass"
+    },
+    "limitations": [
+      "Game compatibility and DOS extenders are not tested yet.",
+      "Memory is measured while MEMSTAT runs under FreeCOM.",
+      "Full-volume and injected I/O error cases are not tested yet.",
+      "QEMU timings are not real Libretto performance measurements."
+    ],
+    "interactive_prompt_smoke": "pass",
+    "fat32_test_runs": 6
+  },
+  "comparison": {
+    "baseline_commit": "5f17969cd603eeef159f8706e63ee7631ecd5419",
+    "candidate_commit": "4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+    "cpu": "486",
+    "ram_mib": 20,
+    "memory_profile": "xms",
+    "qemu_version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+    "icount": "shift=3,align=off,sleep=off",
+    "order": [
+      "control",
+      "candidate",
+      "candidate",
+      "control"
+    ],
+    "control_kernel_sha256": "a9ed8607cb5657828ee4c0259e8bafda19e581b3e914b2f87e19a1a1e0fc9d25",
+    "candidate_kernel_sha256": "d2d2fcb037bcb1115777267e2f635f8743b6d5953628c78bd17e04385e890fd2",
+    "kernel_bytes_identical": false,
+    "calibration": "not_applicable",
+    "max_identical_kernel_median_change_percent": null,
+    "summaries": [
+      {
+        "scenario": "write_1m_flush",
+        "samples_per_variant": 10,
+        "guest_instructions": {
+          "control_median": 8137028.0,
+          "candidate_median": 8550154.5,
+          "control_min": 7872550,
+          "control_max": 9250287,
+          "candidate_min": 7866578,
+          "candidate_max": 9485551,
+          "paired_change_percent_median": 3.895238650940791
+        },
+        "non_rom_instructions": {
+          "control_median": 4790049.0,
+          "candidate_median": 4787745.0,
+          "control_min": 4778316,
+          "control_max": 4790084,
+          "candidate_min": 4776193,
+          "candidate_max": 4787780,
+          "paired_change_percent_median": -0.048099716725236163
+        },
+        "bios_ticks": {
+          "control_median": 1.0,
+          "candidate_median": 1.0,
+          "control_min": 1,
+          "control_max": 2,
+          "candidate_min": 1,
+          "candidate_max": 2,
+          "paired_change_percent_median": 0.0
+        }
+      },
+      {
+        "scenario": "repeated_read_16m",
+        "samples_per_variant": 10,
+        "guest_instructions": {
+          "control_median": 88956437.0,
+          "candidate_median": 88565387.5,
+          "control_min": 82747822,
+          "control_max": 94378393,
+          "candidate_min": 84861211,
+          "candidate_max": 93993013,
+          "paired_change_percent_median": -1.1355442729388765
+        },
+        "non_rom_instructions": {
+          "control_median": 28156286.0,
+          "candidate_median": 28055914.0,
+          "control_min": 28040928,
+          "control_max": 28156286,
+          "candidate_min": 27942527,
+          "candidate_max": 28055949,
+          "paired_change_percent_median": -0.35641974357916717
+        },
+        "bios_ticks": {
+          "control_median": 13.0,
+          "candidate_median": 13.0,
+          "control_min": 12,
+          "control_max": 14,
+          "candidate_min": 12,
+          "candidate_max": 14,
+          "paired_change_percent_median": 0.0
+        }
+      },
+      {
+        "scenario": "random_read_1m",
+        "samples_per_variant": 10,
+        "guest_instructions": {
+          "control_median": 696214928.0,
+          "candidate_median": 438282749.0,
+          "control_min": 694527452,
+          "control_max": 697045075,
+          "candidate_min": 437305924,
+          "candidate_max": 439992062,
+          "paired_change_percent_median": -37.014257022880244
+        },
+        "non_rom_instructions": {
+          "control_median": 688280681.0,
+          "candidate_median": 431132466.0,
+          "control_min": 688258468,
+          "control_max": 688280854,
+          "candidate_min": 431129944,
+          "candidate_max": 431132508,
+          "paired_change_percent_median": -37.36095202125832
+        },
+        "bios_ticks": {
+          "control_median": 101.0,
+          "candidate_median": 64.0,
+          "control_min": 101,
+          "control_max": 102,
+          "candidate_min": 63,
+          "candidate_max": 64,
+          "paired_change_percent_median": -36.633663366336634
+        }
+      },
+      {
+        "scenario": "small_files_100",
+        "samples_per_variant": 10,
+        "guest_instructions": {
+          "control_median": 23050630.0,
+          "candidate_median": 23023554.5,
+          "control_min": 18954181,
+          "control_max": 24187420,
+          "candidate_min": 18799449,
+          "candidate_max": 24084722,
+          "paired_change_percent_median": 0.02424019430791735
+        },
+        "non_rom_instructions": {
+          "control_median": 20220096.0,
+          "candidate_median": 20171193.0,
+          "control_min": 15975382,
+          "control_max": 20220131,
+          "candidate_min": 15937225,
+          "candidate_max": 20171228,
+          "paired_change_percent_median": -0.2418530325050794
+        },
+        "bios_ticks": {
+          "control_median": 3.0,
+          "candidate_median": 3.0,
+          "control_min": 2,
+          "control_max": 4,
+          "candidate_min": 2,
+          "candidate_max": 4,
+          "paired_change_percent_median": 0.0
+        }
+      }
+    ],
+    "raw": [
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 1,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8896639,
+        "non_rom_instructions": 4778316,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 1,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 87983762,
+        "non_rom_instructions": 28040928,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 1,
+        "scenario": "random_read_1m",
+        "guest_instructions": 696461181,
+        "non_rom_instructions": 688258468,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 1,
+        "scenario": "small_files_100",
+        "guest_instructions": 19370942,
+        "non_rom_instructions": 15975417,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 2,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 7909536,
+        "non_rom_instructions": 4790049,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 2,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 87878436,
+        "non_rom_instructions": 28156286,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 2,
+        "scenario": "random_read_1m",
+        "guest_instructions": 694527452,
+        "non_rom_instructions": 688280681,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 2,
+        "scenario": "small_files_100",
+        "guest_instructions": 22993325,
+        "non_rom_instructions": 20220096,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 3,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 7872550,
+        "non_rom_instructions": 4790084,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 3,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 91253134,
+        "non_rom_instructions": 28156286,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 3,
+        "scenario": "random_read_1m",
+        "guest_instructions": 695099302,
+        "non_rom_instructions": 688280681,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 3,
+        "scenario": "small_files_100",
+        "guest_instructions": 23057777,
+        "non_rom_instructions": 20220131,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 4,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 7953553,
+        "non_rom_instructions": 4790049,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 4,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 82747822,
+        "non_rom_instructions": 28156251,
+        "bios_ticks": 12
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 4,
+        "scenario": "random_read_1m",
+        "guest_instructions": 696400421,
+        "non_rom_instructions": 688280819,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 4,
+        "scenario": "small_files_100",
+        "guest_instructions": 23029758,
+        "non_rom_instructions": 20220096,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 5,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8090652,
+        "non_rom_instructions": 4790049,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 5,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 85876304,
+        "non_rom_instructions": 28156286,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 5,
+        "scenario": "random_read_1m",
+        "guest_instructions": 694572065,
+        "non_rom_instructions": 688280681,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 0,
+        "run": 5,
+        "scenario": "small_files_100",
+        "guest_instructions": 23043483,
+        "non_rom_instructions": 20220131,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 1,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8555470,
+        "non_rom_instructions": 4776193,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 1,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 85546183,
+        "non_rom_instructions": 27942527,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 1,
+        "scenario": "random_read_1m",
+        "guest_instructions": 437652800,
+        "non_rom_instructions": 431129944,
+        "bios_ticks": 63
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 1,
+        "scenario": "small_files_100",
+        "guest_instructions": 18799449,
+        "non_rom_instructions": 15937225,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 2,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8400514,
+        "non_rom_instructions": 4787780,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 2,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 84861211,
+        "non_rom_instructions": 28055879,
+        "bios_ticks": 12
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 2,
+        "scenario": "random_read_1m",
+        "guest_instructions": 437305924,
+        "non_rom_instructions": 431132466,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 2,
+        "scenario": "small_files_100",
+        "guest_instructions": 22987038,
+        "non_rom_instructions": 20171193,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 3,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8324479,
+        "non_rom_instructions": 4787780,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 3,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 89553313,
+        "non_rom_instructions": 28055914,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 3,
+        "scenario": "random_read_1m",
+        "guest_instructions": 438368171,
+        "non_rom_instructions": 431132431,
+        "bios_ticks": 63
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 3,
+        "scenario": "small_files_100",
+        "guest_instructions": 23263193,
+        "non_rom_instructions": 20171193,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 4,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8544839,
+        "non_rom_instructions": 4787745,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 4,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 91734034,
+        "non_rom_instructions": 28055949,
+        "bios_ticks": 14
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 4,
+        "scenario": "random_read_1m",
+        "guest_instructions": 439486610,
+        "non_rom_instructions": 431132508,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 4,
+        "scenario": "small_files_100",
+        "guest_instructions": 24084722,
+        "non_rom_instructions": 20171228,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 5,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 9063858,
+        "non_rom_instructions": 4787745,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 5,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 92060274,
+        "non_rom_instructions": 28055914,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 5,
+        "scenario": "random_read_1m",
+        "guest_instructions": 437501562,
+        "non_rom_instructions": 431132466,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 0,
+        "run": 5,
+        "scenario": "small_files_100",
+        "guest_instructions": 22998979,
+        "non_rom_instructions": 20171228,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 1,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8751237,
+        "non_rom_instructions": 4776193,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 1,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 93993013,
+        "non_rom_instructions": 27942562,
+        "bios_ticks": 14
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 1,
+        "scenario": "random_read_1m",
+        "guest_instructions": 439992062,
+        "non_rom_instructions": 431129979,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 1,
+        "scenario": "small_files_100",
+        "guest_instructions": 19676717,
+        "non_rom_instructions": 15937260,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 2,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 9485551,
+        "non_rom_instructions": 4787745,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 2,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 84880814,
+        "non_rom_instructions": 28055914,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 2,
+        "scenario": "random_read_1m",
+        "guest_instructions": 437615122,
+        "non_rom_instructions": 431132466,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 2,
+        "scenario": "small_files_100",
+        "guest_instructions": 22964761,
+        "non_rom_instructions": 20171193,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 3,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8234849,
+        "non_rom_instructions": 4787745,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 3,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 91933654,
+        "non_rom_instructions": 28055949,
+        "bios_ticks": 14
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 3,
+        "scenario": "random_read_1m",
+        "guest_instructions": 439442062,
+        "non_rom_instructions": 431132466,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 3,
+        "scenario": "small_files_100",
+        "guest_instructions": 23993720,
+        "non_rom_instructions": 20171228,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 4,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8618969,
+        "non_rom_instructions": 4787745,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 4,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 85627858,
+        "non_rom_instructions": 28055879,
+        "bios_ticks": 12
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 4,
+        "scenario": "random_read_1m",
+        "guest_instructions": 438197327,
+        "non_rom_instructions": 431132508,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 4,
+        "scenario": "small_files_100",
+        "guest_instructions": 23048130,
+        "non_rom_instructions": 20171193,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 5,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 7866578,
+        "non_rom_instructions": 4787745,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 5,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 87577462,
+        "non_rom_instructions": 28055914,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 5,
+        "scenario": "random_read_1m",
+        "guest_instructions": 438578234,
+        "non_rom_instructions": 431132466,
+        "bios_ticks": 64
+      },
+      {
+        "variant": "candidate",
+        "batch": 1,
+        "run": 5,
+        "scenario": "small_files_100",
+        "guest_instructions": 23852275,
+        "non_rom_instructions": 20171228,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 1,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8575448,
+        "non_rom_instructions": 4778316,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 1,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 94378393,
+        "non_rom_instructions": 28040963,
+        "bios_ticks": 14
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 1,
+        "scenario": "random_read_1m",
+        "guest_instructions": 696444954,
+        "non_rom_instructions": 688258468,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 1,
+        "scenario": "small_files_100",
+        "guest_instructions": 18954181,
+        "non_rom_instructions": 15975382,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 2,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8578129,
+        "non_rom_instructions": 4790084,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 2,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 91263824,
+        "non_rom_instructions": 28156286,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 2,
+        "scenario": "random_read_1m",
+        "guest_instructions": 697045075,
+        "non_rom_instructions": 688280681,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 2,
+        "scenario": "small_files_100",
+        "guest_instructions": 24187420,
+        "non_rom_instructions": 20220096,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 3,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 8183404,
+        "non_rom_instructions": 4790084,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 3,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 89929112,
+        "non_rom_instructions": 28156286,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 3,
+        "scenario": "random_read_1m",
+        "guest_instructions": 694905204,
+        "non_rom_instructions": 688280681,
+        "bios_ticks": 101
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 3,
+        "scenario": "small_files_100",
+        "guest_instructions": 23975541,
+        "non_rom_instructions": 20220131,
+        "bios_ticks": 4
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 4,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 9250287,
+        "non_rom_instructions": 4790049,
+        "bios_ticks": 1
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 4,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 91241800,
+        "non_rom_instructions": 28156286,
+        "bios_ticks": 13
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 4,
+        "scenario": "random_read_1m",
+        "guest_instructions": 696084221,
+        "non_rom_instructions": 688280854,
+        "bios_ticks": 102
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 4,
+        "scenario": "small_files_100",
+        "guest_instructions": 23587009,
+        "non_rom_instructions": 20220096,
+        "bios_ticks": 3
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 5,
+        "scenario": "write_1m_flush",
+        "guest_instructions": 7956057,
+        "non_rom_instructions": 4790084,
+        "bios_ticks": 2
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 5,
+        "scenario": "repeated_read_16m",
+        "guest_instructions": 86312620,
+        "non_rom_instructions": 28156251,
+        "bios_ticks": 12
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 5,
+        "scenario": "random_read_1m",
+        "guest_instructions": 696345635,
+        "non_rom_instructions": 688280716,
+        "bios_ticks": 102
+      },
+      {
+        "variant": "control",
+        "batch": 1,
+        "run": 5,
+        "scenario": "small_files_100",
+        "guest_instructions": 23413123,
+        "non_rom_instructions": 20220096,
+        "bios_ticks": 3
+      }
+    ],
+    "limitations": [
+      "Instruction counts are not CPU cycles or Libretto speed.",
+      "non_rom excludes 0xA0000..0xFFFFF; it is not a kernel-only counter.",
+      "BIOS ticks use the artificial icount clock; host wall time is diagnostic only.",
+      "Performance acceptance requires gains above measured calibration noise."
+    ]
+  },
+  "fat32_tests": [
+    {
+      "profile": "basic",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509872,
+        "largest_conventional_block_bytes_while_probe_loaded": 509728,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "83",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "47",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "basic",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509872,
+        "largest_conventional_block_bytes_while_probe_loaded": 509728,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "83",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "48",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    },
+    {
+      "profile": "xms",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "143",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "39",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "xms",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31457,
+        "xms_largest_kib": 31457,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "143",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "39",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    },
+    {
+      "profile": "ems",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 36144,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 18965,
+        "xms_largest_kib": 18965,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1187,
+        "ems_total_16k_pages": 1218
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "101",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "53",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "ems",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 36144,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31253,
+        "xms_largest_kib": 31253,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1955,
+        "ems_total_16k_pages": 1986
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "100",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "52",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    }
+  ],
+  "edge_tests": [
+    {
+      "fat": 16,
+      "mode": "full",
+      "status": "pass",
+      "guest": "PASS: full volume, short write, EOF and recovery; bytes=8192",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 11 files, 16297/16303 clusters"
+    },
+    {
+      "fat": 16,
+      "mode": "readerror",
+      "status": "pass",
+      "guest": "PASS: injected read error returned to application",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 10 files, 184/16303 clusters"
+    },
+    {
+      "fat": 16,
+      "mode": "writeerror",
+      "status": "pass",
+      "guest": "PASS: injected write error returned to application",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 10 files, 184/16303 clusters"
+    },
+    {
+      "fat": 32,
+      "mode": "full",
+      "status": "pass",
+      "guest": "PASS: full volume, short write, EOF and recovery; bytes=4096",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 11 files, 128986/128992 clusters"
+    },
+    {
+      "fat": 32,
+      "mode": "readerror",
+      "status": "pass",
+      "guest": "PASS: injected read error returned to application",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 10 files, 362/128992 clusters"
+    },
+    {
+      "fat": 32,
+      "mode": "writeerror",
+      "status": "pass",
+      "guest": "PASS: injected write error returned to application",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 10 files, 362/128992 clusters"
+    },
+    {
+      "fat": 32,
+      "mode": "high",
+      "status": "pass",
+      "guest": "PASS: high FAT32 clusters, forward/backward seeks and cross-sector data",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/edge-tests/tools/volume.img: 11 files, 2410/128992 clusters"
+    }
+  ],
+  "chain_tests": [
+    {
+      "variant": "control",
+      "fat": 16,
+      "mode": "handles",
+      "status": "pass",
+      "guest": "PASS: handles",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 696/16303 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 16,
+      "mode": "resize",
+      "status": "pass",
+      "guest": "PASS: resize",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 12 files, 952/16303 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 16,
+      "mode": "reuse",
+      "status": "pass",
+      "guest": "PASS: reuse",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 696/16303 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 32,
+      "mode": "handles",
+      "status": "pass",
+      "guest": "PASS: handles",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 1387/128992 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 32,
+      "mode": "resize",
+      "status": "pass",
+      "guest": "PASS: resize",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 12 files, 1899/128992 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 32,
+      "mode": "reuse",
+      "status": "pass",
+      "guest": "PASS: reuse",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 1387/128992 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 32,
+      "mode": "rawfat",
+      "status": "pass",
+      "guest": "PASS: rawfat",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 12 files, 1392/128992 clusters"
+    },
+    {
+      "variant": "control",
+      "fat": 32,
+      "mode": "media",
+      "status": "pass",
+      "guest": "PASS: media",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 9 files, 363/128992 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 16,
+      "mode": "handles",
+      "status": "pass",
+      "guest": "PASS: handles",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 697/16303 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 16,
+      "mode": "resize",
+      "status": "pass",
+      "guest": "PASS: resize",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 12 files, 953/16303 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 16,
+      "mode": "reuse",
+      "status": "pass",
+      "guest": "PASS: reuse",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 697/16303 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 32,
+      "mode": "handles",
+      "status": "pass",
+      "guest": "PASS: handles",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 1388/128992 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 32,
+      "mode": "resize",
+      "status": "pass",
+      "guest": "PASS: resize",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 12 files, 1900/128992 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 32,
+      "mode": "reuse",
+      "status": "pass",
+      "guest": "PASS: reuse",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 11 files, 1388/128992 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 32,
+      "mode": "rawfat",
+      "status": "pass",
+      "guest": "PASS: rawfat",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 12 files, 1393/128992 clusters"
+    },
+    {
+      "variant": "candidate",
+      "fat": 32,
+      "mode": "media",
+      "status": "pass",
+      "guest": "PASS: media",
+      "fsck": "fsck.fat 4.2 (2021-01-31)\n/home/runner/work/freedos-libretto/freedos-libretto/_output/libretto-486-fat32/chain-tests/tools/volume.img: 9 files, 364/128992 clusters"
+    }
+  ],
+  "runtime_inputs": [
+    {
+      "name": "freecom",
+      "version": "com086",
+      "url": "https://github.com/FDOS/freecom/releases/download/com086/English.zip",
+      "archive_sha256": "42093a00286f66bf922eebd8204a3b74b429f4c6973cd960ae1ab52ce80b4bd5",
+      "binary": "COMMAND.COM",
+      "archive_member": "xmsswap/command.com",
+      "binary_sha256": "d33d3e0a3a0c02ef74d9b9e6d72a3adc7969630bacb7ec8e4e6a7cb197dcefb2"
+    },
+    {
+      "name": "himemx",
+      "version": "3.40",
+      "url": "https://github.com/Baron-von-Riedesel/HimemX/releases/download/v3.40/HimemX340.zip",
+      "archive_sha256": "e6e9913f26aec2e264bf514ddd1910cde319122cafeeda1b46cc0756beae25f8",
+      "binary": "HIMEMX.EXE",
+      "archive_member": "HimemX.exe",
+      "binary_sha256": "95557fe6d35ff7801a9baa072f7cef1f8a6d53a46f00c90785ad7e59c094cba9"
+    },
+    {
+      "name": "jemm",
+      "version": "5.86",
+      "url": "https://github.com/Baron-von-Riedesel/Jemm/releases/download/v5.86/JemmB_v586.zip",
+      "archive_sha256": "94838a1836f94d95dcf84d250f7968dfca2eb6b5cfa7ac664d6e01f22f0d296e",
+      "binary": "JEMMEX.EXE",
+      "archive_member": "JEMMEX.EXE",
+      "binary_sha256": "407233e2313a4f2f67d5390a48a2ce5e28839f81382837f9a2848732c218f9bd"
+    },
+    {
+      "source_archive": "freecom-com086-source.zip",
+      "url": "https://github.com/FDOS/freecom/releases/download/com086/freecom-source.zip",
+      "sha256": "4d9365772efc54fe5bd4bc48a27bcbb7041e71791af36dd0621ef4c8a34cc1d3"
+    },
+    {
+      "source_archive": "himemx-v3.40-source.zip",
+      "url": "https://github.com/Baron-von-Riedesel/HimemX/archive/refs/tags/v3.40.zip",
+      "sha256": "ed0aa854a3281e531ce74ff84e8b99475a1ecacd88396e50e12a533d1dce685c"
+    },
+    {
+      "source_archive": "jemm-v5.86-source.zip",
+      "url": "https://github.com/Baron-von-Riedesel/Jemm/archive/refs/tags/v5.86.zip",
+      "sha256": "60dfa23dc0e2150eaba2b4fb5b249cf1be2d60c90ada22092e8267b61d615f9a"
+    }
+  ],
+  "diagnostic_candidate": {
+    "cpu": "486",
+    "commit": "4a24bdaa80aa2523f1330e88fbdd6154b357a747",
+    "diagnostic_only": true,
+    "ram_mib": 20,
+    "memory_profile": "xms",
+    "workloads": [
+      {
+        "scenario": "write_1m_flush",
+        "map_calls": 2048,
+        "chain_steps": 2047,
+        "backward_seeks": 0,
+        "fat_reads": 8190,
+        "fat_writes": 4095,
+        "buffer_probes": 25317,
+        "buffer_hits": 16366,
+        "buffer_misses": 16,
+        "disk_calls": 308,
+        "seek_hits": 0,
+        "seek_saves": 0
+      },
+      {
+        "scenario": "repeated_read_16m",
+        "map_calls": 32768,
+        "chain_steps": 32752,
+        "backward_seeks": 15,
+        "fat_reads": 65504,
+        "fat_writes": 0,
+        "buffer_probes": 70264,
+        "buffer_hits": 65487,
+        "buffer_misses": 17,
+        "disk_calls": 4113,
+        "seek_hits": 0,
+        "seek_saves": 0
+      },
+      {
+        "scenario": "random_read_1m",
+        "map_calls": 3073,
+        "chain_steps": 873173,
+        "backward_seeks": 1026,
+        "fat_reads": 1746346,
+        "fat_writes": 0,
+        "buffer_probes": 1825586,
+        "buffer_hits": 1746346,
+        "buffer_misses": 0,
+        "disk_calls": 2048,
+        "seek_hits": 909,
+        "seek_saves": 1025
+      },
+      {
+        "scenario": "small_files_100",
+        "map_calls": 27608,
+        "chain_steps": 1131,
+        "backward_seeks": 6,
+        "fat_reads": 2561,
+        "fat_writes": 212,
+        "buffer_probes": 55246,
+        "buffer_hits": 30975,
+        "buffer_misses": 106,
+        "disk_calls": 1126,
+        "seek_hits": 0,
+        "seek_saves": 0
+      }
+    ]
+  }
+}

@@ -27,6 +27,23 @@ CFLAGSC=-mc-zp1-os-s-we-e3-wx-bt=DOS
 
 TARGET=kwc
 
+# Optional Libretto profiles retain the 386 assembly/ABI configuration.
+# LIBRETTO_TUNE selects 486 (4) or Pentium/Pentium MMX (5) C code.
+!ifdef LIBRETTO_TUNE
+!if $(XCPU) != 386
+!error LIBRETTO_TUNE requires XCPU=386
+!endif
+!if $(LIBRETTO_TUNE) == 4
+TARGETOPT=-4
+!else
+!if $(LIBRETTO_TUNE) == 5
+TARGETOPT=-5
+!else
+!error LIBRETTO_TUNE must be 4 or 5
+!endif
+!endif
+!endif
+
 # used for building the library
 
 CLIB=$(COMPILERPATH)\lib286\dos\clibm.lib
@@ -61,7 +78,11 @@ MATH_INSERT=
 # -3		optimization for 386 - given in CONFIG.MAK, not here
 #
 
-ALLCFLAGS=-I..$(DIRSEP)hdr $(TARGETOPT) $(ALLCFLAGS) -os-s-e5-j-zl-zp1-wx-we-zgf-zff-r
+!ifdef LIBRETTO_PROFILE
+PROFILEOPT=-DLIBRETTO_PROFILE
+!endif
+
+ALLCFLAGS=-I..$(DIRSEP)hdr $(TARGETOPT) $(ALLCFLAGS) $(PROFILEOPT) -os-s-e5-j-zl-zp1-wx-we-zgf-zff-r
 INITCFLAGS=$(ALLCFLAGS)-ntINIT_TEXT-gTGROUP-ndI
 CFLAGS=$(ALLCFLAGS)-ntHMA_TEXT
 

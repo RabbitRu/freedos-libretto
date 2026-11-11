@@ -163,6 +163,13 @@ dtime dos_gettime(void);
 COUNT dos_mkdir(BYTE * dir);
 BOOL last_link(f_node_ptr fnp);
 COUNT map_cluster(REG f_node_ptr fnp, COUNT mode);
+#ifdef WITHFAT32
+/* Internal coherence byte: inline stores avoid register spills in FAT reads. */
+extern UBYTE fat_seek_valid;
+#define fat_seek_invalidate() (fat_seek_valid = FALSE)
+#else
+#define fat_seek_invalidate() ((void)0)
+#endif
 long rwblock(COUNT fd, VOID FAR * buffer, UCOUNT count, int mode);
 COUNT dos_read(COUNT fd, VOID FAR * buffer, UCOUNT count);
 COUNT dos_write(COUNT fd, const VOID FAR * buffer, UCOUNT count);

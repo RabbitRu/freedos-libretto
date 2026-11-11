@@ -1,0 +1,88 @@
+name: Libretto FAT32 builds
+
+on:
+  push:
+    branches: [libretto]
+  pull_request:
+    branches: [master, libretto]
+    paths:
+      - 'scripts/libretto/**'
+      - '.github/workflows/libretto.yml'
+      - 'kernel/**'
+      - 'hdr/**'
+      - 'mkfiles/**'
+      - 'boot/**'
+      - 'drivers/**'
+      - 'utils/**'
+      - 'test/**'
+      - 'makefile'
+      - 'country'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: libretto-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        cpu: ['486', pentium-mmx]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Install build and boot test tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends nasm qemu-system-x86 mtools dosfstools xz-utils
+      - name: Install pinned Open Watcom
+        run: bash scripts/libretto/bootstrap.sh
+      - name: Build and boot on the target CPU with 20 and 32 MiB
+        run: bash scripts/libretto/build.sh '${{ matrix.cpu }}'
+      - name: Check FAT16/FAT32 full-volume recovery, high clusters and injected I/O errors
+        run: python3 scripts/libretto/edges.py '${{ matrix.cpu }}'
+      - name: Compare control and candidate with ten samples per workload
+        run: python3 scripts/libretto/compare.py '${{ matrix.cpu }}'
+      - name: Check chain invalidation, handles, raw FAT writes and real floppy change on both kernels
+        run: python3 scripts/libretto/chains.py '${{ matrix.cpu }}'
+      - name: Save kernel, map, test images and report
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: libretto-${{ matrix.cpu }}-fat32-${{ github.sha }}
+          path: _output/libretto-${{ matrix.cpu }}-fat32/
+          if-no-files-found: error
+
+  profile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        cpu: ['486', pentium-mmx]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Install diagnostic tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
+          sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends nasm qemu-system-x86 mtools xz-utils
+      - name: Install pinned Open Watcom
+        run: bash scripts/libretto/bootstrap.sh
+      - name: Count FAT, chain, cache and disk operations in a diagnostic kernel
+        run: python3 scripts/libretto/profile.py '${{ matrix.cpu }}'
+      - name: Save diagnostic counters
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: profile-${{ matrix.cpu }}-${{ github.sha }}
+          path: _output/profile-${{ matrix.cpu }}/
+          if-no-files-found: error

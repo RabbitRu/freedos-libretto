@@ -29,6 +29,7 @@
 
 #include "portab.h"
 #include "globals.h"
+#include "libretto_profile.h"
 #include "debug.h"
 
 
@@ -960,9 +961,69 @@ STATIC COUNT extend_dir(f_node_ptr fnp)
  *  that we are at now (f_cluster_offset) to start, instead of starting
  *  at the beginning. */
 
+#ifdef WITHFAT32
+/* Eight read checkpoints for one file chain. No SFT/fnode ABI changes.
+ * Only backward nonzero file reads consult/update them; sequential I/O and
+ * directory traversal keep their original path. Invalidate before FAT entry
+ * changes, on raw-write attempts, media invalidation and block IOCTLs.
+ * Cache only successfully reached positions, never another SFT's old cursor.
+ */
+STATIC struct {
+  struct dpb FAR *dpb;
+  CLUSTER start;
+  struct { CLUSTER offset, cluster; } point[8];
+  UBYTE used, hand;
+} seek_cache;
+
+UBYTE fat_seek_valid = FALSE;
+
+STATIC COUNT seek_read(f_node_ptr fnp, CLUSTER relcluster)
+{
+  unsigned i;
+  COUNT result;
+  if (!fat_seek_valid || seek_cache.start != fnp->f_cluster ||
+      seek_cache.dpb != fnp->f_dpb)
+  {
+    seek_cache.start = fnp->f_cluster;
+    seek_cache.dpb = fnp->f_dpb;
+    seek_cache.used = seek_cache.hand = 0;
+    fat_seek_valid = TRUE;
+  }
+  for (i = 0; i < seek_cache.used; i++)
+  {
+    if (seek_cache.point[i].offset <= relcluster &&
+        seek_cache.point[i].offset > fnp->f_cluster_offset)
+    {
+      fnp->f_cluster_offset = seek_cache.point[i].offset;
+      fnp->f_cluster = seek_cache.point[i].cluster;
+    }
+  }
+  if (fnp->f_cluster_offset != 0) { LB_SEEK_HIT(); }
+  /* At/before the target now: one bounded re-entry follows the normal
+   * forward walk, with all existing FAT checks and no extra loop bookkeeping.
+   * No further backward branch is possible in that call.
+   */
+  result = map_cluster(fnp, XFR_READ);
+  if (result == SUCCESS && fat_seek_valid &&
+      seek_cache.start == getdstart(fnp->f_dpb, &fnp->f_dir) &&
+      seek_cache.dpb == fnp->f_dpb)
+  {
+    LB_SEEK_SAVE();
+    seek_cache.point[seek_cache.hand].offset = relcluster;
+    seek_cache.point[seek_cache.hand].cluster = fnp->f_cluster;
+    seek_cache.hand = (seek_cache.hand + 1) & 7;
+    if (seek_cache.used < 8)
+      seek_cache.used++;
+  }
+  return result;
+}
+#endif
+
 COUNT map_cluster(REG f_node_ptr fnp, COUNT mode)
 {
   CLUSTER relcluster, cluster;
+
+  LB_MAP();
 
 #ifdef DISPLAY_GETBLOCK
   printf("map_cluster: current %lu, offset %lu, diff=%lu ",
@@ -993,12 +1054,20 @@ COUNT map_cluster(REG f_node_ptr fnp, COUNT mode)
                          fnp->f_dpb->dpb_shftcnt);
   if (relcluster < fnp->f_cluster_offset)
   {
+    LB_BACK();
     /* If seek is to earlier in file than current position, */
     /* we have to follow chain from the beginning again...  */
     /* Set internal index and cluster size.                 */
     fnp->f_cluster = fnp->f_sft_idx == 0xff ? fnp->f_dmp->dm_dircluster :
         getdstart(fnp->f_dpb, &fnp->f_dir);
     fnp->f_cluster_offset = 0;
+#ifdef WITHFAT32
+    if (mode == XFR_READ && relcluster != 0 &&
+        fnp->f_sft_idx != 0xff)
+    {
+      return seek_read(fnp, relcluster);
+    }
+#endif
   }
 
   /* Now begin the linear search. The relative cluster is         */
@@ -1010,6 +1079,7 @@ COUNT map_cluster(REG f_node_ptr fnp, COUNT mode)
 
   while (fnp->f_cluster_offset != relcluster)
   {
+    LB_CHAIN();
     /* get next cluster in the chain */
     cluster = next_cluster(fnp->f_dpb, fnp->f_cluster);
     if (cluster <= 1) /* 1/error or 0/FREE chain into the void */

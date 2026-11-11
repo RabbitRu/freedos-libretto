@@ -30,6 +30,7 @@
 
 #include "portab.h"
 #include "globals.h"
+#include "libretto_profile.h"
 
 #ifdef VERSION_STRINGS
 static BYTE *blockioRcsId =
@@ -97,9 +98,11 @@ STATIC struct buffer FAR *searchblock(ULONG blkno, COUNT dsk)
   bp = MK_FP(bufseg, firstbp);
   do
   {
+    LB_PROBE();
     if ((bp->b_blkno == blkno) &&
         (bp->b_flag & BFR_VALID) && (bp->b_unit == dsk))
     {
+      LB_HIT();
       /* found it -- rearrange LRU links      */
 #ifdef DISPLAY_GETBLOCK
       printf("HIT %04x:%04x]\n", FP_SEG(bp), FP_OFF(bp));
@@ -141,6 +144,7 @@ STATIC struct buffer FAR *searchblock(ULONG blkno, COUNT dsk)
     bp = b_prev(bufptr(firstbp));
   }
 
+  LB_MISS();
   bp->b_flag |= BFR_UNCACHE;  /* set uncache attribute */
 
 #ifdef DISPLAY_GETBLOCK
@@ -249,6 +253,8 @@ struct buffer FAR *getblk(ULONG blkno, COUNT dsk, BOOL overwrite)
 VOID setinvld(REG COUNT dsk)
 {
   struct buffer FAR *bp = firstbuf;
+
+  fat_seek_invalidate();
 
   do
   {
@@ -374,6 +380,9 @@ UWORD dskxfer(COUNT dsk, ULONG blkno, VOID FAR * buf, UWORD numblocks,
               COUNT mode)
 {
   register struct dpb FAR *dpbp = get_dpb(dsk);
+  LB_DISK();
+  if (mode == DSKWRITEINT26)
+    fat_seek_invalidate();
   if (dpbp == NULL)
   {
     return 0x0201;              /* illegal command */
