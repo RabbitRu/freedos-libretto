@@ -8,6 +8,8 @@ org 100h
     push cs
     pop es
     cld
+    pushf
+    cli
 %macro measure 2
     mov si,source
     mov di,destination
@@ -25,6 +27,7 @@ org 100h
     counts movsb
     counts movsw
     counts movsd
+    popf
     mov ax,4c00h
     int 21h
 source times 4096 db 0a5h

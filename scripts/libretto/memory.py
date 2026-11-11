@@ -34,6 +34,7 @@ def main():
     run(['gcc', '-shared', '-fPIC', '-fvisibility=hidden', '-O2', '-Wall', '-Wextra', '-Werror',
          ROOT/'scripts/libretto/qemu/instruction_count.c', '-o', tools/'counter.so'])
     run(['nasm', '-f', 'obj', ROOT/'scripts/libretto/dos/memcheck.asm', '-o', tools/'check.obj'])
+    run(['git', 'fetch', '--depth=1', 'origin', BASELINE])
     control = subprocess.check_output(['git', 'show', BASELINE+':kernel/asmsupt.asm'], cwd=ROOT)
     (tools/'control.asm').write_bytes(control)
     for variant, source in [('REF', tools/'control.asm'), ('NEW', ROOT/'kernel/asmsupt.asm')]:
@@ -109,12 +110,12 @@ def main():
             cursor += 1
     assert cursor == len(counts)
     summaries = []
-    for key in sorted({(r['op'], r['bytes'], r['alignment']) for r in rows}):
+    for key in sorted({(r['op'], r['bytes'], r['dest_alignment'], r['source_alignment']) for r in rows}):
         samples = {v:[r['non_rom_instructions'] for r in rows if r['variant']==v and
-                      (r['op'], r['bytes'], r['alignment'])==key] for v in ['REF','NEW']}
+                      (r['op'], r['bytes'], r['dest_alignment'], r['source_alignment'])==key] for v in ['REF','NEW']}
         assert all(len(s)==3 for s in samples.values())
         a,b = (statistics.median(samples[v]) for v in ['REF','NEW'])
-        summaries.append(dict(op=key[0], bytes=key[1], alignment=key[2], control=a, candidate=b,
+        summaries.append(dict(op=key[0], bytes=key[1], dest_alignment=key[2], source_alignment=key[3], control=a, candidate=b,
                               change_percent=(b/a-1)*100))
     report = dict(cpu=cpu, baseline_commit=BASELINE, qemu_version=version,
                   candidate_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),

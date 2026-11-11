@@ -63,6 +63,7 @@ report = {
     "c_cpu_target": sys.argv[2],
     "compiler_cpu_option": "-" + sys.argv[3],
     "compiler_optimization": __import__("os").environ.get("LIBRETTO_OPT", "-os"),
+    "compiler_hot_optimization": __import__("os").environ.get("LIBRETTO_HOT_OPT", ""),
     "assembly_cpu_target": "386",
     "fat_support": "FAT12/16/32",
     "mmx_specific_routines": False,

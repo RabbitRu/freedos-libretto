@@ -145,24 +145,40 @@ arg arg1, arg2, arg3
 
 
         
+; Memory operations set up their own arguments directly.  This avoids the
+; CALL/POP/indirect-JMP dispatcher and unused near-argument loads in far calls.
+%macro memory_setup 0
+                push    bp
+                mov     bp,sp
+%ifdef WATCOM
+                push    bx
+                push    cx
+                push    es
+%endif
+                push    si
+                push    di
+                push    ds
+                cld
+%endmacro
+
 ;***********************************************
 ;
 ;       VOID memcpy(REG BYTE *s, REG BYTE *d, REG COUNT n);
 ;
                 global  MEMCPY
 MEMCPY:
-                call pascal_setup
-
-                ;mov cx,[4+bp] - preset above
-                ;mov si,[6+bp] - preset above
-                ;mov di,[8+bp] - preset above
-
-                ;mov bl,6 - preset above
-
+                memory_setup
+                push    ds
+                pop     es
+arg d, s, n
+                mov     cx,[.n]
+                mov     si,[.s]
+                mov     di,[.d]
+                mov     bl,6
 
 domemcpy:
 %if XCPU >= 386
-                cmp     cx,64
+                cmp     cx,128
                 jae     memcpy_large
 %endif
 memcpy_words:
@@ -197,22 +213,13 @@ FMEMCPYBACK:
                 std             ; force to copy the string in reverse order
 %endif
 FMEMCPY:
-                call pascal_setup
-
+                memory_setup
 arg {d,4}, {s,4}, n
-                ; Get the repetition count, n preset above
-%ifdef STDCALL
                 mov     cx,[.n]
-%endif
-
-                ; Get the far source pointer, s
                 lds     si,[.s]
-
-                ; Get the far destination pointer d
                 les     di,[.d]
-		mov	bl,10
-
-                jmp short domemcpy
+                mov     bl,10
+                jmp     domemcpy
 
 ;***************************************************************
 ;
@@ -220,57 +227,38 @@ arg {d,4}, {s,4}, n
 ;
                 global  FMEMSET
 FMEMSET:
-                call pascal_setup
-
+                memory_setup
 arg {d,4}, ch, n
-                ; Get the repetition count, n - preset above
-%ifdef STDCALL
                 mov     cx,[.n]
-%endif
-
-                ; Get the fill byte ch
                 mov     ax,[.ch]
-                
-                ; Get the far source pointer, s
                 les     di,[.d]
-		mov	bl,8
+                mov     bl,8
 
 domemset:
 %if XCPU >= 386
-                cmp     cx,64
+                cmp     cx,128
                 jae     memset_large
 %endif
 memset_words:
-                mov	ah, al
-
-                shr	cx,1
+                mov     ah,al
+                shr     cx,1
                 rep     stosw
                 jnc     pascal_return
                 stosb
-                
-                jmp  short pascal_return
+                jmp     short pascal_return
 
-;***************************************************************
-;
-;       VOID memset(REG VOID *d, REG BYTE ch, REG COUNT n);
-;
+; Near fill uses the same destination segment as the C data segment.
                 global  MEMSET
 MEMSET:
-                call pascal_setup
-                
+                memory_setup
+                push    ds
+                pop     es
 arg d, ch, n
-                ; Get the repitition count, n - preset above
-                ; mov     cx,[bp+4]
-
-                ; Get the char ch
-                mov     ax, [.ch]
-
-                ; Get the far source pointer, d - preset above
-                ; mov      di,[bp+8]
-
-		;mov	bl, 6   ; preset above
-
-                jmp short domemset
+                mov     cx,[.n]
+                mov     ax,[.ch]
+                mov     di,[.d]
+                mov     bl,6
+                jmp     domemset
 
 ;*****
 pascal_return:
@@ -578,21 +566,45 @@ strncmp_done:
 		ror  ah,1
 strncmp_done2:  jmp  pascal_return
 
-; Long, aligned blocks use 32-bit operands with 16-bit addresses/counts.
-; Keep the word path for short/unaligned blocks and segment-offset wrap.
+; Long blocks use 32-bit operands with 16-bit addresses/counts.
+; Keep the word path for short blocks, close overlap and segment-offset wrap.
 ; In particular, no dword may straddle offset FFFF in real mode.
 %if XCPU >= 386
 memcpy_large:
-                mov     ax,si
-                or      ax,di
-                test    al,3
-                jnz     memcpy_words
                 mov     ax,si
                 add     ax,cx
                 jc      memcpy_words
                 mov     ax,di
                 add     ax,cx
                 jc      memcpy_words
+                ; A positive physical overlap of 1..3 bytes must retain
+                ; the word path's propagation.  Testing the low 16 bits
+                ; of ES*16+DI-(DS*16+SI) is conservative: it can also
+                ; reject distant blocks, but never misses that overlap.
+                push    dx
+                mov     ax,es
+                mov     dx,ds
+                sub     ax,dx
+                shl     ax,4
+                add     ax,di
+                sub     ax,si
+                pop     dx
+                cmp     ax,3
+                jbe     memcpy_words
+                ; Align stores.  Source loads may be unaligned, but the
+                ; range checks above ensure they never cross offset FFFF.
+                test    di,3
+                jz      .aligned
+                test    di,1
+                jz      .word_align
+                movsb
+                dec     cx
+.word_align:
+                test    di,2
+                jz      .aligned
+                movsw
+                sub     cx,2
+.aligned:
                 mov     ax,cx
                 shr     cx,2
                 rep     movsd
@@ -606,12 +618,22 @@ memcpy_large:
                 jmp     pascal_return
 
 memset_large:
-                test    di,3
-                jnz     memset_words
                 mov     si,di
                 add     si,cx
                 jc      memset_words
                 mov     ah,al
+                test    di,3
+                jz      .aligned
+                test    di,1
+                jz      .word_align
+                stosb
+                dec     cx
+.word_align:
+                test    di,2
+                jz      .aligned
+                stosw
+                sub     cx,2
+.aligned:
                 ; Watcom's kernel entry does not save high GPR halves.
                 ; Preserve high EAX while forming the four-byte pattern.
                 push    eax

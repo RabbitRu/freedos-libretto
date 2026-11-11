@@ -14,8 +14,10 @@ import sys
 import images
 
 ROOT = Path(__file__).resolve().parents[2]
-OPTIONS = [('size', '-os'), ('speed', '-ot'),
-           ('scheduled-size', '-os -ob -or -ol'), ('scheduled-speed', '-ot -ob -or -ol')]
+OPTIONS = [('size', '-os', ''), ('speed', '-ot', ''),
+           ('scheduled-size', '-os -ob -or -ol', ''), ('scheduled', '-os -or', ''),
+           ('hot-speed', '-os', '-ot -ob -or -ol'),
+           ('scheduled-speed', '-ot -ob -or -ol', '')]
 
 
 def main():
@@ -31,13 +33,24 @@ def main():
     reports = []
     commit = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
     try:
-        for name, options in OPTIONS:
+        for name, options, hot_options in OPTIONS:
             directory = output/name; directory.mkdir(exist_ok=True)
             build_env = dict(env, LIBRETTO_OPT=options)
-            with (directory/'build.log').open('wb') as log:
-                for target in ['clobber','all']:
-                    images.run(['make',target]+flags, cwd=ROOT, env=build_env,
-                               stdout=log, stderr=subprocess.STDOUT)
+            build_env.pop("LIBRETTO_HOT_OPT", None)
+            if hot_options: build_env["LIBRETTO_HOT_OPT"] = hot_options
+            try:
+                with (directory/'build.log').open('wb') as log:
+                    for target in ['clobber','all']:
+                        images.run(['make',target]+flags, cwd=ROOT, env=build_env,
+                                   stdout=log, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError:
+                text = (directory/'build.log').read_text(errors='replace')
+                if 'Error! E2020: size of group TGROUP exceeds 64k' not in text: raise
+                reports.append(dict(name=name, options=options, hot_options=hot_options,
+                                    status='rejected_segment_overflow',
+                                    error=next(l for l in text.splitlines() if 'Error! E2020:' in l)))
+                print('COMPILER_VARIANT '+json.dumps(reports[-1]), flush=True)
+                continue
             kernel = (ROOT/'bin/kwc38632.sys').read_bytes()
             (directory/'KERNEL.SYS').write_bytes(kernel)
             shutil.copy2(ROOT/'bin/kwc38632.map', directory/'kernel.map')
@@ -50,7 +63,8 @@ def main():
                 images.run(['python3', ROOT/'scripts/libretto/compare.py', cpu], cwd=ROOT,
                            env=compare_env, stdout=log, stderr=subprocess.STDOUT)
             comparison = json.loads((directory/'comparison/comparison.json').read_text())
-            reports.append(dict(name=name, options=options, kernel_bytes=len(kernel),
+            reports.append(dict(name=name, options=options, hot_options=hot_options, status="pass",
+                                kernel_bytes=len(kernel),
                                 kernel_sha256=hashlib.sha256(kernel).hexdigest(),
                                 calibration=comparison['calibration'],
                                 memory=comparison['memory_reports'], summaries=comparison['summaries']))
