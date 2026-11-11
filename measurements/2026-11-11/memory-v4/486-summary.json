@@ -1,0 +1,215 @@
+{
+  "baseline_commit": "28dc3c7f0ce5f29440905bc54af37591f8db8b67",
+  "candidate_commit": "430f06d30ff89431775678c6646c07b63f3990c1",
+  "control_kernel_override": false,
+  "cpu": "486",
+  "ram_mib": 20,
+  "memory_profile": "xms",
+  "qemu_version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+  "icount": "shift=3,align=off,sleep=off",
+  "order": [
+    "control",
+    "candidate",
+    "candidate",
+    "control"
+  ],
+  "control_kernel_sha256": "1bb2e32847691ed581542dcf35a1caa8192ceb8ef6a7fb6b62753f809deae28e",
+  "candidate_kernel_sha256": "6bd2dea0faf2bd4636a75b66e6eec5571a217d1bd5ca992769c166c9164ca4f3",
+  "memory_reports": {
+    "control-0": {
+      "probe_psp_block_bytes": 3440,
+      "conventional_free_bytes_while_probe_loaded": 631200,
+      "largest_conventional_block_bytes_while_probe_loaded": 631056,
+      "umb_chain_linked": 0,
+      "umb_free_bytes_after_temporary_link": 0,
+      "umb_enumeration_supported": 0,
+      "dos_in_hma": 1,
+      "xms_present": 1,
+      "xms_free_kib": 19169,
+      "xms_largest_kib": 19169,
+      "ems_present": 0,
+      "ems_free_16k_pages": 0,
+      "ems_total_16k_pages": 0
+    },
+    "candidate-0": {
+      "probe_psp_block_bytes": 3440,
+      "conventional_free_bytes_while_probe_loaded": 631200,
+      "largest_conventional_block_bytes_while_probe_loaded": 631056,
+      "umb_chain_linked": 0,
+      "umb_free_bytes_after_temporary_link": 0,
+      "umb_enumeration_supported": 0,
+      "dos_in_hma": 1,
+      "xms_present": 1,
+      "xms_free_kib": 19169,
+      "xms_largest_kib": 19169,
+      "ems_present": 0,
+      "ems_free_16k_pages": 0,
+      "ems_total_16k_pages": 0
+    },
+    "candidate-1": {
+      "probe_psp_block_bytes": 3440,
+      "conventional_free_bytes_while_probe_loaded": 631200,
+      "largest_conventional_block_bytes_while_probe_loaded": 631056,
+      "umb_chain_linked": 0,
+      "umb_free_bytes_after_temporary_link": 0,
+      "umb_enumeration_supported": 0,
+      "dos_in_hma": 1,
+      "xms_present": 1,
+      "xms_free_kib": 19169,
+      "xms_largest_kib": 19169,
+      "ems_present": 0,
+      "ems_free_16k_pages": 0,
+      "ems_total_16k_pages": 0
+    },
+    "control-1": {
+      "probe_psp_block_bytes": 3440,
+      "conventional_free_bytes_while_probe_loaded": 631200,
+      "largest_conventional_block_bytes_while_probe_loaded": 631056,
+      "umb_chain_linked": 0,
+      "umb_free_bytes_after_temporary_link": 0,
+      "umb_enumeration_supported": 0,
+      "dos_in_hma": 1,
+      "xms_present": 1,
+      "xms_free_kib": 19169,
+      "xms_largest_kib": 19169,
+      "ems_present": 0,
+      "ems_free_16k_pages": 0,
+      "ems_total_16k_pages": 0
+    }
+  },
+  "kernel_bytes_identical": false,
+  "calibration": "not_applicable",
+  "max_identical_kernel_median_change_percent": null,
+  "summaries": [
+    {
+      "scenario": "write_1m_flush",
+      "samples_per_variant": 10,
+      "guest_instructions": {
+        "control_median": 8999283.5,
+        "candidate_median": 8895468.5,
+        "control_min": 8198100,
+        "control_max": 9971198,
+        "candidate_min": 7866583,
+        "candidate_max": 9426709,
+        "paired_change_percent_median": -1.462584966929853
+      },
+      "non_rom_instructions": {
+        "control_median": 4787745,
+        "candidate_median": 4771557,
+        "control_min": 4776193,
+        "control_max": 4787780,
+        "candidate_min": 4760005,
+        "candidate_max": 4771592,
+        "paired_change_percent_median": -0.33884180141944276
+      },
+      "bios_ticks": {
+        "control_median": 1,
+        "candidate_median": 1,
+        "control_min": 1,
+        "control_max": 2,
+        "candidate_min": 1,
+        "candidate_max": 2,
+        "paired_change_percent_median": 0
+      }
+    },
+    {
+      "scenario": "repeated_read_16m",
+      "samples_per_variant": 10,
+      "guest_instructions": {
+        "control_median": 88458674,
+        "candidate_median": 89187744.5,
+        "control_min": 85168893,
+        "control_max": 93479063,
+        "candidate_min": 83496714,
+        "candidate_max": 94609262,
+        "paired_change_percent_median": 0.983163818138566
+      },
+      "non_rom_instructions": {
+        "control_median": 28055879,
+        "candidate_median": 27889765,
+        "control_min": 27942527,
+        "control_max": 28055949,
+        "candidate_min": 27776378,
+        "candidate_max": 27889800,
+        "paired_change_percent_median": -0.5922074300363178
+      },
+      "bios_ticks": {
+        "control_median": 13,
+        "candidate_median": 13,
+        "control_min": 12,
+        "control_max": 14,
+        "candidate_min": 12,
+        "candidate_max": 14,
+        "paired_change_percent_median": 0
+      }
+    },
+    {
+      "scenario": "random_read_1m",
+      "samples_per_variant": 10,
+      "guest_instructions": {
+        "control_median": 438727913.5,
+        "candidate_median": 438349228.5,
+        "control_min": 437326463,
+        "control_max": 440037908,
+        "candidate_min": 437304214,
+        "candidate_max": 439570587,
+        "paired_change_percent_median": -0.10236961751756701
+      },
+      "non_rom_instructions": {
+        "control_median": 431132466,
+        "candidate_median": 431009586,
+        "control_min": 431129979,
+        "control_max": 431132508,
+        "candidate_min": 431007099,
+        "candidate_max": 431009628,
+        "paired_change_percent_median": -0.028501680965964393
+      },
+      "bios_ticks": {
+        "control_median": 64,
+        "candidate_median": 64,
+        "control_min": 63,
+        "control_max": 64,
+        "candidate_min": 64,
+        "candidate_max": 64,
+        "paired_change_percent_median": 0
+      }
+    },
+    {
+      "scenario": "small_files_100",
+      "samples_per_variant": 10,
+      "guest_instructions": {
+        "control_median": 23540793.5,
+        "candidate_median": 23008368,
+        "control_min": 18874080,
+        "control_max": 24231603,
+        "candidate_min": 19149871,
+        "candidate_max": 23543082,
+        "paired_change_percent_median": -1.7675311099191793
+      },
+      "non_rom_instructions": {
+        "control_median": 20171193,
+        "candidate_median": 19615871,
+        "control_min": 15937260,
+        "control_max": 20171193,
+        "candidate_min": 15480110,
+        "candidate_max": 19615906,
+        "paired_change_percent_median": -2.7530448992283185
+      },
+      "bios_ticks": {
+        "control_median": 3,
+        "candidate_median": 3,
+        "control_min": 3,
+        "control_max": 3,
+        "candidate_min": 3,
+        "candidate_max": 4,
+        "paired_change_percent_median": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Instruction counts are not CPU cycles or Libretto speed.",
+    "non_rom excludes 0xA0000..0xFFFFF; it is not a kernel-only counter.",
+    "BIOS ticks use the artificial icount clock; host wall time is diagnostic only.",
+    "Performance acceptance requires gains above measured calibration noise."
+  ]
+}

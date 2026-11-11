@@ -15,6 +15,9 @@ The first kernel optimization and raw CI evidence are in OPTIMIZATION_RESULTS.md
 The comparison method is described in CI_BENCHMARKS.md.
 The validated backward-seek checkpoints, final CI results and downloadable
 packages are described in CHECKPOINT_RESULTS.md.
+The validated copy/fill routines and current instruction/memory results are in
+MEMORY_RESULTS.md. Compiler experiments and the decision to retain -os are in
+COMPILER_RESULTS.md.
 
 ## Packages
 
@@ -26,6 +29,7 @@ Each successful CI artifact contains:
 - KERNEL.SYS, COUNTRY.SYS, linker map and original FAT12 test images;
 - report.json, fat32-tests.json, runtime.json and benchmark CSV files;
 - comparison/: control/candidate kernels, ten-sample comparisons and raw CSV;
+- memory/: copy/fill correctness, REP calibration and isolated microbenchmarks;
 - edge-tests/: FAT16/FAT32 full-volume, high-cluster and injected-I/O results;
 - licenses and source archives for the external DOS components.
 
@@ -112,6 +116,6 @@ The compiler installs in _watcom/; LIBRETTO_WATCOM overrides it. Move a personal
 config.mak aside for comparable builds. Outputs are under
 _output/libretto-486-fat32/ and _output/libretto-pentium-mmx-fat32/.
 Instruction comparison requires QEMU 8.2 matching the vendored plugin header.
-After build.sh, run edges.py and compare.py with the same CPU argument for
+After build.sh, run memory.py, edges.py, compare.py and chains.py with the same CPU argument for
 the full CI checks; profile.py builds a separate diagnostic kernel.
 Kernel license: COPYING. Runtime versions and hashes: runtime.json.

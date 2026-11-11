@@ -1,0 +1,123 @@
+{
+  "run_id": 42954670025,
+  "source_commit": "e02d6d3611bd3950ba7580a9991d056c2d595304",
+  "tested_merge_commit": "62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+  "tree": "97a799d57317726dfce0fa2e34ac76efab03525b",
+  "evidence": "Compiler-only summary records extracted from completed CI job logs. Complete comparisons, individual samples, kernels, maps and build logs are retained in the compiler artifacts.",
+  "artifacts": [
+    {
+      "id": 13827271264,
+      "name": "libretto-486-fat32-62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+      "size_in_bytes": 2079228,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827271264",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827271264/zip",
+      "expired": false,
+      "created_at": "2026-11-11T03:55:48Z",
+      "expires_at": "2027-02-09T03:44:01Z",
+      "updated_at": "2026-11-11T03:55:48Z",
+      "digest": "sha256:12a01a316a952aa6ee87553dc53e28da1ef8f3d136f56a6634526c0307716efc",
+      "workflow_run": {
+        "id": 42954670025,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "e02d6d3611bd3950ba7580a9991d056c2d595304"
+      }
+    },
+    {
+      "id": 13827176514,
+      "name": "libretto-pentium-mmx-fat32-62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+      "size_in_bytes": 2079097,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827176514",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827176514/zip",
+      "expired": false,
+      "created_at": "2026-11-11T03:56:08Z",
+      "expires_at": "2027-02-09T03:44:01Z",
+      "updated_at": "2026-11-11T03:56:08Z",
+      "digest": "sha256:828bf9754f8d50672d80abc198ee2188f77a3a62d8345f8f164783b0a17ac02a",
+      "workflow_run": {
+        "id": 42954670025,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "e02d6d3611bd3950ba7580a9991d056c2d595304"
+      }
+    },
+    {
+      "id": 13826897872,
+      "name": "compiler-pentium-mmx-62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+      "size_in_bytes": 762466,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826897872",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826897872/zip",
+      "expired": false,
+      "created_at": "2026-11-11T03:59:07Z",
+      "expires_at": "2027-02-09T03:44:01Z",
+      "updated_at": "2026-11-11T03:59:07Z",
+      "digest": "sha256:4973171c8eb5e99776bd597cd3e61717e81f5819a0e2eebd5a30fc30f568fd42",
+      "workflow_run": {
+        "id": 42954670025,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "e02d6d3611bd3950ba7580a9991d056c2d595304"
+      }
+    },
+    {
+      "id": 13826897301,
+      "name": "compiler-486-62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+      "size_in_bytes": 762153,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826897301",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826897301/zip",
+      "expired": false,
+      "created_at": "2026-11-11T03:55:16Z",
+      "expires_at": "2027-02-09T03:44:01Z",
+      "updated_at": "2026-11-11T03:55:16Z",
+      "digest": "sha256:93fb30d3b485895475520eeb74c83184a5a3a03000cf814af96d1ef8d3d22add",
+      "workflow_run": {
+        "id": 42954670025,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "e02d6d3611bd3950ba7580a9991d056c2d595304"
+      }
+    },
+    {
+      "id": 13826497890,
+      "name": "profile-486-62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+      "size_in_bytes": 3459,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826497890",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826497890/zip",
+      "expired": false,
+      "created_at": "2026-11-11T03:45:47Z",
+      "expires_at": "2027-02-09T03:44:01Z",
+      "updated_at": "2026-11-11T03:45:47Z",
+      "digest": "sha256:9ef7b4ef12253e2944086d86483c0b13c9f4996e651b1413a7003c5cc5a77de5",
+      "workflow_run": {
+        "id": 42954670025,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "e02d6d3611bd3950ba7580a9991d056c2d595304"
+      }
+    },
+    {
+      "id": 13825854998,
+      "name": "profile-pentium-mmx-62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+      "size_in_bytes": 3464,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13825854998",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13825854998/zip",
+      "expired": false,
+      "created_at": "2026-11-11T03:45:47Z",
+      "expires_at": "2027-02-09T03:44:01Z",
+      "updated_at": "2026-11-11T03:45:47Z",
+      "digest": "sha256:81085bc2727a03046d02b26b049f2746dd0a78f6b4961261de763f3d25a93447",
+      "workflow_run": {
+        "id": 42954670025,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "e02d6d3611bd3950ba7580a9991d056c2d595304"
+      }
+    }
+  ]
+}
