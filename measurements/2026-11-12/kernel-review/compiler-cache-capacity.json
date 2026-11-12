@@ -1,0 +1,51 @@
+{
+  "review_date": "2026-11-12",
+  "reviewed_commit": "87e7c3a1dfdd03035008c811f76633f1160a8f4e",
+  "kind": "source-and-linker-map-derived; not runtime measurements",
+  "artifact": {
+    "run_id": 42954670025,
+    "artifact_id": 13826897301,
+    "cpu": "486",
+    "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/42954670025/artifacts/13826897301",
+    "sha256": "93fb30d3b485895475520eeb74c83184a5a3a03000cf814af96d1ef8d3d22add"
+  },
+  "compiler_source_commit": "e02d6d3611bd3950ba7580a9991d056c2d595304",
+  "compiler_tested_merge": "62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+  "assumptions": [
+    "DOS=HIGH, successful HMA kernel relocation and buffer allocation",
+    "BUFFERS=20 (positive minimum, automatic HMA fill)",
+    "packed struct buffer is 532 bytes with 512-byte sectors",
+    "no intervening HMA allocation before buffer initialization"
+  ],
+  "formula": "floor((0xfff0 - hma_first_free) / buffer_bytes); aligned map text end yields first free = text end + 0x10",
+  "variants": [
+    {
+      "setting": "size",
+      "hma_text_end": "0xa9b0",
+      "hma_first_free": "0xa9c0",
+      "buffer_bytes": 532,
+      "derived_buffers": 41
+    },
+    {
+      "setting": "scheduled-size",
+      "hma_text_end": "0xab30",
+      "hma_first_free": "0xab40",
+      "buffer_bytes": 532,
+      "derived_buffers": 40
+    },
+    {
+      "setting": "scheduled",
+      "hma_text_end": "0xaa40",
+      "hma_first_free": "0xaa50",
+      "buffer_bytes": 532,
+      "derived_buffers": 41
+    },
+    {
+      "setting": "hot-speed",
+      "hma_text_end": "0xafa0",
+      "hma_first_free": "0xafb0",
+      "buffer_bytes": 532,
+      "derived_buffers": 38
+    }
+  ]
+}
