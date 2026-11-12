@@ -40,6 +40,13 @@ static char *RcsId =
 UWORD ASM DaysSinceEpoch = 0;
 typedef UDWORD ticks_t;
 
+/* Cache only the tick-to-time conversion, never the BIOS read or date.
+   A nested driver request uses its local record while this cache is busy. */
+STATIC ticks_t clock_cache_tick;
+STATIC UBYTE clock_cache[4];     /* minutes, hours, hundredths, seconds */
+STATIC UBYTE clock_cache_valid;
+STATIC volatile UBYTE clock_cache_busy;
+
 STATIC int ByteToBcd(int x)
 {
   return ((x / 10) << 4) | (x % 10);
@@ -75,15 +82,28 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
       {
         struct ClockRecord clk;
         int tmp;
-        ticks_t ticks;
+        ticks_t ticks, raw_ticks;
+        BOOL cacheable;
 
         if (sizeof(struct ClockRecord) != rp->r_count)
           return failure(E_LENGTH);
 
+        raw_ticks = ReadPCClock();
+        cacheable = !clock_cache_busy;
+        if (cacheable)
+        {
+          clock_cache_busy = 1;
+          if (clock_cache_valid && raw_ticks == clock_cache_tick)
+          {
+            fmemcpy(&clk.clkMinutes, clock_cache, sizeof(clock_cache));
+            goto clock_ready;
+          }
+        }
+
         /* The scaling factor is now
            6553600/1193180 = 327680/59659 = 65536*5/59659 */
 
-        ticks = 5 * ReadPCClock();
+        ticks = 5 * raw_ticks;
         ticks = ((ticks / 59659u) << 16) + ((ticks % 59659u) << 16) / 59659u;
 
         tmp = (int)(ticks / 6000);
@@ -94,6 +114,16 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
         clk.clkSeconds = tmp / 100;
         clk.clkHundredths = tmp % 100;
 
+        if (cacheable)
+        {
+          fmemcpy(clock_cache, &clk.clkMinutes, sizeof(clock_cache));
+          clock_cache_tick = raw_ticks;
+          clock_cache_valid = 1;
+        }
+
+      clock_ready:
+        if (cacheable)
+          clock_cache_busy = 0;
         clk.clkDays = DaysSinceEpoch;
 
         fmemcpy(rp->r_trans, &clk, sizeof(struct ClockRecord));
@@ -102,8 +132,7 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
 
     case C_OUTPUT:
       {
-        const unsigned short *pdays;
-        unsigned Day, Month, Year;
+        struct dosdate date;
         struct ClockRecord clk;
         ticks_t hs, Ticks;
 
@@ -111,6 +140,8 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
           return failure(E_LENGTH);
 
         fmemcpy(&clk, rp->r_trans, sizeof(struct ClockRecord));
+
+        clock_cache_valid = 0;
 
         /* Set PC Clock first                                   */
         DaysSinceEpoch = clk.clkDays;
@@ -124,33 +155,9 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
 
         WritePCClock(Ticks);
 
-        /* Now set AT clock                                     */
-        /* Fix year by looping through each year, subtracting   */
-        /* the appropriate number of days for that year.        */
-        for (Year = 1980, Day = clk.clkDays;;)
-        {
-          pdays = is_leap_year_monthdays(Year);
-          if (Day >= pdays[12])
-          {
-            ++Year;
-            Day -= pdays[12];
-          }
-          else
-            break;
-        }
-
-        /* Day contains the days left and count the number of   */
-        /* days for that year.  Use this to index the table.    */
-        for (Month = 1; Month < 13; ++Month)
-        {
-          if (pdays[Month] > Day)
-          {
-            Day = Day - pdays[Month - 1] + 1;
-            break;
-          }
-        }
-
-        DayToBcd(bcd_days, Month, Day, Year);
+        /* Use the same calendar conversion as DOS get-date. */
+        DaysToDate(clk.clkDays, &date);
+        DayToBcd(bcd_days, date.month, date.monthday, date.year);
         bcd_minutes = ByteToBcd(clk.clkMinutes);
         bcd_hours = ByteToBcd(clk.clkHours);
         bcd_seconds = ByteToBcd(clk.clkSeconds);
