@@ -774,15 +774,35 @@ COUNT DosExeLoader(BYTE FAR * namep, exec_blk * exp, COUNT mode, COUNT fd)
   }
 
   {                             /* relocate the image for new segment                   */
-    COUNT i;
-    UWORD reloc[2];
+    UWORD remaining = ExeHeader.exRelocItems, count, i, *r;
+    UWORD limit;
+    UWORD add = mode == OVERLAY ? exp->load.reloc : start_seg;
+    COUNT bytes;
     seg FAR *spot;
 
     SftSeek(fd, ExeHeader.exRelocTable, 0);
-    for (i = 0; i < ExeHeader.exRelocItems; i++)
+    /* SftSeek selects lpCurSft. Keep redirector requests at four bytes. */
+    limit = (lpCurSft->sft_flags & SFT_FSHARED) ? 1 : sizeof(ExeRelocs) / 4;
+    /* Rename scratch is idle during EXEC; local file reads use fnode[0].
+       Reuse it instead of growing the 384-byte disk API stack. */
+    while (remaining)
     {
-      if (DosRWSft
-          (fd, sizeof(reloc), (VOID FAR *) & reloc[0], XFR_READ) != sizeof(reloc))
+      count = min(remaining, limit);
+      bytes = (COUNT)DosRWSft(fd, count * 4, (VOID FAR *)ExeRelocs, XFR_READ);
+      /* A short local read can contain complete records before EOF or an
+         I/O error. Apply that prefix, as the old four-byte loop did. */
+      if (bytes >= 4)
+      {
+        i = (UWORD)bytes / 4;
+        r = ExeRelocs;
+        do
+        {
+          spot = MK_FP(r[1] + start_seg, r[0]);
+          *spot += add;
+          r += 2;
+        } while (--i);
+      }
+      if (bytes != count * 4)
       {
         if (mode != OVERLAY)
         {
@@ -791,17 +811,7 @@ COUNT DosExeLoader(BYTE FAR * namep, exec_blk * exp, COUNT mode, COUNT fd)
         }
         return DE_INVLDDATA;
       }
-      if (mode == OVERLAY)
-      {
-        spot = MK_FP(reloc[1] + mem, reloc[0]);
-        *spot += exp->load.reloc;
-      }
-      else
-      {
-        /*      spot = MK_FP(reloc[1] + mem + 0x10, reloc[0]); */
-        spot = MK_FP(reloc[1] + start_seg, reloc[0]);
-        *spot += start_seg;
-      }
+      remaining -= count;
     }
   }
 
