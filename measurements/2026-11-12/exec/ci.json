@@ -1,0 +1,52 @@
+{
+  "measurement_run_id": 43193923187,
+  "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43193923187",
+  "source_commit": "2351226bc66070ff8b0344e541a9825a1f6d3340",
+  "tested_merge": "8749083b0115cb86bf10b52a0b8eb1cfccd1b909",
+  "tested_tree": "64e04041acb19612ddcb818bede97fc15cb5193c",
+  "compiler": {
+    "release": "2026-11-01-Build",
+    "archive_sha256": "89e90b7544cf3ea4a38124ec4c104a5027f31101405d7115c3f833daa465bb48",
+    "cpu_options": {
+      "486": "-4",
+      "pentium-mmx": "-5"
+    },
+    "optimization": "-os"
+  },
+  "counter": {
+    "qemu": "8.2.2",
+    "icount": "shift=3,align=off,sleep=off",
+    "timed_buffers": 20,
+    "automatic_buffers": 41
+  },
+  "measurement_boots_per_cpu": 24,
+  "measurement_step": "Check MZ relocations, overlays, EXEC lifetime, stack use and fixed-buffer costs",
+  "measurement_step_conclusion": "success",
+  "note": "Superseded initial 24-byte-frame candidate. Its unmanaged-local measurements are retained for provenance. The final revision removes frame growth and adds SHARE fallback and regressions. Current results and full-suite status are attached to PR #6.",
+  "jobs": [
+    {
+      "name": "build (pentium-mmx)",
+      "id": 131099885082,
+      "measurement_step_conclusion": "success"
+    },
+    {
+      "name": "build (486)",
+      "id": 131099886005,
+      "measurement_step_conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13932353426,
+      "name": "exec-pentium-mmx-8749083b0115cb86bf10b52a0b8eb1cfccd1b909",
+      "digest": "sha256:2873431409b9d5dd46f8ab0936db1eb0d28056b114c4ccc0ac65710b24d1f7cf",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43193923187/artifacts/13932353426"
+    },
+    {
+      "id": 13931779300,
+      "name": "exec-486-8749083b0115cb86bf10b52a0b8eb1cfccd1b909",
+      "digest": "sha256:34d3d11a44ed6b6cc732e0b6f28057734516d5b41d0e0dc3ca0bb9a8a7c86fe7",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43193923187/artifacts/13931779300"
+    }
+  ]
+}

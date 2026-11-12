@@ -924,6 +924,10 @@ open_filename    dd 0                   ;2E3 pointer to filename to open (see ax
 apistk_bottom:
                 ; use bottom of error stack as scratch buffer
                 ;  - only used during int 21 call
+                ; EXEC relocation batches share 32 bytes of rename scratch.
+                ; Neither service can nest the other during local file I/O.
+                global  _ExeRelocs
+_ExeRelocs:
                 global  _sda_tmp_dm_ren
 _sda_tmp_dm_ren:times 21 db 0x90   ;300 - 21 byte srch state for rename
                 global  _SearchDir_ren

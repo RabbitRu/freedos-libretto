@@ -302,6 +302,7 @@ extern UWORD ASM wAttr;
 extern BYTE ASM default_drive;      /* default drive for dos                */
 
 extern dmatch ASM sda_tmp_dm;       /* Temporary directory match buffer     */
+extern UWORD ASM ExeRelocs[16];    /* 32 bytes shared with rename scratch */
 extern dmatch ASM sda_tmp_dm_ren;   /* 2nd Temporary directory match buffer */
 extern BYTE
   ASM internal_data[],              /* sda areas                            */
