@@ -1,0 +1,1308 @@
+{
+  "baseline_commit": "a961f142a1fc2d5554b7eed4b871c952cd5e6beb",
+  "candidate_commit": "70b7f0010a2a78a0b99978797907154eb9159da2",
+  "working_tree_dirty": false,
+  "control_override": true,
+  "calibration": true,
+  "host": {
+    "status": "pass",
+    "output": "PASS: 65536 Gregorian days/RTC outputs, 1573040 ticks twice, BIOS reads, rollover, nesting, lengths, external driver",
+    "source_sha256": {
+      "systime.c": "7ababdde2cbadfd044c174b16e6925f146731f49ffbb271d105a539a50cfdc6c",
+      "sysclk.c": "5a0830f7a70db7069d2b9824d1f4d8e76f76ea4985378242964ad1169ce002bd"
+    }
+  },
+  "cpu": "pentium-mmx",
+  "exact_buffers": 20,
+  "source": "INT 1Ah test hook",
+  "kernel_sha256": {
+    "control": "368e7f51846bc0893831eab024637ff9c8e6f5588269c276c0eb97069523a927",
+    "candidate": "368e7f51846bc0893831eab024637ff9c8e6f5588269c276c0eb97069523a927"
+  },
+  "kernel_bytes": {
+    "control": 73195,
+    "candidate": 73195
+  },
+  "boots": [
+    {
+      "label": "bench-0-control",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      }
+    },
+    {
+      "label": "bench-1-candidate",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      }
+    },
+    {
+      "label": "bench-2-candidate",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      }
+    },
+    {
+      "label": "bench-3-control",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      }
+    }
+  ],
+  "samples": [
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366912,
+      "non_rom_instructions": 324006
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 731328,
+      "non_rom_instructions": 688422
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366912,
+      "non_rom_instructions": 324006
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 731328,
+      "non_rom_instructions": 688422
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366912,
+      "non_rom_instructions": 324006
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 731328,
+      "non_rom_instructions": 688422
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366912,
+      "non_rom_instructions": 324006
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 730883,
+      "non_rom_instructions": 688387
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "time_same_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "time_changing_tick",
+      "calls": 256,
+      "guest_instructions": 271107,
+      "non_rom_instructions": 228611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "date_1980",
+      "calls": 256,
+      "guest_instructions": 289539,
+      "non_rom_instructions": 247043
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "date_2026",
+      "calls": 256,
+      "guest_instructions": 460035,
+      "non_rom_instructions": 417539
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "date_2099",
+      "calls": 256,
+      "guest_instructions": 731328,
+      "non_rom_instructions": 688422
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "mixed",
+      "calls": 256,
+      "guest_instructions": 366467,
+      "non_rom_instructions": 323971
+    }
+  ],
+  "limitations": [
+    "QEMU instruction counts are not native cycles or FPS.",
+    "A deterministic BIOS hook isolates kernel conversion work; normal BIOS boots run separately."
+  ],
+  "qemu_version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+  "summaries": [
+    {
+      "scenario": "time_same_tick",
+      "samples_per_variant": 10,
+      "control_median": 228611.0,
+      "candidate_median": 228611.0,
+      "control_range": [
+        228611,
+        228611
+      ],
+      "candidate_range": [
+        228611,
+        228611
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "time_changing_tick",
+      "samples_per_variant": 10,
+      "control_median": 228611.0,
+      "candidate_median": 228611.0,
+      "control_range": [
+        228611,
+        228611
+      ],
+      "candidate_range": [
+        228611,
+        228611
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "date_1980",
+      "samples_per_variant": 10,
+      "control_median": 247043.0,
+      "candidate_median": 247043.0,
+      "control_range": [
+        247043,
+        247043
+      ],
+      "candidate_range": [
+        247043,
+        247043
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "date_2026",
+      "samples_per_variant": 10,
+      "control_median": 417539.0,
+      "candidate_median": 417539.0,
+      "control_range": [
+        417539,
+        417539
+      ],
+      "candidate_range": [
+        417539,
+        417539
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "date_2099",
+      "samples_per_variant": 10,
+      "control_median": 688387.0,
+      "candidate_median": 688387.0,
+      "control_range": [
+        688387,
+        688422
+      ],
+      "candidate_range": [
+        688387,
+        688422
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "mixed",
+      "samples_per_variant": 10,
+      "control_median": 323971.0,
+      "candidate_median": 323971.0,
+      "control_range": [
+        323971,
+        324006
+      ],
+      "candidate_range": [
+        323971,
+        324006
+      ],
+      "paired_change_percent_median": 0.0
+    }
+  ],
+  "max_calibration_change_percent": 0.0
+}
