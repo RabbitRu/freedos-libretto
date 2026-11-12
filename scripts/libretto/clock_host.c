@@ -33,7 +33,7 @@ static struct ClockRecord ClkRecord;
 static struct dhdr *clock;
 static UDWORD mock_tick,reads,writes;
 static UBYTE midnight,rtc_date[4],rtc_h,rtc_m,rtc_s;
-static int external;
+static int external,inject;
 static struct ClockRecord external_record,nested_record;
 static WORD clk_driver(request *);
 static UDWORD ReadPCClock(void);
@@ -51,8 +51,13 @@ static void need(int ok,const char *why)
 }
 static UDWORD ReadPCClock(void)
 {
+    UDWORD result=mock_tick;
     reads++; DaysSinceEpoch=(UWORD)(DaysSinceEpoch+midnight); midnight=0;
-    return mock_tick;
+    if (inject) {
+        request r={C_INPUT,sizeof(nested_record),0,&nested_record,0};
+        inject=0; mock_tick=50000; clk_driver(&r); mock_tick=result;
+    }
+    return result;
 }
 static void WritePCClock(UDWORD n) { writes++; mock_tick=n; }
 static void WriteATClock(BYTE *d,UBYTE h,UBYTE m,UBYTE s)
@@ -84,7 +89,6 @@ int main(void)
     static const unsigned length[]={31,28,31,30,31,30,31,31,30,31,30,31};
     struct dosdate date;
     struct dostime time;
-    struct dostime saved_cache;
     struct ClockRecord got,expected;
     request r={C_INPUT,sizeof(got),0,&got,0};
     for (day=0;day<65536;day++) {
@@ -107,24 +111,21 @@ int main(void)
         oracle(mock_tick,&expected);
         for (i=0;i<2;i++) {
             need(clk_driver(&r)==S_DONE && !memcmp(&got,&expected,sizeof(got)),
-                 "every BIOS tick, miss and hit");
+                 "every BIOS tick, repeated request");
         }
     }
-    need(reads==2u*0x1800b0u,"BIOS still read on every cache hit");
+    need(reads==2u*0x1800b0u,"BIOS read on every request");
     mock_tick=0; midnight=1; DaysSinceEpoch=100;
     clk_driver(&r); midnight=2; clk_driver(&r);
     need(got.clkDays==103,"fresh date on same-tick rollover");
-    mock_tick=1000; clk_driver(&r); saved_cache=clock_cache;
-    /* Model an interrupt while an outer request owns the cache. */
-    clock_cache_busy=1; mock_tick=50000; r.r_trans=&nested_record;
-    clk_driver(&r);
+    mock_tick=1000; inject=1; clk_driver(&r);
+    oracle(1000,&expected);
+    need(!inject && !memcmp(&got,&expected,sizeof(got)),"outer request after nested BIOS query");
     oracle(50000,&expected);
     need(!memcmp(&nested_record,&expected,sizeof(expected)),"nested request local conversion");
-    need(clock_cache_busy==1 && clock_cache_tick==1000 &&
-         !memcmp(&clock_cache,&saved_cache,sizeof(saved_cache)),"nested request leaves outer cache untouched");
-    clock_cache_busy=0; r.r_trans=&got;
+    mock_tick=50000;
     clk_driver(&r);
-    need(!memcmp(&got,&expected,sizeof(got)),"cache after nested request");
+    need(!memcmp(&got,&expected,sizeof(got)),"new time after nested request");
     r.r_count=5; reads=0; writes=0;
     need(((UWORD)clk_driver(&r)&S_ERROR) && !reads,"reject short input");
     r.r_command=C_OUTPUT;

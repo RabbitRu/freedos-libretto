@@ -40,13 +40,6 @@ static char *RcsId =
 UWORD ASM DaysSinceEpoch = 0;
 typedef UDWORD ticks_t;
 
-/* Cache only the tick-to-time conversion, never the BIOS read or date.
-   A nested driver request uses its local record while this cache is busy. */
-STATIC ticks_t clock_cache_tick;
-STATIC struct dostime clock_cache;
-STATIC UBYTE clock_cache_valid;
-STATIC volatile UBYTE clock_cache_busy;
-
 /* floor(((5 * raw) mod 2^32) * 65536 / 59659), modulo 2^32.
    Reuse DIV's remainder instead of dividing the same value repeatedly.
    Subtracting 59659 from the high word removes a quotient bit which
@@ -104,31 +97,15 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
       {
         struct ClockRecord clk;
         int tmp;
-        ticks_t ticks, raw_ticks;
-        BOOL cacheable;
+        ticks_t ticks;
 
         if (sizeof(struct ClockRecord) != rp->r_count)
           return failure(E_LENGTH);
 
-        raw_ticks = ReadPCClock();
-        cacheable = !clock_cache_busy;
-        if (cacheable)
-        {
-          clock_cache_busy = 1;
-          if (clock_cache_valid && raw_ticks == clock_cache_tick)
-          {
-            clk.clkHours = clock_cache.hour;
-            clk.clkMinutes = clock_cache.minute;
-            clk.clkSeconds = clock_cache.second;
-            clk.clkHundredths = clock_cache.hundredth;
-            goto clock_ready;
-          }
-        }
-
         /* The scaling factor is now
            6553600/1193180 = 327680/59659 = 65536*5/59659 */
 
-        ticks = ClockHundredths(raw_ticks);
+        ticks = ClockHundredths(ReadPCClock());
 
         tmp = (int)(ticks / 6000);
         clk.clkHours = tmp / 60;
@@ -138,19 +115,6 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
         clk.clkSeconds = tmp / 100;
         clk.clkHundredths = tmp % 100;
 
-        if (cacheable)
-        {
-          clock_cache.hour = clk.clkHours;
-          clock_cache.minute = clk.clkMinutes;
-          clock_cache.second = clk.clkSeconds;
-          clock_cache.hundredth = clk.clkHundredths;
-          clock_cache_tick = raw_ticks;
-          clock_cache_valid = 1;
-        }
-
-      clock_ready:
-        if (cacheable)
-          clock_cache_busy = 0;
         clk.clkDays = DaysSinceEpoch;
 
         fmemcpy(rp->r_trans, &clk, sizeof(struct ClockRecord));
@@ -167,8 +131,6 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
           return failure(E_LENGTH);
 
         fmemcpy(&clk, rp->r_trans, sizeof(struct ClockRecord));
-
-        clock_cache_valid = 0;
 
         /* Set PC Clock first                                   */
         DaysSinceEpoch = clk.clkDays;

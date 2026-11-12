@@ -15,7 +15,7 @@ import images
 import compare
 
 BASELINE = 'a961f142a1fc2d5554b7eed4b871c952cd5e6beb'
-SCENARIOS = ['time_hit', 'time_miss', 'date_1980', 'date_2026', 'date_2099', 'mixed']
+SCENARIOS = ['time_same_tick', 'time_changing_tick', 'date_1980', 'date_2026', 'date_2099', 'mixed']
 
 
 def sha(path):
@@ -118,7 +118,9 @@ def main():
 
     def boot(variant, profile, ram, mode, label, bench=False):
         test_math = mode == 'all' and variant == 'candidate'
-        config = images.config(profile).replace('BUFFERS=20\n', 'BUFFERS=-20\n')
+        config = images.config(profile)
+        if mode != 'probe':
+            config = config.replace('BUFFERS=20\n', 'BUFFERS=-20\n')
         if mode == 'external':
             config += 'DEVICE=C:\\CLOCKDEV.SYS\n'
         images.dos_text(payload / 'FDCONFIG.SYS', config)
@@ -149,7 +151,7 @@ def main():
             assert images.mread(disk, 'RESULT.TXT').strip() == b'PASS', text
             lines = text.splitlines()
             match = re.fullmatch(r'CLOCK_CONFIG buffers=(\d+) bufloc=(\d+)', lines[0])
-            assert match and int(match[1]) == 20, lines[:2]
+            assert match and (int(match[1]) >= 20 if mode == 'probe' else int(match[1]) == 20), lines[:2]
             assert int(match[2]) == int(profile != 'basic'), lines[0]
             memory = dict((k, int(v)) for k, v in (line.split('=', 1) for line in
                 images.mread(disk, 'MEMORY.TXT').decode('ascii').splitlines()))
@@ -200,6 +202,12 @@ def main():
             label = variant + '-external'
             if not args.cases or label in args.cases:
                 boot(variant, 'xms', 20, 'external', label)
+            label = variant + '-automatic-buffers'
+            if not args.cases or label in args.cases:
+                boot(variant, 'xms', 20, 'probe', label)
+        auto = [r['nbuffers'] for r in results if r['mode'] == 'probe']
+        if len(auto) == 2:
+            assert auto[0] == auto[1], 'Automatic HMA buffer capacity changed'
     if not args.skip_benchmark:
         for i, variant in enumerate(['control', 'candidate', 'candidate', 'control']):
             boot(variant, 'xms', 20, 'bench', f'bench-{i}-{variant}', True)
