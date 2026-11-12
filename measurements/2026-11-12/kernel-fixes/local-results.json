@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-12",
+  "baseline_commit": "87e7c3a1dfdd03035008c811f76633f1160a8f4e",
+  "candidate_commit": "055f21bee627a15aa43aa36dbbda01220cd0e2f4",
+  "local_qemu": "7.2.22 (Debian bookworm packages, TCG)",
+  "compiler": "Open Watcom 2026-11-01-Build, pinned scripts/libretto/toolchain.env",
+  "candidate_kernel_bytes": 73195,
+  "baseline_kernel_bytes": 73035,
+  "baseline_kernel_sha256": "155d1e7b3141435f245fca7d8620604f444a8cd8add10f3feb59eddf696c5879",
+  "candidate_boots": 18,
+  "candidate": {
+    "486": {
+      "kernel_sha256": "368e7f51846bc0893831eab024637ff9c8e6f5588269c276c0eb97069523a927",
+      "results": [
+        {
+          "case": "jft-basic-20",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-basic-32",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-xms-20",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-xms-32",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-ems-20",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-ems-32",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "install-9",
+          "status": "pass",
+          "guest": "INSTALL_BOOT_OK"
+        },
+        {
+          "case": "install-10",
+          "status": "pass",
+          "guest": "INSTALL_BOOT_OK"
+        },
+        {
+          "case": "install-11",
+          "status": "pass",
+          "guest": "INSTALL_BOOT_OK"
+        }
+      ]
+    },
+    "pentium-mmx": {
+      "kernel_sha256": "368e7f51846bc0893831eab024637ff9c8e6f5588269c276c0eb97069523a927",
+      "results": [
+        {
+          "case": "jft-basic-20",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-basic-32",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-xms-20",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-xms-32",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-ems-20",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "jft-ems-32",
+          "status": "pass",
+          "guest": "PASS: growth, shrink/regrow, memory, handles, EXEC, ENOMEM, 65521/65535\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected\r\nPASS: custom JFT ownership/offset respected"
+        },
+        {
+          "case": "install-9",
+          "status": "pass",
+          "guest": "INSTALL_BOOT_OK"
+        },
+        {
+          "case": "install-10",
+          "status": "pass",
+          "guest": "INSTALL_BOOT_OK"
+        },
+        {
+          "case": "install-11",
+          "status": "pass",
+          "guest": "INSTALL_BOOT_OK"
+        }
+      ]
+    }
+  },
+  "negative_controls": {
+    "jft-basic-20": {
+      "kernel": "baseline",
+      "expected_failure": "exactly one external JFT allocation",
+      "observed_failure": true
+    },
+    "install-11": {
+      "kernel": "baseline",
+      "expected_install_executions": 10,
+      "observed_install_executions": 11,
+      "observed_failure": true
+    }
+  },
+  "limits": [
+    "Local checks do not measure native speed or resident memory.",
+    "The current external table remains allocated on count-only shrinking; only superseded kernel-marked tables are reclaimed.",
+    "MCB markers are ownership bookkeeping in unprotected DOS memory, not a security boundary."
+  ]
+}
