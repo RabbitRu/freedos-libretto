@@ -2,7 +2,7 @@
 
 The existing GitHub Actions workflow builds both FAT32 CPU profiles, runs
 correctness checks, and compares each candidate with the fixed control commit
-5f17969cd603eeef159f8706e63ee7631ecd5419. Physical Libretto measurements are a
+28dc3c7f0ce5f29440905bc54af37591f8db8b67. Physical Libretto measurements are a
 later validation step; they do not block early kernel work.
 
 The control is rebuilt with the same compiler, FAT32/CPU settings and date.
@@ -62,3 +62,17 @@ floppy replacement and absolute FAT32 writes. CHECKPOINT_RESULTS.md records
 the final successful matrix (run 42883124425), its source hashes and all raw
 data. It also retains the prior experiment that motivated inline write-only
 invalidation. Future code changes require a fresh successful matrix.
+
+## Memory routines and optional compiler scout
+
+memory.py links the actual production assembly and fixed-control assembly into
+identical DOS harnesses. A byte oracle and register/stack/DF wrapper validate
+near/far copy/fill; separate phases calibrate REP accounting and collect size/
+alignment microbenchmarks. REP calibration counts each iteration, not cycles.
+
+compiler.py compares explicit bundles with the same source and memory routines.
+It uses two samples per workload/variant to screen settings, reports 64-KiB group
+overflow as a rejection, and checks C disassembly for high GPR/MMX use. This job
+runs only when compiler_scout is enabled on workflow_dispatch. The accepted -os
+release still receives the normal ten-sample and complete compatibility matrix.
+See MEMORY_RESULTS.md and COMPILER_RESULTS.md for completed results.

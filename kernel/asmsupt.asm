@@ -145,22 +145,67 @@ arg arg1, arg2, arg3
 
 
         
+; Memory operations set up their own arguments directly.  This avoids the
+; CALL/POP/indirect-JMP dispatcher and unused near-argument loads in far calls.
+%macro memory_setup 0
+                push    bp
+                mov     bp,sp
+%ifdef WATCOM
+                push    bx
+                push    cx
+                push    es
+%endif
+                push    si
+                push    di
+                push    ds
+                cld
+%endmacro
+
+; Watcom promises preservation of BX, which memory_setup has already saved.
+; Use it to select a fixed Pascal return instead of moving stack arguments.
+%macro memory_cleanup 1
+%ifdef WATCOM
+                ; Derive a CS-relative target at runtime: the test EXE
+                ; can place HMA_TEXT after its C runtime's code segment.
+                call    %%ip
+%%ip:
+                pop     bx
+                add     bx,memory_return%1-%%ip
+%else
+                mov     bl,%1
+%endif
+%endmacro
+
+%macro memory_finish 0
+%ifdef WATCOM
+                jmp     bx
+%else
+                jmp     pascal_return
+%endif
+%endmacro
+
+
 ;***********************************************
 ;
 ;       VOID memcpy(REG BYTE *s, REG BYTE *d, REG COUNT n);
 ;
                 global  MEMCPY
 MEMCPY:
-                call pascal_setup
-
-                ;mov cx,[4+bp] - preset above
-                ;mov si,[6+bp] - preset above
-                ;mov di,[8+bp] - preset above
-
-                ;mov bl,6 - preset above
-
+                memory_setup
+                push    ds
+                pop     es
+arg d, s, n
+                mov     cx,[.n]
+                mov     si,[.s]
+                mov     di,[.d]
+                memory_cleanup 6
 
 domemcpy:
+%if XCPU >= 386
+                cmp     cx,128
+                jae     memcpy_large
+%endif
+memcpy_words:
                 ; And do the built-in byte copy, but do a 16-bit transfer
                 ; whenever possible.
                 shr     cx,1
@@ -176,7 +221,7 @@ memcpy_return:
 ; pascal_return - pop saved registers and do return
 ;
         
-                jmp short pascal_return
+                memory_finish
 
 
 
@@ -192,22 +237,13 @@ FMEMCPYBACK:
                 std             ; force to copy the string in reverse order
 %endif
 FMEMCPY:
-                call pascal_setup
-
+                memory_setup
 arg {d,4}, {s,4}, n
-                ; Get the repetition count, n preset above
-%ifdef STDCALL
                 mov     cx,[.n]
-%endif
-
-                ; Get the far source pointer, s
                 lds     si,[.s]
-
-                ; Get the far destination pointer d
                 les     di,[.d]
-		mov	bl,10
-
-                jmp short domemcpy
+                memory_cleanup 10
+                jmp     domemcpy
 
 ;***************************************************************
 ;
@@ -215,52 +251,39 @@ arg {d,4}, {s,4}, n
 ;
                 global  FMEMSET
 FMEMSET:
-                call pascal_setup
-
+                memory_setup
 arg {d,4}, ch, n
-                ; Get the repetition count, n - preset above
-%ifdef STDCALL
                 mov     cx,[.n]
-%endif
-
-                ; Get the fill byte ch
                 mov     ax,[.ch]
-                
-                ; Get the far source pointer, s
                 les     di,[.d]
-		mov	bl,8
+                memory_cleanup 8
 
-domemset:                
-                mov	ah, al
-
-                shr	cx,1
+domemset:
+%if XCPU >= 386
+                cmp     cx,128
+                jae     memset_large
+%endif
+memset_words:
+                mov     ah,al
+                shr     cx,1
                 rep     stosw
-                jnc     pascal_return
+                jnc     .return
                 stosb
-                
-                jmp  short pascal_return
+.return:
+                memory_finish
 
-;***************************************************************
-;
-;       VOID memset(REG VOID *d, REG BYTE ch, REG COUNT n);
-;
+; Near fill uses the same destination segment as the C data segment.
                 global  MEMSET
 MEMSET:
-                call pascal_setup
-                
+                memory_setup
+                push    ds
+                pop     es
 arg d, ch, n
-                ; Get the repitition count, n - preset above
-                ; mov     cx,[bp+4]
-
-                ; Get the char ch
-                mov     ax, [.ch]
-
-                ; Get the far source pointer, d - preset above
-                ; mov      di,[bp+8]
-
-		;mov	bl, 6   ; preset above
-
-                jmp short domemset
+                mov     cx,[.n]
+                mov     ax,[.ch]
+                mov     di,[.d]
+                memory_cleanup 6
+                jmp     domemset
 
 ;*****
 pascal_return:
@@ -567,5 +590,112 @@ strncmp_done:
                 lahf
 		ror  ah,1
 strncmp_done2:  jmp  pascal_return
+
+; Long blocks use 32-bit operands with 16-bit addresses/counts.
+; Keep the word path for short blocks, close overlap and segment-offset wrap.
+; In particular, no dword may straddle offset FFFF in real mode.
+%if XCPU >= 386
+memcpy_large:
+                mov     ax,si
+                add     ax,cx
+                jc      memcpy_words
+                mov     ax,di
+                add     ax,cx
+                jc      memcpy_words
+                ; A positive physical overlap of 1..3 bytes must retain
+                ; the word path's propagation.  Testing the low 16 bits
+                ; of ES*16+DI-(DS*16+SI) is conservative: it can also
+                ; reject distant blocks, but never misses that overlap.
+                push    dx
+                mov     ax,es
+                mov     dx,ds
+                sub     ax,dx
+                shl     ax,4
+                add     ax,di
+                sub     ax,si
+                pop     dx
+                cmp     ax,3
+                jbe     memcpy_words
+                ; Align stores.  Source loads may be unaligned, but the
+                ; range checks above ensure they never cross offset FFFF.
+                test    di,3
+                jz      .aligned
+                test    di,1
+                jz      .word_align
+                movsb
+                dec     cx
+.word_align:
+                test    di,2
+                jz      .aligned
+                movsw
+                sub     cx,2
+.aligned:
+                mov     ax,cx
+                shr     cx,2
+                rep     movsd
+                jnc     .byte
+                movsw
+.byte:
+                test    al,1
+                jz      .done
+                movsb
+.done:
+                memory_finish
+
+memset_large:
+                mov     si,di
+                add     si,cx
+                jc      memset_words
+                mov     ah,al
+                test    di,3
+                jz      .aligned
+                test    di,1
+                jz      .word_align
+                stosb
+                dec     cx
+.word_align:
+                test    di,2
+                jz      .aligned
+                stosw
+                sub     cx,2
+.aligned:
+                ; Watcom's kernel entry does not save high GPR halves.
+                ; Preserve high EAX while forming the four-byte pattern.
+                push    eax
+                push    ax
+                push    ax
+                pop     eax
+                mov     si,cx
+                shr     cx,2
+                rep     stosd
+                jnc     .byte
+                stosw
+.byte:
+                test    si,1
+                jz      .done
+                stosb
+.done:
+                pop     eax
+                memory_finish
+%endif
+
+%ifdef WATCOM
+%macro memory_restore 1
+                pop     ds
+                pop     di
+                pop     si
+                pop     es
+                pop     cx
+                pop     bx
+                pop     bp
+                ret     %1
+%endmacro
+memory_return6:
+                memory_restore 6
+memory_return8:
+                memory_restore 8
+memory_return10:
+                memory_restore 10
+%endif
 
 %endif

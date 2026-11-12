@@ -14,9 +14,11 @@ import time
 import images
 
 ROOT=Path(__file__).resolve().parents[2]
-BASELINE='5f17969cd603eeef159f8706e63ee7631ecd5419'
+BASELINE=os.environ.get('LIBRETTO_BASELINE','28dc3c7f0ce5f29440905bc54af37591f8db8b67')
 ORDER=['control','candidate','candidate','control']
-REPEATS=5
+REPEATS=int(os.environ.get('LIBRETTO_COMPARE_REPEATS','5'))
+assert REPEATS in (1,5)
+SAMPLES=REPEATS*len(ORDER)//2
 SCENARIOS=['write_1m_flush','repeated_read_16m','random_read_1m','small_files_100']
 
 def run(args,**kw):
@@ -25,6 +27,9 @@ def run(args,**kw):
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 def build_control(cpu,output,env):
+    if env.get('LIBRETTO_CONTROL_KERNEL'):
+        shutil.copy2(env['LIBRETTO_CONTROL_KERNEL'],output/'control.sys')
+        return
     work=ROOT/'_output'/('control-source-'+cpu)
     run(['git','fetch','--depth=1','origin',BASELINE])
     run(['git','worktree','add','--detach',work,BASELINE])
@@ -42,7 +47,8 @@ def main():
     cpu=sys.argv[1]
     assert cpu in ('486','pentium-mmx')
     package=ROOT/'_output'/('libretto-'+cpu+'-fat32')
-    output=package/'comparison'; output.mkdir(parents=True,exist_ok=True)
+    output=Path(os.environ.get('LIBRETTO_COMPARISON_DIR',str(package/'comparison')))
+    output.mkdir(parents=True,exist_ok=True)
     tools=output/'tools'; tools.mkdir(exist_ok=True)
     env=dict(os.environ,WATCOM=str(ROOT/'_watcom'),LIBRETTO_TUNE='4' if cpu=='486' else '5',
              LIBRETTO_CPU=cpu,LIBRETTO_RAM_MB='20')
@@ -75,7 +81,7 @@ def main():
     identical=sha(output/'control.sys')==sha(output/'candidate.sys')
     if identical:
         assert sha(templates['control'])==sha(templates['candidate']),'Calibration disk images differ'
-    data=[]; boots={'control':0,'candidate':0}
+    data=[]; memory_reports={}; boots={'control':0,'candidate':0}
     for variant in ORDER:
         batch=boots[variant]; boots[variant]+=1
         name=variant+'-'+str(batch)
@@ -93,6 +99,7 @@ def main():
                 run(command,env=env,timeout=int(os.environ.get("LIBRETTO_COMPARE_TIMEOUT","420")),stdout=stream,stderr=subprocess.STDOUT)
             assert images.mread(disk,'RESULT.TXT').strip()==b'PASS'
             memory=dict((k,int(v)) for k,v in (line.split('=',1) for line in images.mread(disk,'MEMORY.TXT').decode('ascii').splitlines()))
+            memory_reports[name]=memory
             assert memory['xms_present']==1 and memory['dos_in_hma']==1
             text=images.mread(disk,'BENCH.CSV').decode('ascii')
             (output/(name+'-dos.csv')).write_text(text)
@@ -118,8 +125,8 @@ def main():
     summaries=[]
     for scenario in SCENARIOS:
         selected={v:[r for r in data if r['variant']==v and r['scenario']==scenario] for v in ('control','candidate')}
-        assert all(len(r)==10 for r in selected.values())
-        summary=dict(scenario=scenario,samples_per_variant=10)
+        assert all(len(r)==SAMPLES for r in selected.values())
+        summary=dict(scenario=scenario,samples_per_variant=SAMPLES)
         for metric in ['guest_instructions','non_rom_instructions','bios_ticks']:
             a=[r[metric] for r in selected['control']]; b=[r[metric] for r in selected['candidate']]
             ratios=[(y/x-1)*100 for x,y in zip(a,b) if x]
@@ -129,9 +136,10 @@ def main():
         summaries.append(summary)
     neutral=max(abs(r['non_rom_instructions']['paired_change_percent_median']) for r in summaries)
     report=dict(baseline_commit=BASELINE,candidate_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+         control_kernel_override=bool(env.get('LIBRETTO_CONTROL_KERNEL')),
          cpu=cpu,ram_mib=20,memory_profile='xms',qemu_version=version,icount='shift=3,align=off,sleep=off',order=ORDER,
          control_kernel_sha256=sha(output/'control.sys'),candidate_kernel_sha256=sha(output/'candidate.sys'),
-         kernel_bytes_identical=identical,calibration=('pass' if neutral<=1 else 'noisy') if identical else 'not_applicable',
+         memory_reports=memory_reports,kernel_bytes_identical=identical,calibration=('pass' if neutral<=1 else 'noisy') if identical else 'not_applicable',
          max_identical_kernel_median_change_percent=neutral if identical else None,summaries=summaries,raw=data,
          limitations=['Instruction counts are not CPU cycles or Libretto speed.',
                       'non_rom excludes 0xA0000..0xFFFFF; it is not a kernel-only counter.',
@@ -144,7 +152,7 @@ def main():
            '| --- | ---: | ---: | ---: | ---: |']
     for row in summaries:
         m=row['non_rom_instructions']
-        lines.append(f'| {row["scenario"]} | 10 | {m["control_median"]} | {m["candidate_median"]} | {m["paired_change_percent_median"]:.4f}% |')
+        lines.append(f'| {row["scenario"]} | {SAMPLES} | {m["control_median"]} | {m["candidate_median"]} | {m["paired_change_percent_median"]:.4f}% |')
     lines+=['','Executed guest instructions are not real CPU timings. Identical kernels calibrate the method, not an optimization.']
     (output/'comparison.md').write_text('\n'.join(lines)+'\n')
     print('AB_SUMMARY '+json.dumps({k:v for k,v in report.items() if k!='raw'}),flush=True)

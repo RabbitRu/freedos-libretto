@@ -1,0 +1,585 @@
+{
+  "memory_checks": {
+    "cpu": "pentium-mmx",
+    "baseline_commit": "28dc3c7f0ce5f29440905bc54af37591f8db8b67",
+    "qemu_version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+    "candidate_commit": "430f06d30ff89431775678c6646c07b63f3990c1",
+    "candidate_assembly_sha256": "41fe2d598df50d79dca364a48edd945d591bb95ffeb9cfd36b71a8b2724def76",
+    "correctness": {
+      "CHECKREF.TXT": "PASS cases=1648 full destination and ABI checks\r\n",
+      "CHECKNEW.TXT": "PASS cases=1648 full destination and ABI checks\r\n"
+    },
+    "rep_calibration": [
+      {
+        "operation": "movsb",
+        "iterations": 0,
+        "interval": "1",
+        "guest_instructions": "2",
+        "non_rom_instructions": "2",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsb",
+        "iterations": 1,
+        "interval": "2",
+        "guest_instructions": "3",
+        "non_rom_instructions": "3",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsb",
+        "iterations": 64,
+        "interval": "3",
+        "guest_instructions": "66",
+        "non_rom_instructions": "66",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsb",
+        "iterations": 1024,
+        "interval": "4",
+        "guest_instructions": "1026",
+        "non_rom_instructions": "1026",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsw",
+        "iterations": 0,
+        "interval": "5",
+        "guest_instructions": "2",
+        "non_rom_instructions": "2",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsw",
+        "iterations": 1,
+        "interval": "6",
+        "guest_instructions": "3",
+        "non_rom_instructions": "3",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsw",
+        "iterations": 64,
+        "interval": "7",
+        "guest_instructions": "66",
+        "non_rom_instructions": "66",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsw",
+        "iterations": 1024,
+        "interval": "8",
+        "guest_instructions": "1026",
+        "non_rom_instructions": "1026",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsd",
+        "iterations": 0,
+        "interval": "9",
+        "guest_instructions": "2",
+        "non_rom_instructions": "2",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsd",
+        "iterations": 1,
+        "interval": "10",
+        "guest_instructions": "3",
+        "non_rom_instructions": "3",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsd",
+        "iterations": 64,
+        "interval": "11",
+        "guest_instructions": "66",
+        "non_rom_instructions": "66",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      },
+      {
+        "operation": "movsd",
+        "iterations": 1024,
+        "interval": "12",
+        "guest_instructions": "1026",
+        "non_rom_instructions": "1026",
+        "marker_errors": "0",
+        "map_calls": "0",
+        "chain_steps": "0",
+        "backward_seeks": "0",
+        "fat_reads": "0",
+        "fat_writes": "0",
+        "buffer_probes": "0",
+        "buffer_hits": "0",
+        "buffer_misses": "0",
+        "disk_calls": "0",
+        "seek_hits": "0",
+        "seek_saves": "0"
+      }
+    ],
+    "limitations": [
+      "QEMU REP accounting is calibrated separately; instruction counts are not CPU cycles.",
+      "Microbenchmarks include caller dispatch and loop overhead."
+    ]
+  },
+  "fat32": [
+    {
+      "profile": "basic",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509600,
+        "largest_conventional_block_bytes_while_probe_loaded": 509456,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "37",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "22",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "basic",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509600,
+        "largest_conventional_block_bytes_while_probe_loaded": 509456,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "2",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "37",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "23",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    },
+    {
+      "profile": "xms",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "111",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "32",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "5",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "xms",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31457,
+        "xms_largest_kib": 31457,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "105",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "31",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "5",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    },
+    {
+      "profile": "ems",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 18977,
+        "xms_largest_kib": 18977,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1188,
+        "ems_total_16k_pages": 1219
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "76",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "42",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "ems",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31265,
+        "xms_largest_kib": 31265,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1956,
+        "ems_total_16k_pages": 1987
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "78",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "42",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "5",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    }
+  ]
+}

@@ -105,6 +105,9 @@ HEADERS=$(HDRS) globals.h proto.h
 INITHEADERS=$(HDRS) init-mod.h init-dat.h
 
 blockio.obj: blockio.c    $(HEADERS) $(TARGET).lnk  
+!ifdef LIBRETTO_HOT_OPT
+	$(CC) $(CFLAGS) $(LIBRETTO_HOT_OPT) $*.c
+!endif
 break.obj: break.c        $(HEADERS) $(TARGET).lnk  
 chario.obj: chario.c      $(HEADERS) $(TARGET).lnk  
 dosfns.obj: dosfns.c      $(HEADERS) $(TARGET).lnk  
@@ -112,7 +115,13 @@ dsk.obj: dsk.c            $(HEADERS) $(TARGET).lnk
 error.obj: error.c        $(HEADERS) $(TARGET).lnk  
 fatdir.obj: fatdir.c      $(HEADERS) $(TARGET).lnk  
 fatfs.obj: fatfs.c        $(HEADERS) $(TARGET).lnk  
+!ifdef LIBRETTO_HOT_OPT
+	$(CC) $(CFLAGS) $(LIBRETTO_HOT_OPT) $*.c
+!endif
 fattab.obj: fattab.c      $(HEADERS) $(TARGET).lnk  
+!ifdef LIBRETTO_HOT_OPT
+	$(CC) $(CFLAGS) $(LIBRETTO_HOT_OPT) $*.c
+!endif
 fcbfns.obj: fcbfns.c      $(HEADERS) $(TARGET).lnk  
 inthndlr.obj: inthndlr.c  $(HEADERS) $(TARGET).lnk  
 ioctl.obj: ioctl.c        $(HEADERS) $(TARGET).lnk  

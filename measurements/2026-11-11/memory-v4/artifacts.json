@@ -1,0 +1,112 @@
+{
+  "run_id": 42956883375,
+  "source_commit": "bdb3e00f3858bc8cbb3e1c369c1ce4fa65c6a73f",
+  "tested_merge_commit": "430f06d30ff89431775678c6646c07b63f3990c1",
+  "tree": "b15cfc0619635f0f4c73c17a2a83be03ad5377cf",
+  "evidence": "Summary and correctness/calibration records extracted from completed CI job logs. Complete per-run CSV, memory microbenchmark samples and binaries are in the artifacts.",
+  "jobs": [
+    {
+      "id": 130313983152,
+      "name": "build (pentium-mmx)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130313983163,
+      "name": "profile (pentium-mmx)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130313983269,
+      "name": "build (486)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130313983795,
+      "name": "profile (486)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130314020682,
+      "name": "compiler",
+      "conclusion": "skipped"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13827796262,
+      "name": "profile-pentium-mmx-430f06d30ff89431775678c6646c07b63f3990c1",
+      "size_in_bytes": 3466,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827796262",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827796262/zip",
+      "expired": false,
+      "created_at": "2026-11-11T04:06:35Z",
+      "expires_at": "2027-02-09T04:05:01Z",
+      "updated_at": "2026-11-11T04:06:35Z",
+      "digest": "sha256:a0c9a31b50556970df797b341a2cf0ba6f6efc4915da35ba1ebda8e0bbb04806",
+      "workflow_run": {
+        "id": 42956883375,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "bdb3e00f3858bc8cbb3e1c369c1ce4fa65c6a73f"
+      }
+    },
+    {
+      "id": 13827783513,
+      "name": "libretto-486-fat32-430f06d30ff89431775678c6646c07b63f3990c1",
+      "size_in_bytes": 2079142,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827783513",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827783513/zip",
+      "expired": false,
+      "created_at": "2026-11-11T04:20:13Z",
+      "expires_at": "2027-02-09T04:05:01Z",
+      "updated_at": "2026-11-11T04:20:13Z",
+      "digest": "sha256:370ac660e2989011369544c3c669c0e053c4d90eea0c63020e35cefcb2bafe08",
+      "workflow_run": {
+        "id": 42956883375,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "bdb3e00f3858bc8cbb3e1c369c1ce4fa65c6a73f"
+      }
+    },
+    {
+      "id": 13827274742,
+      "name": "libretto-pentium-mmx-fat32-430f06d30ff89431775678c6646c07b63f3990c1",
+      "size_in_bytes": 2079110,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827274742",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13827274742/zip",
+      "expired": false,
+      "created_at": "2026-11-11T04:16:45Z",
+      "expires_at": "2027-02-09T04:05:01Z",
+      "updated_at": "2026-11-11T04:16:45Z",
+      "digest": "sha256:692ebf991021205bb93d9ec183ce2aa9018ab20f363864ffd449f15449eeb9fa",
+      "workflow_run": {
+        "id": 42956883375,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "bdb3e00f3858bc8cbb3e1c369c1ce4fa65c6a73f"
+      }
+    },
+    {
+      "id": 13826933838,
+      "name": "profile-486-430f06d30ff89431775678c6646c07b63f3990c1",
+      "size_in_bytes": 3460,
+      "url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826933838",
+      "archive_download_url": "https://api.github.com/repos/RabbitRu/freedos-libretto/actions/artifacts/13826933838/zip",
+      "expired": false,
+      "created_at": "2026-11-11T04:06:16Z",
+      "expires_at": "2027-02-09T04:05:01Z",
+      "updated_at": "2026-11-11T04:06:16Z",
+      "digest": "sha256:38a3401eb3ba51af2c320bcc80407d5c1ca6938a847d04852392354c99e517a9",
+      "workflow_run": {
+        "id": 42956883375,
+        "repository_id": 1452277585,
+        "head_repository_id": 1452277585,
+        "head_branch": "memory-opt",
+        "head_sha": "bdb3e00f3858bc8cbb3e1c369c1ce4fa65c6a73f"
+      }
+    }
+  ]
+}

@@ -1,0 +1,814 @@
+{
+  "cpu": "pentium-mmx",
+  "commit": "62de02a4bacbe16d8ed231bf3d821e29a9d6aaa0",
+  "samples_per_variant": 2,
+  "variants": [
+    {
+      "name": "size",
+      "options": "-os",
+      "hot_options": "",
+      "status": "pass",
+      "kernel_bytes": 72987,
+      "kernel_sha256": "d072263db46c02ba7abadd113c310551503d402027a8b2e0b4f50ade96a7416b",
+      "calibration": "pass",
+      "memory": {
+        "control-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "control-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        }
+      },
+      "summaries": [
+        {
+          "scenario": "write_1m_flush",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 9167814.5,
+            "candidate_median": 8910398.5,
+            "control_min": 8750560,
+            "control_max": 9585069,
+            "candidate_min": 8713019,
+            "candidate_max": 9107778,
+            "paired_change_percent_median": -2.50788712040228
+          },
+          "non_rom_instructions": {
+            "control_median": 4764341,
+            "candidate_median": 4764341,
+            "control_min": 4764341,
+            "control_max": 4764341,
+            "candidate_min": 4764341,
+            "candidate_max": 4764341,
+            "paired_change_percent_median": 0
+          },
+          "bios_ticks": {
+            "control_median": 1,
+            "candidate_median": 1,
+            "control_min": 1,
+            "control_max": 1,
+            "candidate_min": 1,
+            "candidate_max": 1,
+            "paired_change_percent_median": 0
+          }
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 90253121.5,
+            "candidate_median": 92601283,
+            "control_min": 88212066,
+            "control_max": 92294177,
+            "candidate_min": 91157208,
+            "candidate_max": 94045358,
+            "paired_change_percent_median": 2.6904541574869545
+          },
+          "non_rom_instructions": {
+            "control_median": 27842127.5,
+            "candidate_median": 27842127.5,
+            "control_min": 27842110,
+            "control_max": 27842145,
+            "candidate_min": 27842110,
+            "candidate_max": 27842145,
+            "paired_change_percent_median": 7.900902154744927e-11
+          },
+          "bios_ticks": {
+            "control_median": 13.5,
+            "candidate_median": 13.5,
+            "control_min": 13,
+            "control_max": 14,
+            "candidate_min": 13,
+            "candidate_max": 14,
+            "paired_change_percent_median": 0.27472527472527375
+          }
+        },
+        {
+          "scenario": "random_read_1m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 439478026,
+            "candidate_median": 439703476.5,
+            "control_min": 439341660,
+            "control_max": 439614392,
+            "candidate_min": 438646885,
+            "candidate_max": 440760068,
+            "paired_change_percent_median": 0.05123463991981714
+          },
+          "non_rom_instructions": {
+            "control_median": 431056251,
+            "candidate_median": 431056251,
+            "control_min": 431056251,
+            "control_max": 431056251,
+            "candidate_min": 431056251,
+            "candidate_max": 431056251,
+            "paired_change_percent_median": 0
+          },
+          "bios_ticks": {
+            "control_median": 64,
+            "candidate_median": 64,
+            "control_min": 64,
+            "control_max": 64,
+            "candidate_min": 64,
+            "candidate_max": 64,
+            "paired_change_percent_median": 0
+          }
+        },
+        {
+          "scenario": "small_files_100",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 18791542.5,
+            "candidate_median": 19184134,
+            "control_min": 18492075,
+            "control_max": 19091010,
+            "candidate_min": 18923026,
+            "candidate_max": 19445242,
+            "paired_change_percent_median": 2.092977164844889
+          },
+          "non_rom_instructions": {
+            "control_median": 15619806,
+            "candidate_median": 15619788.5,
+            "control_min": 15619806,
+            "control_max": 15619806,
+            "candidate_min": 15619771,
+            "candidate_max": 15619806,
+            "paired_change_percent_median": -0.00011203724297192963
+          },
+          "bios_ticks": {
+            "control_median": 3,
+            "candidate_median": 2.5,
+            "control_min": 3,
+            "control_max": 3,
+            "candidate_min": 2,
+            "candidate_max": 3,
+            "paired_change_percent_median": -16.666666666666668
+          }
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "options": "-ot",
+      "hot_options": "",
+      "status": "rejected_segment_overflow",
+      "error": "Error! E2020: size of group TGROUP exceeds 64k by 2576 bytes"
+    },
+    {
+      "name": "scheduled-size",
+      "options": "-os -ob -or -ol",
+      "hot_options": "",
+      "status": "pass",
+      "kernel_bytes": 73515,
+      "kernel_sha256": "f91d9b94d4bc778cca01791ab2bb48a7ea310a56572f4bb95ca99dde97739dc3",
+      "calibration": "not_applicable",
+      "memory": {
+        "control-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "control-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        }
+      },
+      "summaries": [
+        {
+          "scenario": "write_1m_flush",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 8864685.5,
+            "candidate_median": 9042486,
+            "control_min": 8459218,
+            "control_max": 9270153,
+            "candidate_min": 8413124,
+            "candidate_max": 9671848,
+            "paired_change_percent_median": 1.894155586859031
+          },
+          "non_rom_instructions": {
+            "control_median": 4764341,
+            "candidate_median": 4776206,
+            "control_min": 4764341,
+            "control_max": 4764341,
+            "candidate_min": 4776206,
+            "candidate_max": 4776206,
+            "paired_change_percent_median": 0.24903758987864233
+          },
+          "bios_ticks": {
+            "control_median": 1,
+            "candidate_median": 1,
+            "control_min": 1,
+            "control_max": 1,
+            "candidate_min": 1,
+            "candidate_max": 1,
+            "paired_change_percent_median": 0
+          }
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 90628248.5,
+            "candidate_median": 94077854,
+            "control_min": 90162601,
+            "control_max": 91093896,
+            "candidate_min": 93274298,
+            "candidate_max": 94881410,
+            "paired_change_percent_median": 3.813620983843291
+          },
+          "non_rom_instructions": {
+            "control_median": 27842110,
+            "candidate_median": 27932134,
+            "control_min": 27842110,
+            "control_max": 27842110,
+            "candidate_min": 27932134,
+            "candidate_max": 27932134,
+            "paired_change_percent_median": 0.32333756313727147
+          },
+          "bios_ticks": {
+            "control_median": 13,
+            "candidate_median": 14,
+            "control_min": 13,
+            "control_max": 13,
+            "candidate_min": 14,
+            "candidate_max": 14,
+            "paired_change_percent_median": 7.692307692307687
+          }
+        },
+        {
+          "scenario": "random_read_1m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 439115663,
+            "candidate_median": 440698456.5,
+            "control_min": 438363413,
+            "control_max": 439867913,
+            "candidate_min": 440341929,
+            "candidate_max": 441054984,
+            "paired_change_percent_median": 0.36088387031545377
+          },
+          "non_rom_instructions": {
+            "control_median": 431056268.5,
+            "candidate_median": 432815204,
+            "control_min": 431056251,
+            "control_max": 431056286,
+            "candidate_min": 432815204,
+            "candidate_max": 432815204,
+            "paired_change_percent_median": 0.4080524118397655
+          },
+          "bios_ticks": {
+            "control_median": 64.5,
+            "candidate_median": 64,
+            "control_min": 64,
+            "control_max": 65,
+            "candidate_min": 64,
+            "candidate_max": 64,
+            "paired_change_percent_median": -0.7692307692307665
+          }
+        },
+        {
+          "scenario": "small_files_100",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 18890204,
+            "candidate_median": 18581808.5,
+            "control_min": 18780426,
+            "control_max": 18999982,
+            "candidate_min": 18565595,
+            "candidate_max": 18598022,
+            "paired_change_percent_median": -1.6297450203895725
+          },
+          "non_rom_instructions": {
+            "control_median": 15619806,
+            "candidate_median": 15624802,
+            "control_min": 15619806,
+            "control_max": 15619806,
+            "candidate_min": 15624802,
+            "candidate_max": 15624802,
+            "paired_change_percent_median": 0.031985032336501185
+          },
+          "bios_ticks": {
+            "control_median": 3,
+            "candidate_median": 3,
+            "control_min": 3,
+            "control_max": 3,
+            "candidate_min": 3,
+            "candidate_max": 3,
+            "paired_change_percent_median": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "scheduled",
+      "options": "-os -or",
+      "hot_options": "",
+      "status": "pass",
+      "kernel_bytes": 73211,
+      "kernel_sha256": "5a35d9a2e4cdcb8017f9294ad608e940315623df9bcf7ff1c82a1053a6e97e8a",
+      "calibration": "not_applicable",
+      "memory": {
+        "control-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "control-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        }
+      },
+      "summaries": [
+        {
+          "scenario": "write_1m_flush",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 8743978,
+            "candidate_median": 9118809.5,
+            "control_min": 8044987,
+            "control_max": 9442969,
+            "candidate_min": 9092285,
+            "candidate_max": 9145334,
+            "paired_change_percent_median": 4.933048988415795
+          },
+          "non_rom_instructions": {
+            "control_median": 4764341,
+            "candidate_median": 4792177,
+            "control_min": 4764341,
+            "control_max": 4764341,
+            "candidate_min": 4792177,
+            "candidate_max": 4792177,
+            "paired_change_percent_median": 0.5842570882310882
+          },
+          "bios_ticks": {
+            "control_median": 1,
+            "candidate_median": 1,
+            "control_min": 1,
+            "control_max": 1,
+            "candidate_min": 1,
+            "candidate_max": 1,
+            "paired_change_percent_median": 0
+          }
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 88684897,
+            "candidate_median": 90447142.5,
+            "control_min": 83151128,
+            "control_max": 94218666,
+            "candidate_min": 87837140,
+            "candidate_max": 93057145,
+            "paired_change_percent_median": 2.201371711843292
+          },
+          "non_rom_instructions": {
+            "control_median": 27842110,
+            "candidate_median": 27989586.5,
+            "control_min": 27842075,
+            "control_max": 27842145,
+            "candidate_min": 27989569,
+            "candidate_max": 27989604,
+            "paired_change_percent_median": 0.5296886623256336
+          },
+          "bios_ticks": {
+            "control_median": 13,
+            "candidate_median": 13.5,
+            "control_min": 12,
+            "control_max": 14,
+            "candidate_min": 13,
+            "candidate_max": 14,
+            "paired_change_percent_median": 4.1666666666666625
+          }
+        },
+        {
+          "scenario": "random_read_1m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 439530527.5,
+            "candidate_median": 441083135,
+            "control_min": 439061471,
+            "control_max": 439999584,
+            "candidate_min": 441003432,
+            "candidate_max": 441162838,
+            "paired_change_percent_median": 0.35337588512200924
+          },
+          "non_rom_instructions": {
+            "control_median": 431056251,
+            "candidate_median": 433686010,
+            "control_min": 431056251,
+            "control_max": 431056251,
+            "candidate_min": 433686010,
+            "candidate_max": 433686010,
+            "paired_change_percent_median": 0.6100732778840934
+          },
+          "bios_ticks": {
+            "control_median": 64,
+            "candidate_median": 64,
+            "control_min": 64,
+            "control_max": 64,
+            "candidate_min": 64,
+            "candidate_max": 64,
+            "paired_change_percent_median": 0
+          }
+        },
+        {
+          "scenario": "small_files_100",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 19368025.5,
+            "candidate_median": 19116128.5,
+            "control_min": 19337686,
+            "control_max": 19398365,
+            "candidate_min": 19081346,
+            "candidate_max": 19150911,
+            "paired_change_percent_median": -1.3000582117899784
+          },
+          "non_rom_instructions": {
+            "control_median": 15619806,
+            "candidate_median": 15667922.5,
+            "control_min": 15619806,
+            "control_max": 15619806,
+            "candidate_min": 15667905,
+            "candidate_max": 15667940,
+            "paired_change_percent_median": 0.3080480000839936
+          },
+          "bios_ticks": {
+            "control_median": 3,
+            "candidate_median": 2.5,
+            "control_min": 3,
+            "control_max": 3,
+            "candidate_min": 2,
+            "candidate_max": 3,
+            "paired_change_percent_median": -16.666666666666668
+          }
+        }
+      ]
+    },
+    {
+      "name": "hot-speed",
+      "options": "-os",
+      "hot_options": "-ot -ob -or -ol",
+      "status": "pass",
+      "kernel_bytes": 74507,
+      "kernel_sha256": "cad5c81ce0b6dfdd2457e025dbf29fa6d66e4f92a50026cf46230abafbb820c5",
+      "calibration": "not_applicable",
+      "memory": {
+        "control-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-0": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "candidate-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        },
+        "control-1": {
+          "probe_psp_block_bytes": 3440,
+          "conventional_free_bytes_while_probe_loaded": 631200,
+          "largest_conventional_block_bytes_while_probe_loaded": 631056,
+          "umb_chain_linked": 0,
+          "umb_free_bytes_after_temporary_link": 0,
+          "umb_enumeration_supported": 0,
+          "dos_in_hma": 1,
+          "xms_present": 1,
+          "xms_free_kib": 19169,
+          "xms_largest_kib": 19169,
+          "ems_present": 0,
+          "ems_free_16k_pages": 0,
+          "ems_total_16k_pages": 0
+        }
+      },
+      "summaries": [
+        {
+          "scenario": "write_1m_flush",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 8458309.5,
+            "candidate_median": 8631943,
+            "control_min": 8345924,
+            "control_max": 8570695,
+            "candidate_min": 8463509,
+            "candidate_max": 8800377,
+            "paired_change_percent_median": 2.0443720091598894
+          },
+          "non_rom_instructions": {
+            "control_median": 4764341,
+            "candidate_median": 5166236,
+            "control_min": 4764341,
+            "control_max": 4764341,
+            "candidate_min": 5166236,
+            "candidate_max": 5166236,
+            "paired_change_percent_median": 8.435479324422834
+          },
+          "bios_ticks": {
+            "control_median": 1,
+            "candidate_median": 1,
+            "control_min": 1,
+            "control_max": 1,
+            "candidate_min": 1,
+            "candidate_max": 1,
+            "paired_change_percent_median": 0
+          }
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 89696892.5,
+            "candidate_median": 92652124,
+            "control_min": 84412838,
+            "control_max": 94980947,
+            "candidate_min": 90740878,
+            "candidate_max": 94563370,
+            "paired_change_percent_median": 3.5284472617858276
+          },
+          "non_rom_instructions": {
+            "control_median": 27842110,
+            "candidate_median": 29861021.5,
+            "control_min": 27842075,
+            "control_max": 27842145,
+            "candidate_min": 29861004,
+            "candidate_max": 29861039,
+            "paired_change_percent_median": 7.251287707810894
+          },
+          "bios_ticks": {
+            "control_median": 13,
+            "candidate_median": 13.5,
+            "control_min": 12,
+            "control_max": 14,
+            "candidate_min": 13,
+            "candidate_max": 14,
+            "paired_change_percent_median": 4.1666666666666625
+          }
+        },
+        {
+          "scenario": "random_read_1m",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 439219718.5,
+            "candidate_median": 486038885,
+            "control_min": 439048288,
+            "control_max": 439391149,
+            "candidate_min": 485692075,
+            "candidate_max": 486385695,
+            "paired_change_percent_median": 10.659609122390712
+          },
+          "non_rom_instructions": {
+            "control_median": 431056251,
+            "candidate_median": 479172732,
+            "control_min": 431056251,
+            "control_max": 431056251,
+            "candidate_min": 479172732,
+            "candidate_max": 479172732,
+            "paired_change_percent_median": 11.16245986188007
+          },
+          "bios_ticks": {
+            "control_median": 64,
+            "candidate_median": 71,
+            "control_min": 64,
+            "control_max": 64,
+            "candidate_min": 71,
+            "candidate_max": 71,
+            "paired_change_percent_median": 10.9375
+          }
+        },
+        {
+          "scenario": "small_files_100",
+          "samples_per_variant": 2,
+          "guest_instructions": {
+            "control_median": 19182377.5,
+            "candidate_median": 19528739.5,
+            "control_min": 18777178,
+            "control_max": 19587577,
+            "candidate_min": 19100961,
+            "candidate_max": 19956518,
+            "paired_change_percent_median": 1.898200085885976
+          },
+          "non_rom_instructions": {
+            "control_median": 15619788.5,
+            "candidate_median": 16057876,
+            "control_min": 15619771,
+            "control_max": 15619806,
+            "candidate_min": 16057876,
+            "candidate_max": 16057876,
+            "paired_change_percent_median": 2.8046954670363
+          },
+          "bios_ticks": {
+            "control_median": 2.5,
+            "candidate_median": 3,
+            "control_min": 2,
+            "control_max": 3,
+            "candidate_min": 3,
+            "candidate_max": 3,
+            "paired_change_percent_median": 25
+          }
+        }
+      ]
+    },
+    {
+      "name": "scheduled-speed",
+      "options": "-ot -ob -or -ol",
+      "hot_options": "",
+      "status": "rejected_segment_overflow",
+      "error": "Error! E2020: size of group TGROUP exceeds 64k by 4464 bytes"
+    }
+  ],
+  "fixed_abi": "16-bit small model, Pascal helpers, -r -zp1 -j -zgf -zff",
+  "limitations": [
+    "Scout results require full validation of the selected setting.",
+    "QEMU instruction counts are not CPU cycles or native timing."
+  ]
+}

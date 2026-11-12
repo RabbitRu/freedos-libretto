@@ -18,6 +18,11 @@ on:
       - 'makefile'
       - 'country'
   workflow_dispatch:
+    inputs:
+      compiler_scout:
+        description: Run the optional Watcom settings experiment
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -46,6 +51,8 @@ jobs:
         run: bash scripts/libretto/bootstrap.sh
       - name: Build and boot on the target CPU with 20 and 32 MiB
         run: bash scripts/libretto/build.sh '${{ matrix.cpu }}'
+      - name: Check actual memory routines, ABI, segment boundaries and REP accounting
+        run: python3 scripts/libretto/memory.py '${{ matrix.cpu }}'
       - name: Check FAT16/FAT32 full-volume recovery, high clusters and injected I/O errors
         run: python3 scripts/libretto/edges.py '${{ matrix.cpu }}'
       - name: Compare control and candidate with ten samples per workload
@@ -85,4 +92,41 @@ jobs:
         with:
           name: profile-${{ matrix.cpu }}-${{ github.sha }}
           path: _output/profile-${{ matrix.cpu }}/
+          if-no-files-found: error
+
+  compiler:
+    if: github.event_name == 'workflow_dispatch' && inputs.compiler_scout
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        cpu: ['486', pentium-mmx]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Install compiler experiment tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update
+          sudo apt-get install -y --no-install-recommends nasm qemu-system-x86 mtools xz-utils
+      - name: Install pinned Open Watcom
+        run: bash scripts/libretto/bootstrap.sh
+      - name: Prepare runtime and initial kernel
+        run: |
+          export WATCOM="$PWD/_watcom"
+          export PATH="$WATCOM/binl64:$PATH"
+          export LIBRETTO_TUNE=$([[ '${{ matrix.cpu }}' == 486 ]] && echo 4 || echo 5)
+          make all COMPILER=owlinux XCPU=386 XFAT=32 XUPX= RM='rm -f'
+          mkdir -p '_output/libretto-${{ matrix.cpu }}-fat32'
+          cp bin/kwc38632.sys '_output/libretto-${{ matrix.cpu }}-fat32/KERNEL.SYS'
+          python3 scripts/libretto/runtime.py _downloads/runtime-extracted
+      - name: Compare size, speed, block ordering, scheduling and loop settings
+        run: python3 scripts/libretto/compiler.py '${{ matrix.cpu }}'
+      - name: Save compiler experiment kernels, maps and measurements
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: compiler-${{ matrix.cpu }}-${{ github.sha }}
+          path: _output/libretto-${{ matrix.cpu }}-fat32/compiler/
           if-no-files-found: error
