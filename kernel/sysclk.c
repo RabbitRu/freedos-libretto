@@ -43,9 +43,31 @@ typedef UDWORD ticks_t;
 /* Cache only the tick-to-time conversion, never the BIOS read or date.
    A nested driver request uses its local record while this cache is busy. */
 STATIC ticks_t clock_cache_tick;
-STATIC UBYTE clock_cache[4];     /* minutes, hours, hundredths, seconds */
+STATIC struct dostime clock_cache;
 STATIC UBYTE clock_cache_valid;
 STATIC volatile UBYTE clock_cache_busy;
+
+/* floor(((5 * raw) mod 2^32) * 65536 / 59659), modulo 2^32.
+   Reuse DIV's remainder instead of dividing the same value repeatedly.
+   Subtracting 59659 from the high word removes a quotient bit which
+   would disappear in the final 16-bit shift anyway. All operations
+   are 16-bit, including the full-range overflow case. */
+#if defined(__WATCOMC__)
+STATIC ticks_t ClockHundredths(ticks_t raw);
+#pragma aux ClockHundredths = \
+  "mov bx,ax" "mov cx,dx" \
+  "shl ax,1" "rcl dx,1" "shl ax,1" "rcl dx,1" \
+  "add ax,bx" "adc dx,cx" \
+  "mov bx,59659" "cmp dx,bx" "jb clock_div_low" "sub dx,bx" \
+  "clock_div_low:" "div bx" "mov cx,ax" "xor ax,ax" "div bx" "mov dx,cx" \
+  __parm [__dx __ax] __value [__dx __ax] __modify __exact [__ax __bx __cx __dx];
+#else
+STATIC ticks_t ClockHundredths(ticks_t raw)
+{
+  ticks_t scaled = 5 * raw;
+  return ((scaled / 59659u) << 16) + ((scaled % 59659u) << 16) / 59659u;
+}
+#endif
 
 STATIC int ByteToBcd(int x)
 {
@@ -95,7 +117,10 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
           clock_cache_busy = 1;
           if (clock_cache_valid && raw_ticks == clock_cache_tick)
           {
-            fmemcpy(&clk.clkMinutes, clock_cache, sizeof(clock_cache));
+            clk.clkHours = clock_cache.hour;
+            clk.clkMinutes = clock_cache.minute;
+            clk.clkSeconds = clock_cache.second;
+            clk.clkHundredths = clock_cache.hundredth;
             goto clock_ready;
           }
         }
@@ -103,8 +128,7 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
         /* The scaling factor is now
            6553600/1193180 = 327680/59659 = 65536*5/59659 */
 
-        ticks = 5 * raw_ticks;
-        ticks = ((ticks / 59659u) << 16) + ((ticks % 59659u) << 16) / 59659u;
+        ticks = ClockHundredths(raw_ticks);
 
         tmp = (int)(ticks / 6000);
         clk.clkHours = tmp / 60;
@@ -116,7 +140,10 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
 
         if (cacheable)
         {
-          fmemcpy(clock_cache, &clk.clkMinutes, sizeof(clock_cache));
+          clock_cache.hour = clk.clkHours;
+          clock_cache.minute = clk.clkMinutes;
+          clock_cache.second = clk.clkSeconds;
+          clock_cache.hundredth = clk.clkHundredths;
           clock_cache_tick = raw_ticks;
           clock_cache_valid = 1;
         }

@@ -63,6 +63,9 @@ def main():
     host = host_check(output)
     tools = output / 'tools'
     tools.mkdir(exist_ok=True)
+    source = (root / 'kernel/sysclk.c').read_text()
+    start = source.index('#if defined(__WATCOMC__)')
+    (tools / 'clock-math-under-test.h').write_text(source[start:source.index('#endif', start) + 6] + '\n')
     env = dict(os.environ, WATCOM=str(root / '_watcom'), LIBRETTO_CPU=args.cpu,
                LIBRETTO_RAM_MB='20', LIBRETTO_TUNE='4' if args.cpu == '486' else '5')
     env['PATH'] = str(root / '_watcom/binl64') + os.pathsep + env['PATH']
@@ -79,6 +82,9 @@ def main():
     images.run(['wcl', '-zq', '-bt=dos', '-ms', '-0', '-os', '-wx', '-we', '-k4096',
                 '-I' + str(root / '_watcom/h'), '-fe=CLKTEST.EXE',
                 root / 'scripts/libretto/dos/clocktest.c', tools / 'hook.obj'], cwd=tools, env=env)
+    images.run(['wcl', '-zq', '-bt=dos', '-ms', '-0', '-os', '-wx', '-we', '-k4096',
+                '-I' + str(root / '_watcom/h'), '-I' + str(tools), '-fe=CLKMATH.EXE',
+                root / 'scripts/libretto/dos/clockmath.c'], cwd=tools, env=env)
     for name, target in [('mbr', 'mbr.bin'), ('poweroff', 'POWEROFF.COM'),
                          ('memstat', 'MEMSTAT.COM'), ('clockdev', 'CLOCKDEV.SYS')]:
         images.run(['nasm', '-f', 'bin', root / f'scripts/libretto/dos/{name}.asm',
@@ -87,7 +93,7 @@ def main():
     payload.mkdir(exist_ok=True)
     for name in ['COMMAND.COM', 'HIMEMX.EXE', 'JEMMEX.EXE']:
         shutil.copy2(root / '_downloads/runtime-extracted' / name, payload / name)
-    for name in ['CLKTEST.EXE', 'POWEROFF.COM', 'MEMSTAT.COM', 'CLOCKDEV.SYS']:
+    for name in ['CLKTEST.EXE', 'CLKMATH.EXE', 'POWEROFF.COM', 'MEMSTAT.COM', 'CLOCKDEV.SYS']:
         shutil.copy2(tools / name, payload / name)
     results, raw = [], []
     report = dict(baseline_commit=BASELINE, candidate_commit=subprocess.check_output(
@@ -111,12 +117,15 @@ def main():
                     '-o', counter])
 
     def boot(variant, profile, ram, mode, label, bench=False):
+        test_math = mode == 'all' and variant == 'candidate'
         config = images.config(profile).replace('BUFFERS=20\n', 'BUFFERS=-20\n')
         if mode == 'external':
             config += 'DEVICE=C:\\CLOCKDEV.SYS\n'
         images.dos_text(payload / 'FDCONFIG.SYS', config)
         images.dos_text(payload / 'AUTOEXEC.BAT',
-            '@ECHO OFF\nMEMSTAT > MEMORY.TXT\nCLKTEST ' + mode + ' > CLOCKLOG.TXT\n'
+            '@ECHO OFF\nMEMSTAT > MEMORY.TXT\n' +
+            ('CLKMATH > MATHLOG.TXT\nIF ERRORLEVEL 1 GOTO FAIL\n' if test_math else '') +
+            'CLKTEST ' + mode + ' > CLOCKLOG.TXT\n'
             'IF ERRORLEVEL 1 GOTO FAIL\nECHO PASS > RESULT.TXT\nPOWEROFF\nGOTO END\n'
             ':FAIL\nECHO FAIL > RESULT.TXT\nPOWEROFF\n:END\n')
         shutil.copy2(output / (variant + '.sys'), payload / 'KERNEL.SYS')
@@ -163,10 +172,15 @@ def main():
             else:
                 assert 'PASS:' in text, text
                 result['guest'] = '\n'.join(lines[1:])
+                if test_math:
+                    math = images.mread(disk, 'MATHLOG.TXT').decode('ascii')
+                    (output / (label + '-math.txt')).write_text(math)
+                    assert math.startswith('PASS:'), math
+                    result['math'] = math.strip()
             results.append(result)
             print('CLOCK_PASS ' + label, flush=True)
         except Exception:
-            for name in ['CLOCKLOG.TXT', 'RESULT.TXT']:
+            for name in ['CLOCKLOG.TXT', 'MATHLOG.TXT', 'RESULT.TXT']:
                 try:
                     print(name + ': ' + images.mread(disk, name).decode('ascii', errors='replace'))
                 except subprocess.CalledProcessError:

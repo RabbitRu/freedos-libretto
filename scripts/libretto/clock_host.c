@@ -33,7 +33,7 @@ static struct ClockRecord ClkRecord;
 static struct dhdr *clock;
 static UDWORD mock_tick,reads,writes;
 static UBYTE midnight,rtc_date[4],rtc_h,rtc_m,rtc_s;
-static int external,inject;
+static int external;
 static struct ClockRecord external_record,nested_record;
 static WORD clk_driver(request *);
 static UDWORD ReadPCClock(void);
@@ -41,8 +41,7 @@ static void WritePCClock(UDWORD);
 static void WriteATClock(BYTE *,UBYTE,UBYTE,UBYTE);
 static void BinaryCharIO(struct dhdr **,size_t,struct ClockRecord *,BYTE);
 static int char_error(request *r,struct dhdr *d) { (void)r; (void)d; return -1; }
-static void *test_copy(void *,const void *,size_t);
-#define fmemcpy test_copy
+#define fmemcpy memcpy
 
 #include "clock-under-test.h"
 
@@ -78,19 +77,6 @@ static void oracle(UDWORD raw,struct ClockRecord *r)
     r->clkSeconds=s/100; r->clkHundredths=s%100;
     r->clkDays=DaysSinceEpoch;
 }
-static void *test_copy(void *d,const void *s,size_t n)
-{
-    if (inject && n==4 && (d==clock_cache || s==clock_cache)) {
-        request r={C_INPUT,sizeof(nested_record),0,&nested_record,0};
-        inject=0;
-        memcpy(d,s,2);
-        mock_tick=50000;
-        clk_driver(&r);
-        memcpy((char *)d+2,(const char *)s+2,n-2);
-        return d;
-    }
-    return memcpy(d,s,n);
-}
 static UBYTE bcd(unsigned x) { return (UBYTE)((x/10)*16+x%10); }
 int main(void)
 {
@@ -98,6 +84,7 @@ int main(void)
     static const unsigned length[]={31,28,31,30,31,30,31,31,30,31,30,31};
     struct dosdate date;
     struct dostime time;
+    struct dostime saved_cache;
     struct ClockRecord got,expected;
     request r={C_INPUT,sizeof(got),0,&got,0};
     for (day=0;day<65536;day++) {
@@ -127,12 +114,15 @@ int main(void)
     mock_tick=0; midnight=1; DaysSinceEpoch=100;
     clk_driver(&r); midnight=2; clk_driver(&r);
     need(got.clkDays==103,"fresh date on same-tick rollover");
-    mock_tick=1000; clk_driver(&r);
-    inject=1; clk_driver(&r);
-    oracle(1000,&expected);
-    need(!inject && !memcmp(&got,&expected,sizeof(got)),"nested cache-hit snapshot");
+    mock_tick=1000; clk_driver(&r); saved_cache=clock_cache;
+    /* Model an interrupt while an outer request owns the cache. */
+    clock_cache_busy=1; mock_tick=50000; r.r_trans=&nested_record;
+    clk_driver(&r);
     oracle(50000,&expected);
     need(!memcmp(&nested_record,&expected,sizeof(expected)),"nested request local conversion");
+    need(clock_cache_busy==1 && clock_cache_tick==1000 &&
+         !memcmp(&clock_cache,&saved_cache,sizeof(saved_cache)),"nested request leaves outer cache untouched");
+    clock_cache_busy=0; r.r_trans=&got;
     clk_driver(&r);
     need(!memcmp(&got,&expected,sizeof(got)),"cache after nested request");
     r.r_count=5; reads=0; writes=0;
