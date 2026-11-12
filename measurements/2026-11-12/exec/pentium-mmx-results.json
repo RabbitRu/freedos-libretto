@@ -1,0 +1,1335 @@
+{
+  "baseline_commit": "1c43e901dc699dce0a0a89301fccb09eddb6096d",
+  "candidate_commit": "8749083b0115cb86bf10b52a0b8eb1cfccd1b909",
+  "working_tree_dirty": false,
+  "control_override": false,
+  "calibration": false,
+  "cpu": "pentium-mmx",
+  "fixtures": 57,
+  "host": {
+    "status": "pass",
+    "output": "PASS: 578 actual-block cases; local/remote request sizes, prefixes, negative reads, cleanup, byte oracle",
+    "source_sha256": "b675f096fcf0d9711b4ee5685c80d7c24282f19bb3034c8f45f973b49414c8f9"
+  },
+  "exact_buffers": 20,
+  "boots": [
+    {
+      "label": "control-basic-20",
+      "variant": "control",
+      "profile": "basic",
+      "ram_mib": 20,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 0,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509472,
+        "largest_conventional_block_bytes_while_probe_loaded": 509328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=22 of 384 bytes"
+    },
+    {
+      "label": "control-basic-32",
+      "variant": "control",
+      "profile": "basic",
+      "ram_mib": 32,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 0,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509472,
+        "largest_conventional_block_bytes_while_probe_loaded": 509328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=22 of 384 bytes"
+    },
+    {
+      "label": "control-xms-20",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "all",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F002.EXE mode=3 records=7 available=7 error=0\nPASS: F002.EXE mode=1 records=7 available=7 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F005.EXE mode=3 records=15 available=15 error=0\nPASS: F005.EXE mode=1 records=15 available=15 error=0\nPASS: F006.EXE mode=3 records=16 available=16 error=0\nPASS: F006.EXE mode=1 records=16 available=16 error=0\nPASS: F007.EXE mode=3 records=17 available=17 error=0\nPASS: F007.EXE mode=1 records=17 available=17 error=0\nPASS: F008.EXE mode=3 records=127 available=127 error=0\nPASS: F008.EXE mode=1 records=127 available=127 error=0\nPASS: F009.EXE mode=3 records=128 available=128 error=0\nPASS: F009.EXE mode=1 records=128 available=128 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: F011.EXE mode=3 records=16383 available=16383 error=0\nPASS: F011.EXE mode=1 records=16383 available=16383 error=0\nPASS: F012.EXE mode=3 records=16384 available=16384 error=0\nPASS: F012.EXE mode=1 records=16384 available=16384 error=0\nPASS: F013.EXE mode=3 records=16385 available=16385 error=0\nPASS: F013.EXE mode=1 records=16385 available=16385 error=0\nPASS: F014.EXE mode=3 records=32767 available=32767 error=0\nPASS: F014.EXE mode=1 records=32767 available=32767 error=0\nPASS: F015.EXE mode=3 records=32768 available=32768 error=0\nPASS: F015.EXE mode=1 records=32768 available=32768 error=0\nPASS: F016.EXE mode=3 records=65535 available=65535 error=0\nPASS: F016.EXE mode=1 records=65535 available=65535 error=0\nPASS: S00.EXE mode=3 records=17 available=0 error=13\nPASS: S00.EXE mode=1 records=17 available=0 error=13\nPASS: S01.EXE mode=3 records=17 available=0 error=13\nPASS: S01.EXE mode=1 records=17 available=0 error=13\nPASS: S02.EXE mode=3 records=17 available=0 error=13\nPASS: S02.EXE mode=1 records=17 available=0 error=13\nPASS: S03.EXE mode=3 records=17 available=0 error=13\nPASS: S03.EXE mode=1 records=17 available=0 error=13\nPASS: S10.EXE mode=3 records=17 available=1 error=13\nPASS: S10.EXE mode=1 records=17 available=1 error=13\nPASS: S11.EXE mode=3 records=17 available=1 error=13\nPASS: S11.EXE mode=1 records=17 available=1 error=13\nPASS: S12.EXE mode=3 records=17 available=1 error=13\nPASS: S12.EXE mode=1 records=17 available=1 error=13\nPASS: S13.EXE mode=3 records=17 available=1 error=13\nPASS: S13.EXE mode=1 records=17 available=1 error=13\nPASS: S20.EXE mode=3 records=17 available=2 error=13\nPASS: S20.EXE mode=1 records=17 available=2 error=13\nPASS: S21.EXE mode=3 records=17 available=2 error=13\nPASS: S21.EXE mode=1 records=17 available=2 error=13\nPASS: S22.EXE mode=3 records=17 available=2 error=13\nPASS: S22.EXE mode=1 records=17 available=2 error=13\nPASS: S23.EXE mode=3 records=17 available=2 error=13\nPASS: S23.EXE mode=1 records=17 available=2 error=13\nPASS: S30.EXE mode=3 records=17 available=3 error=13\nPASS: S30.EXE mode=1 records=17 available=3 error=13\nPASS: S31.EXE mode=3 records=17 available=3 error=13\nPASS: S31.EXE mode=1 records=17 available=3 error=13\nPASS: S32.EXE mode=3 records=17 available=3 error=13\nPASS: S32.EXE mode=1 records=17 available=3 error=13\nPASS: S33.EXE mode=3 records=17 available=3 error=13\nPASS: S33.EXE mode=1 records=17 available=3 error=13\nPASS: S40.EXE mode=3 records=17 available=4 error=13\nPASS: S40.EXE mode=1 records=17 available=4 error=13\nPASS: S41.EXE mode=3 records=17 available=4 error=13\nPASS: S41.EXE mode=1 records=17 available=4 error=13\nPASS: S42.EXE mode=3 records=17 available=4 error=13\nPASS: S42.EXE mode=1 records=17 available=4 error=13\nPASS: S43.EXE mode=3 records=17 available=4 error=13\nPASS: S43.EXE mode=1 records=17 available=4 error=13\nPASS: S50.EXE mode=3 records=17 available=5 error=13\nPASS: S50.EXE mode=1 records=17 available=5 error=13\nPASS: S51.EXE mode=3 records=17 available=5 error=13\nPASS: S51.EXE mode=1 records=17 available=5 error=13\nPASS: S52.EXE mode=3 records=17 available=5 error=13\nPASS: S52.EXE mode=1 records=17 available=5 error=13\nPASS: S53.EXE mode=3 records=17 available=5 error=13\nPASS: S53.EXE mode=1 records=17 available=5 error=13\nPASS: S60.EXE mode=3 records=17 available=6 error=13\nPASS: S60.EXE mode=1 records=17 available=6 error=13\nPASS: S61.EXE mode=3 records=17 available=6 error=13\nPASS: S61.EXE mode=1 records=17 available=6 error=13\nPASS: S62.EXE mode=3 records=17 available=6 error=13\nPASS: S62.EXE mode=1 records=17 available=6 error=13\nPASS: S63.EXE mode=3 records=17 available=6 error=13\nPASS: S63.EXE mode=1 records=17 available=6 error=13\nPASS: S70.EXE mode=3 records=17 available=7 error=13\nPASS: S70.EXE mode=1 records=17 available=7 error=13\nPASS: S71.EXE mode=3 records=17 available=7 error=13\nPASS: S71.EXE mode=1 records=17 available=7 error=13\nPASS: S72.EXE mode=3 records=17 available=7 error=13\nPASS: S72.EXE mode=1 records=17 available=7 error=13\nPASS: S73.EXE mode=3 records=17 available=7 error=13\nPASS: S73.EXE mode=1 records=17 available=7 error=13\nPASS: S80.EXE mode=3 records=17 available=8 error=13\nPASS: S80.EXE mode=1 records=17 available=8 error=13\nPASS: S81.EXE mode=3 records=17 available=8 error=13\nPASS: S81.EXE mode=1 records=17 available=8 error=13\nPASS: S82.EXE mode=3 records=17 available=8 error=13\nPASS: S82.EXE mode=1 records=17 available=8 error=13\nPASS: S83.EXE mode=3 records=17 available=8 error=13\nPASS: S83.EXE mode=1 records=17 available=8 error=13\nPASS: S90.EXE mode=3 records=17 available=9 error=13\nPASS: S90.EXE mode=1 records=17 available=9 error=13\nPASS: S91.EXE mode=3 records=17 available=9 error=13\nPASS: S91.EXE mode=1 records=17 available=9 error=13\nPASS: S92.EXE mode=3 records=17 available=9 error=13\nPASS: S92.EXE mode=1 records=17 available=9 error=13\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 57 fixtures; disk-stack untouched margin=22 of 384 bytes"
+    },
+    {
+      "label": "control-xms-32",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 32,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31457,
+        "xms_largest_kib": 31457,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=22 of 384 bytes"
+    },
+    {
+      "label": "control-ems-20",
+      "variant": "control",
+      "profile": "ems",
+      "ram_mib": 20,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 18977,
+        "xms_largest_kib": 18977,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1188,
+        "ems_total_16k_pages": 1219
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=22 of 384 bytes"
+    },
+    {
+      "label": "control-ems-32",
+      "variant": "control",
+      "profile": "ems",
+      "ram_mib": 32,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31265,
+        "xms_largest_kib": 31265,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1956,
+        "ems_total_16k_pages": 1987
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=22 of 384 bytes"
+    },
+    {
+      "label": "control-automatic-buffers",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "probe",
+      "status": "pass",
+      "nbuffers": 41,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: automatic buffers"
+    },
+    {
+      "label": "control-io",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "io",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: AIO.EXE mode=3 records=256 available=127 error=13\nPASS: AIO.EXE mode=1 records=256 available=127 error=13\nPASS: persistent relocation-table disk error; INT24 calls=2; disk-stack untouched margin=50 of 384 bytes"
+    },
+    {
+      "label": "candidate-basic-20",
+      "variant": "candidate",
+      "profile": "basic",
+      "ram_mib": 20,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 0,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509408,
+        "largest_conventional_block_bytes_while_probe_loaded": 509264,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=18 of 384 bytes"
+    },
+    {
+      "label": "candidate-basic-32",
+      "variant": "candidate",
+      "profile": "basic",
+      "ram_mib": 32,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 0,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509408,
+        "largest_conventional_block_bytes_while_probe_loaded": 509264,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=18 of 384 bytes"
+    },
+    {
+      "label": "candidate-xms-20",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "all",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F002.EXE mode=3 records=7 available=7 error=0\nPASS: F002.EXE mode=1 records=7 available=7 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F005.EXE mode=3 records=15 available=15 error=0\nPASS: F005.EXE mode=1 records=15 available=15 error=0\nPASS: F006.EXE mode=3 records=16 available=16 error=0\nPASS: F006.EXE mode=1 records=16 available=16 error=0\nPASS: F007.EXE mode=3 records=17 available=17 error=0\nPASS: F007.EXE mode=1 records=17 available=17 error=0\nPASS: F008.EXE mode=3 records=127 available=127 error=0\nPASS: F008.EXE mode=1 records=127 available=127 error=0\nPASS: F009.EXE mode=3 records=128 available=128 error=0\nPASS: F009.EXE mode=1 records=128 available=128 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: F011.EXE mode=3 records=16383 available=16383 error=0\nPASS: F011.EXE mode=1 records=16383 available=16383 error=0\nPASS: F012.EXE mode=3 records=16384 available=16384 error=0\nPASS: F012.EXE mode=1 records=16384 available=16384 error=0\nPASS: F013.EXE mode=3 records=16385 available=16385 error=0\nPASS: F013.EXE mode=1 records=16385 available=16385 error=0\nPASS: F014.EXE mode=3 records=32767 available=32767 error=0\nPASS: F014.EXE mode=1 records=32767 available=32767 error=0\nPASS: F015.EXE mode=3 records=32768 available=32768 error=0\nPASS: F015.EXE mode=1 records=32768 available=32768 error=0\nPASS: F016.EXE mode=3 records=65535 available=65535 error=0\nPASS: F016.EXE mode=1 records=65535 available=65535 error=0\nPASS: S00.EXE mode=3 records=17 available=0 error=13\nPASS: S00.EXE mode=1 records=17 available=0 error=13\nPASS: S01.EXE mode=3 records=17 available=0 error=13\nPASS: S01.EXE mode=1 records=17 available=0 error=13\nPASS: S02.EXE mode=3 records=17 available=0 error=13\nPASS: S02.EXE mode=1 records=17 available=0 error=13\nPASS: S03.EXE mode=3 records=17 available=0 error=13\nPASS: S03.EXE mode=1 records=17 available=0 error=13\nPASS: S10.EXE mode=3 records=17 available=1 error=13\nPASS: S10.EXE mode=1 records=17 available=1 error=13\nPASS: S11.EXE mode=3 records=17 available=1 error=13\nPASS: S11.EXE mode=1 records=17 available=1 error=13\nPASS: S12.EXE mode=3 records=17 available=1 error=13\nPASS: S12.EXE mode=1 records=17 available=1 error=13\nPASS: S13.EXE mode=3 records=17 available=1 error=13\nPASS: S13.EXE mode=1 records=17 available=1 error=13\nPASS: S20.EXE mode=3 records=17 available=2 error=13\nPASS: S20.EXE mode=1 records=17 available=2 error=13\nPASS: S21.EXE mode=3 records=17 available=2 error=13\nPASS: S21.EXE mode=1 records=17 available=2 error=13\nPASS: S22.EXE mode=3 records=17 available=2 error=13\nPASS: S22.EXE mode=1 records=17 available=2 error=13\nPASS: S23.EXE mode=3 records=17 available=2 error=13\nPASS: S23.EXE mode=1 records=17 available=2 error=13\nPASS: S30.EXE mode=3 records=17 available=3 error=13\nPASS: S30.EXE mode=1 records=17 available=3 error=13\nPASS: S31.EXE mode=3 records=17 available=3 error=13\nPASS: S31.EXE mode=1 records=17 available=3 error=13\nPASS: S32.EXE mode=3 records=17 available=3 error=13\nPASS: S32.EXE mode=1 records=17 available=3 error=13\nPASS: S33.EXE mode=3 records=17 available=3 error=13\nPASS: S33.EXE mode=1 records=17 available=3 error=13\nPASS: S40.EXE mode=3 records=17 available=4 error=13\nPASS: S40.EXE mode=1 records=17 available=4 error=13\nPASS: S41.EXE mode=3 records=17 available=4 error=13\nPASS: S41.EXE mode=1 records=17 available=4 error=13\nPASS: S42.EXE mode=3 records=17 available=4 error=13\nPASS: S42.EXE mode=1 records=17 available=4 error=13\nPASS: S43.EXE mode=3 records=17 available=4 error=13\nPASS: S43.EXE mode=1 records=17 available=4 error=13\nPASS: S50.EXE mode=3 records=17 available=5 error=13\nPASS: S50.EXE mode=1 records=17 available=5 error=13\nPASS: S51.EXE mode=3 records=17 available=5 error=13\nPASS: S51.EXE mode=1 records=17 available=5 error=13\nPASS: S52.EXE mode=3 records=17 available=5 error=13\nPASS: S52.EXE mode=1 records=17 available=5 error=13\nPASS: S53.EXE mode=3 records=17 available=5 error=13\nPASS: S53.EXE mode=1 records=17 available=5 error=13\nPASS: S60.EXE mode=3 records=17 available=6 error=13\nPASS: S60.EXE mode=1 records=17 available=6 error=13\nPASS: S61.EXE mode=3 records=17 available=6 error=13\nPASS: S61.EXE mode=1 records=17 available=6 error=13\nPASS: S62.EXE mode=3 records=17 available=6 error=13\nPASS: S62.EXE mode=1 records=17 available=6 error=13\nPASS: S63.EXE mode=3 records=17 available=6 error=13\nPASS: S63.EXE mode=1 records=17 available=6 error=13\nPASS: S70.EXE mode=3 records=17 available=7 error=13\nPASS: S70.EXE mode=1 records=17 available=7 error=13\nPASS: S71.EXE mode=3 records=17 available=7 error=13\nPASS: S71.EXE mode=1 records=17 available=7 error=13\nPASS: S72.EXE mode=3 records=17 available=7 error=13\nPASS: S72.EXE mode=1 records=17 available=7 error=13\nPASS: S73.EXE mode=3 records=17 available=7 error=13\nPASS: S73.EXE mode=1 records=17 available=7 error=13\nPASS: S80.EXE mode=3 records=17 available=8 error=13\nPASS: S80.EXE mode=1 records=17 available=8 error=13\nPASS: S81.EXE mode=3 records=17 available=8 error=13\nPASS: S81.EXE mode=1 records=17 available=8 error=13\nPASS: S82.EXE mode=3 records=17 available=8 error=13\nPASS: S82.EXE mode=1 records=17 available=8 error=13\nPASS: S83.EXE mode=3 records=17 available=8 error=13\nPASS: S83.EXE mode=1 records=17 available=8 error=13\nPASS: S90.EXE mode=3 records=17 available=9 error=13\nPASS: S90.EXE mode=1 records=17 available=9 error=13\nPASS: S91.EXE mode=3 records=17 available=9 error=13\nPASS: S91.EXE mode=1 records=17 available=9 error=13\nPASS: S92.EXE mode=3 records=17 available=9 error=13\nPASS: S92.EXE mode=1 records=17 available=9 error=13\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 57 fixtures; disk-stack untouched margin=18 of 384 bytes"
+    },
+    {
+      "label": "candidate-xms-32",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 32,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31457,
+        "xms_largest_kib": 31457,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=18 of 384 bytes"
+    },
+    {
+      "label": "candidate-ems-20",
+      "variant": "candidate",
+      "profile": "ems",
+      "ram_mib": 20,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 18977,
+        "xms_largest_kib": 18977,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1188,
+        "ems_total_16k_pages": 1219
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=18 of 384 bytes"
+    },
+    {
+      "label": "candidate-ems-32",
+      "variant": "candidate",
+      "profile": "ems",
+      "ram_mib": 32,
+      "mode": "check",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31265,
+        "xms_largest_kib": 31265,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1956,
+        "ems_total_16k_pages": 1987
+      },
+      "guest": "PASS: F000.EXE mode=3 records=0 available=0 error=0\nPASS: F000.EXE mode=1 records=0 available=0 error=0\nPASS: F000.EXE mode=129 records=0 available=0 error=0\nPASS: F001.EXE mode=3 records=1 available=1 error=0\nPASS: F001.EXE mode=1 records=1 available=1 error=0\nPASS: F001.EXE mode=129 records=1 available=1 error=0\nPASS: F003.EXE mode=3 records=8 available=8 error=0\nPASS: F003.EXE mode=1 records=8 available=8 error=0\nPASS: F003.EXE mode=129 records=8 available=8 error=0\nPASS: F004.EXE mode=3 records=9 available=9 error=0\nPASS: F004.EXE mode=1 records=9 available=9 error=0\nPASS: F004.EXE mode=129 records=9 available=9 error=0\nPASS: F010.EXE mode=3 records=129 available=129 error=0\nPASS: F010.EXE mode=1 records=129 available=129 error=0\nPASS: F010.EXE mode=129 records=129 available=129 error=0\nPASS: S93.EXE mode=3 records=17 available=9 error=13\nPASS: S93.EXE mode=1 records=17 available=9 error=13\nPASS: repeated EXE/COM execution, inherited stdout, exit status, memory\nPASS: 6 fixtures; disk-stack untouched margin=18 of 384 bytes"
+    },
+    {
+      "label": "candidate-automatic-buffers",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "probe",
+      "status": "pass",
+      "nbuffers": 41,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: automatic buffers"
+    },
+    {
+      "label": "candidate-io",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "io",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "PASS: AIO.EXE mode=3 records=256 available=127 error=13\nPASS: AIO.EXE mode=1 records=256 available=127 error=13\nPASS: persistent relocation-table disk error; INT24 calls=2; disk-stack untouched margin=46 of 384 bytes"
+    },
+    {
+      "label": "bench-0-control",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    },
+    {
+      "label": "bench-1-candidate",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    },
+    {
+      "label": "bench-2-candidate",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    },
+    {
+      "label": "bench-3-control",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    }
+  ],
+  "samples": [
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 986606,
+      "non_rom_instructions": 374643
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1091861,
+      "non_rom_instructions": 492803
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2318609,
+      "non_rom_instructions": 1965846
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53511757,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 720618,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 838031,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2321680,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 54047648,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 730084,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 840148,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2323689,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53305240,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 990757,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1096520,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2531543,
+      "non_rom_instructions": 1966771
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53208658,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 918449,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 942214,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2424064,
+      "non_rom_instructions": 1966771
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53583573,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 839288,
+      "non_rom_instructions": 374835
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 874691,
+      "non_rom_instructions": 409283
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1073139,
+      "non_rom_instructions": 631555
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10276778,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 868748,
+      "non_rom_instructions": 376179
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1032573,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1256969,
+      "non_rom_instructions": 632550
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10602302,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 984109,
+      "non_rom_instructions": 376179
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1027454,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1252875,
+      "non_rom_instructions": 632550
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 11138751,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 835699,
+      "non_rom_instructions": 376214
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 870507,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1107756,
+      "non_rom_instructions": 632515
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10617129,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 824081,
+      "non_rom_instructions": 376214
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 867176,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1094362,
+      "non_rom_instructions": 632515
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10951964,
+      "non_rom_instructions": 8617338
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 829915,
+      "non_rom_instructions": 374835
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 874298,
+      "non_rom_instructions": 409283
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1107588,
+      "non_rom_instructions": 631555
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10611594,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 836011,
+      "non_rom_instructions": 376179
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 867633,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1091869,
+      "non_rom_instructions": 632550
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10827239,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 865114,
+      "non_rom_instructions": 376179
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 869616,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1057484,
+      "non_rom_instructions": 632550
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10730312,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 980819,
+      "non_rom_instructions": 376179
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1024303,
+      "non_rom_instructions": 409126
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 1251207,
+      "non_rom_instructions": 632515
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10995990,
+      "non_rom_instructions": 8617303
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 835018,
+      "non_rom_instructions": 376179
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 800549,
+      "non_rom_instructions": 409091
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 988231,
+      "non_rom_instructions": 632515
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 10477573,
+      "non_rom_instructions": 8617338
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 829065,
+      "non_rom_instructions": 374643
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 952140,
+      "non_rom_instructions": 492803
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2428560,
+      "non_rom_instructions": 1965846
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53551707,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 879117,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 951718,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2430379,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53398983,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 804605,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 955477,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2468197,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53891595,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 841331,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1079725,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2430021,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53755452,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 965905,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1113318,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2450939,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53147665,
+      "non_rom_instructions": 51319692
+    }
+  ],
+  "kernel_sha256": {
+    "control": "70c594ce52151c1b70e93d8c0f0756d7fa538bb93a20a0014912017e8a5f3394",
+    "candidate": "2d211d374f248f1b04eb0554b8db1e1778602c320f1dea969a7deb550f89b6c6"
+  },
+  "kernel_bytes": {
+    "control": 73163,
+    "candidate": 73227
+  },
+  "limitations": [
+    "Guest instruction counts are not native cycles or FPS.",
+    "Overlay benchmarks include open/seek/body read/close; only relocations change.",
+    "Network redirectors are covered by a host request-trace test, not a network DOS boot."
+  ],
+  "qemu_version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+  "summaries": [
+    {
+      "scenario": "B0.EXE",
+      "samples_per_variant": 10,
+      "control_median": 375987.0,
+      "candidate_median": 376179.0,
+      "control_range": [
+        374643,
+        375987
+      ],
+      "candidate_range": [
+        374835,
+        376214
+      ],
+      "paired_change_percent_median": 0.05106559535303923
+    },
+    {
+      "scenario": "B8.EXE",
+      "samples_per_variant": 10,
+      "control_median": 492611.0,
+      "candidate_median": 409091.0,
+      "control_range": [
+        492611,
+        492803
+      ],
+      "candidate_range": [
+        409091,
+        409283
+      ],
+      "paired_change_percent_median": -16.954554404997047
+    },
+    {
+      "scenario": "B128.EXE",
+      "samples_per_variant": 10,
+      "control_median": 1966806.0,
+      "candidate_median": 632515.0,
+      "control_range": [
+        1965846,
+        1966806
+      ],
+      "candidate_range": [
+        631555,
+        632550
+      ],
+      "paired_change_percent_median": -67.83992645813875
+    },
+    {
+      "scenario": "B4096.EXE",
+      "samples_per_variant": 10,
+      "control_median": 51319692.0,
+      "candidate_median": 8617303.0,
+      "control_range": [
+        51319692,
+        51319692
+      ],
+      "candidate_range": [
+        8617303,
+        8617338
+      ],
+      "paired_change_percent_median": -83.2085839486332
+    }
+  ]
+}

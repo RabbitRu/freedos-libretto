@@ -65,6 +65,11 @@ def fixtures(payload):
                              available=available, tail=tail)
             records.append((name, 17, available, header, 0x3000, 13,
                             int(available == 9 and tail == 3), 8160))
+    header = fixture(payload / 'ZHIGH.EXE', 129)
+    data = bytearray((payload / 'ZHIGH.EXE').read_bytes())
+    struct.pack_into('<4H', data, 10, 0, 0, 0, 0x100)
+    (payload / 'ZHIGH.EXE').write_bytes(data)
+    records.append(('ZHIGH.EXE', 129, 129, header, 28, 0, 2, 8192))
     (payload / 'CASES.DAT').write_bytes(b''.join(struct.pack(
         '<12s6HI', name.encode(), *rest) for name, *rest in records))
     for count, name in zip([0, 8, 128, 4096], SCENARIOS):

@@ -66,6 +66,7 @@ static void water(void)
     unsigned i;
     for (i=0;i<384 && diskstack[i]==0x90;i++);
     if (i<smallest) smallest=i;
+    need(i>=16,"disk API stack retains its bottom guard");
 }
 static void paint(void)
 {
@@ -174,6 +175,12 @@ static void check(const struct fixture *f,unsigned mode)
     need(rc==f->error,"EXEC return code");
     if (!rc || mode==3) {
         reference(fd,f,expected,mode==3?0x1234:loaded);
+        if (f->quick==2 && mode!=3) {
+            need(FP_SEG(pb.stack)==loaded && FP_OFF(pb.stack)==0xfe,
+                 "zero min/max places the image high and returns its stack");
+            need(*(unsigned __far *)pb.stack==0,"LOAD ONLY pushes valid FCB status");
+            at(expected,0xfe)[0]=at(expected,0xff)[0]=0;
+        }
         equal(expected,loaded,f->size);
     }
     if (mode==3) {
@@ -246,7 +253,7 @@ int main(int argc,char **argv)
     while (read(fd,&f,sizeof(f))==sizeof(f)) {
         if (!f.quick && strcmp(argv[1],"all")) continue;
         check(&f,3);check(&f,1);
-        if (!f.error && f.quick) check(&f,0x81);
+        if (!f.error && f.quick==1) check(&f,0x81);
         n++;
     }
     need(close(fd)==0 && n!=0,"complete fixture metadata");execute();

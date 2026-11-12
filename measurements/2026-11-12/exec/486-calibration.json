@@ -1,0 +1,920 @@
+{
+  "baseline_commit": "1c43e901dc699dce0a0a89301fccb09eddb6096d",
+  "candidate_commit": "8749083b0115cb86bf10b52a0b8eb1cfccd1b909",
+  "working_tree_dirty": false,
+  "control_override": true,
+  "calibration": true,
+  "cpu": "486",
+  "fixtures": 57,
+  "host": {
+    "status": "pass",
+    "output": "PASS: 578 actual-block cases; local/remote request sizes, prefixes, negative reads, cleanup, byte oracle",
+    "source_sha256": "b675f096fcf0d9711b4ee5685c80d7c24282f19bb3034c8f45f973b49414c8f9"
+  },
+  "exact_buffers": 20,
+  "boots": [
+    {
+      "label": "bench-0-control",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    },
+    {
+      "label": "bench-1-candidate",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    },
+    {
+      "label": "bench-2-candidate",
+      "variant": "candidate",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    },
+    {
+      "label": "bench-3-control",
+      "variant": "control",
+      "profile": "xms",
+      "ram_mib": 20,
+      "mode": "bench",
+      "status": "pass",
+      "nbuffers": 20,
+      "bufloc": 1,
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "guest": "trial,scenario,calls\n0,B0.EXE,16\n0,B8.EXE,16\n0,B128.EXE,16\n0,B4096.EXE,16\n1,B0.EXE,16\n1,B8.EXE,16\n1,B128.EXE,16\n1,B4096.EXE,16\n2,B0.EXE,16\n2,B8.EXE,16\n2,B128.EXE,16\n2,B4096.EXE,16\n3,B0.EXE,16\n3,B8.EXE,16\n3,B128.EXE,16\n3,B4096.EXE,16\n4,B0.EXE,16\n4,B8.EXE,16\n4,B128.EXE,16\n4,B4096.EXE,16"
+    }
+  ],
+  "samples": [
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 919251,
+      "non_rom_instructions": 374643
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1057904,
+      "non_rom_instructions": 492803
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2507463,
+      "non_rom_instructions": 1965846
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53783987,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 923006,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1050849,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2521363,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53679668,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 822189,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 998478,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2480141,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53854429,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 921850,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1001908,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2478266,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53849944,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 872813,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1008314,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2469848,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-0-control",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53882673,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 815234,
+      "non_rom_instructions": 374643
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 933659,
+      "non_rom_instructions": 492803
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2406783,
+      "non_rom_instructions": 1965846
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53837316,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 896535,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1036925,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2527498,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53945398,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 893469,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 998181,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2504958,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53978848,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 875055,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 987588,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2474865,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53884693,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 873902,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 994451,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2489849,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-1-candidate",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53950322,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 927273,
+      "non_rom_instructions": 374643
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1030315,
+      "non_rom_instructions": 492803
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2398866,
+      "non_rom_instructions": 1965846
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53923886,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 890566,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1046924,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2511230,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53505337,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 920368,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1043127,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2536245,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53983032,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 876805,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 905054,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2407248,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53967062,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 881158,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1007292,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2485356,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "candidate",
+      "boot": "bench-2-candidate",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53493655,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 912088,
+      "non_rom_instructions": 374643
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1059954,
+      "non_rom_instructions": 492803
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2518417,
+      "non_rom_instructions": 1965846
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 0,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53583801,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 824533,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1034380,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2490673,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 1,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53564038,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 816648,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 998117,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2518061,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 2,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53608588,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 878258,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 1015174,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2504664,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 3,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53852003,
+      "non_rom_instructions": 51319692
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B0.EXE",
+      "calls": 16,
+      "guest_instructions": 815131,
+      "non_rom_instructions": 375987
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B8.EXE",
+      "calls": 16,
+      "guest_instructions": 930529,
+      "non_rom_instructions": 492611
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B128.EXE",
+      "calls": 16,
+      "guest_instructions": 2421076,
+      "non_rom_instructions": 1966806
+    },
+    {
+      "variant": "control",
+      "boot": "bench-3-control",
+      "trial": 4,
+      "scenario": "B4096.EXE",
+      "calls": 16,
+      "guest_instructions": 53796915,
+      "non_rom_instructions": 51319692
+    }
+  ],
+  "kernel_sha256": {
+    "control": "70c594ce52151c1b70e93d8c0f0756d7fa538bb93a20a0014912017e8a5f3394",
+    "candidate": "70c594ce52151c1b70e93d8c0f0756d7fa538bb93a20a0014912017e8a5f3394"
+  },
+  "kernel_bytes": {
+    "control": 73163,
+    "candidate": 73163
+  },
+  "limitations": [
+    "Guest instruction counts are not native cycles or FPS.",
+    "Overlay benchmarks include open/seek/body read/close; only relocations change.",
+    "Network redirectors are covered by a host request-trace test, not a network DOS boot."
+  ],
+  "qemu_version": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+  "summaries": [
+    {
+      "scenario": "B0.EXE",
+      "samples_per_variant": 10,
+      "control_median": 375987.0,
+      "candidate_median": 375987.0,
+      "control_range": [
+        374643,
+        375987
+      ],
+      "candidate_range": [
+        374643,
+        375987
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "B8.EXE",
+      "samples_per_variant": 10,
+      "control_median": 492611.0,
+      "candidate_median": 492611.0,
+      "control_range": [
+        492611,
+        492803
+      ],
+      "candidate_range": [
+        492611,
+        492803
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "B128.EXE",
+      "samples_per_variant": 10,
+      "control_median": 1966806.0,
+      "candidate_median": 1966806.0,
+      "control_range": [
+        1965846,
+        1966806
+      ],
+      "candidate_range": [
+        1965846,
+        1966806
+      ],
+      "paired_change_percent_median": 0.0
+    },
+    {
+      "scenario": "B4096.EXE",
+      "samples_per_variant": 10,
+      "control_median": 51319692.0,
+      "candidate_median": 51319692.0,
+      "control_range": [
+        51319692,
+        51319692
+      ],
+      "candidate_range": [
+        51319692,
+        51319692
+      ],
+      "paired_change_percent_median": 0.0
+    }
+  ],
+  "max_calibration_change_percent": 0.0
+}
