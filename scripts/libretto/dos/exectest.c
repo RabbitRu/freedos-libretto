@@ -229,6 +229,35 @@ static void bench(void)
     }
     need(_dos_freemem(seg)==0,"free benchmark image");
 }
+static void range_lock(unsigned fd,unsigned release)
+{
+    union REGS r;
+    memset(&r,0,sizeof(r));r.x.ax=0x5c00+release;r.x.bx=fd;
+    r.x.dx=28+5*4;r.x.di=4;intdos(&r,&r);
+    need(!r.x.cflag,release?"unlock relocation range":"lock relocation range");
+}
+static void sharing(void)
+{
+    struct fixture f;
+    unsigned owner;int fd;
+    union REGS r;
+    memset(&r,0,sizeof(r));r.x.ax=0x1000;int86(0x2f,&r,&r);
+    need(r.h.al==0xff,"real SHARE installed");
+    memset(&f,0,sizeof(f));strcpy(f.name,"SHLOCK.EXE");
+    f.count=17;f.available=5;f.header=6;f.table=28;f.error=13;f.size=8192;
+    need(_dos_allocmem(16,&owner)==0,"allocate separate lock-owner PSP");
+    _fmemcpy(MK_FP(owner,0),MK_FP(parent,0),256);
+    need(_dos_open(f.name,O_RDONLY,&fd)==0,"open lock-owner handle");
+    /* The copied JFT points at the parent's live handle; only lock ownership
+       changes. No inherited references or environment allocations are made. */
+    setpsp(owner);range_lock(fd,0);setpsp(parent);
+    _harderr(disk_error);check(&f,3);check(&f,1);
+    setpsp(owner);range_lock(fd,1);setpsp(parent);
+    need(_dos_close(fd)==0 && _dos_freemem(owner)==0,"release lock owner");
+    need(hard_errors>=2,"SHARE range conflicts reached both loads");
+    f.available=f.count;f.error=0;check(&f,3);check(&f,1);execute();
+    printf("PASS: real SHARE preserves five-entry relocation prefix; INT24 calls=%u; disk-stack untouched margin=%u of 384 bytes\n",hard_errors,smallest);
+}
 int main(int argc,char **argv)
 {
     union REGS r;struct SREGS s;struct fixture f;
@@ -241,6 +270,7 @@ int main(int argc,char **argv)
     memset(&r,0,sizeof(r));segread(&s);r.x.ax=0x5d06;intdosx(&r,&r,&s);
     diskstack=MK_FP(s.ds,r.x.si+0x480);
     if (!strcmp(argv[1],"bench")) { bench();return 0; }
+    if (!strcmp(argv[1],"share")) { sharing();return 0; }
     if (!strcmp(argv[1],"io")) {
         memset(&f,0,sizeof(f));strcpy(f.name,"AIO.EXE");
         f.count=256;f.available=127;f.header=2;f.table=0x3001;f.error=13;f.size=8160;

@@ -1,11 +1,11 @@
 # MZ relocation loading
 
 Baseline: `1c43e901dc699dce0a0a89301fccb09eddb6096d`.
-Runtime implementation: `2351226bc66070ff8b0344e541a9825a1f6d3340`.
+Initial measured implementation (superseded): `2351226bc66070ff8b0344e541a9825a1f6d3340`.
 
 ## Change and ownership
 
-For local files, the EXE loader reads up to eight four-byte relocation records
+For unmanaged local files, the EXE loader reads up to eight four-byte relocation records
 per DosRWSft call. For N entries this changes N calls to ceil(N/8), or 4096 to
 512 in the largest benchmark. Physical disk reads do not fall by the same factor:
 the previous implementation already used the sector cache.
@@ -20,10 +20,17 @@ checks that a partial batch survives the real critical-error path.
 
 This also leaves the shell filename and command tail in SecPathName intact.
 A local array was rejected because the disk API stack is only 384 bytes.
-The selected loader's Watcom frame is 24 bytes versus 20 in the baseline;
-the 32-byte buffer itself consumes no additional stack or resident allocation.
+The final loader keeps the baseline's 20-byte Watcom frame. It consumes the
+relocation count in the already parsed header, which is dead after this phase,
+and reads the overlay adjustment at the point of application. Neither the
+32-byte buffer nor loop state grows the frame. A 24-byte-frame intermediate
+passed ordinary tests but failed when real SHARE was installed and was rejected.
 
-Remote SFTs retain four-byte requests. Relocations are applied in original order,
+Remote SFTs and local SFTs managed by SHARE retain four-byte requests. A
+range-lock check applies to the entire requested range, so batching can change
+the prefix or conflict behavior. The fallback is selected from sft_shroff as
+well as SFT_FSHARED. The real-SHARE negative control fails when this guard is
+removed. Relocations are applied in original order,
 including duplicate, aliased and byte-overlapping target words. A short local
 read applies all complete records preceding EOF or an I/O error, preserving
 the baseline's caller-visible partial OVERLAY result. Failed ordinary loads
@@ -32,7 +39,7 @@ still free their image and environment and return invalid data.
 ## Validation
 
 The host harness compiles the actual relocation block from task.c with traced
-SFT read stubs under AddressSanitizer. Its 578 cases check local/remote request
+SFT read stubs under AddressSanitizer. Its 867 cases check local/remote/SHARE request
 sizes and counts, all short lengths through a 17-entry table, negative reads,
 ordered byte results, failure cleanup, and counts up to 65535. It does not
 exercise a network redirector or the real-mode ABI.
@@ -52,6 +59,14 @@ table set runs in XMS/20 MiB; other profiles run the boundary subset. A persiste
 blkdebug read failure leaves exactly 127 applied records and returns DOS error
 13 in both OVERLAY and LOAD ONLY; the host checks the resulting filesystem.
 
+A separate boot installs the pinned FreeDOS SHARE package, locks the sixth
+relocation on behalf of another PSP, and checks both OVERLAY and LOAD ONLY.
+Both kernels apply exactly five entries and return error 13. The test then
+unlocks the range and checks successful loads and repeated EXE/COM execution.
+The original package, including source, is retained in the CI artifact. Its
+SHA-256 is `e9dd873b3f009f723def66204668d8932a4c60e8fdc32f6f93d02983f48d9a3f`;
+the URL is pinned in scripts/libretto/exec.py.
+
 The harness paints the disk API stack and records its untouched bottom margin,
 with a 16-byte minimum gate. This is a high-water observation for these tests,
 not a proof of a bound for every driver or interrupt handler.
@@ -70,7 +85,14 @@ single-thread TCG, a fixed VM RTC and the repository instruction counter are
 used. Counts exclude the ROM/VGA address window and include the test harness;
 they are not native CPU cycles or predictions of game FPS.
 
-## Results
+## Initial scouting results (superseded candidate)
+
+**These exact figures describe the initial 24-byte-frame candidate, not the
+final SHARE-compatible revision.** The final revision keeps a 20-byte frame
+and is 73211 bytes (+48 versus baseline). Current measurements and complete
+CI status are attached to [PR #6](https://github.com/RabbitRu/freedos-libretto/pull/6).
+The initial data is retained below to preserve its source and measurement
+provenance; it must not be interpreted as SHARE validation.
 
 The two CPU profiles use the same kernel code. Results below count non-ROM
 instructions per 16 OVERLAY calls; each variant has ten samples per scenario.
@@ -98,15 +120,17 @@ arbitrary program startup or gameplay.
 | Disk-stack bottom margin in persistent-I/O-error test | 50 | 46 | -4 |
 
 Memory values use the same MEMSTAT probe and agree at 20/32 MiB. Release kernels
-are identical for the two tuning profiles. The 4-byte frame increase is
-reported separately from the reused 32-byte buffer. The unused disk-stack
-margin remains small in both kernels; this change does not enlarge the stack.
+are identical for the two tuning profiles. This initial candidate
+grew the frame by four bytes. The final revision removes that growth. Neither
+version enlarges the allocated API stack.
 
 Raw samples, ranges, hashes and calibration reports are stored under
 [measurements/2026-11-12/exec](measurements/2026-11-12/exec).
-The measurement source contains 57 MZ fixtures; the final test-only follow-up
-adds the zero-min/max fixture and a stack-margin gate, giving 58. Runtime kernel
-sources and the timed workload remain unchanged.
+The measurement source contains 57 MZ fixtures. The final harness has 58
+regular fixtures, a stack-margin gate and a separate real-SHARE case. The final
+runtime additionally retains four-byte SHARE requests and removes frame growth;
+it is measured again by CI. No current-result claim depends on the superseded
+kernel hash in this archive.
 
 Measurement run:
 [43193923187](https://github.com/RabbitRu/freedos-libretto/actions/runs/43193923187).

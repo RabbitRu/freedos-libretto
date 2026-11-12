@@ -774,20 +774,23 @@ COUNT DosExeLoader(BYTE FAR * namep, exec_blk * exp, COUNT mode, COUNT fd)
   }
 
   {                             /* relocate the image for new segment                   */
-    UWORD remaining = ExeHeader.exRelocItems, count, i, *r;
+    UWORD count, i, *r;
     UWORD limit;
-    UWORD add = mode == OVERLAY ? exp->load.reloc : start_seg;
     COUNT bytes;
     seg FAR *spot;
 
     SftSeek(fd, ExeHeader.exRelocTable, 0);
-    /* SftSeek selects lpCurSft. Keep redirector requests at four bytes. */
-    limit = (lpCurSft->sft_flags & SFT_FSHARED) ? 1 : sizeof(ExeRelocs) / 4;
+    /* SftSeek selects lpCurSft. Redirectors and SHARE-managed files keep
+       four-byte requests, including range-lock checks. */
+    limit = ((lpCurSft->sft_flags & SFT_FSHARED) || lpCurSft->sft_shroff >= 0)
+      ? 1 : sizeof(ExeRelocs) / 4;
     /* Rename scratch is idle during EXEC; local file reads use fnode[0].
        Reuse it instead of growing the 384-byte disk API stack. */
-    while (remaining)
+    /* The relocation count is dead after this phase. Consume it in place
+       so the loader frame stays at its original size, also under SHARE. */
+    while (ExeHeader.exRelocItems)
     {
-      count = min(remaining, limit);
+      count = min(ExeHeader.exRelocItems, limit);
       bytes = (COUNT)DosRWSft(fd, count * 4, (VOID FAR *)ExeRelocs, XFR_READ);
       /* A short local read can contain complete records before EOF or an
          I/O error. Apply that prefix, as the old four-byte loop did. */
@@ -798,7 +801,7 @@ COUNT DosExeLoader(BYTE FAR * namep, exec_blk * exp, COUNT mode, COUNT fd)
         do
         {
           spot = MK_FP(r[1] + start_seg, r[0]);
-          *spot += add;
+          *spot += mode == OVERLAY ? exp->load.reloc : start_seg;
           r += 2;
         } while (--i);
       }
@@ -811,7 +814,7 @@ COUNT DosExeLoader(BYTE FAR * namep, exec_blk * exp, COUNT mode, COUNT fd)
         }
         return DE_INVLDDATA;
       }
-      remaining -= count;
+      ExeHeader.exRelocItems -= count;
     }
   }
 

@@ -18,7 +18,7 @@ static UWORD ExeRelocs[16];
 static unsigned char image[8192],expected[8192],table[65535UL*4];
 #define MK_FP(s,o) ((void *)(image+(uint16_t)(s)*16+(uint16_t)(o)))
 static struct { UWORD exRelocItems,exRelocTable; } ExeHeader;
-static struct { UWORD sft_flags; } sft, *lpCurSft;
+static struct { UWORD sft_flags; COUNT sft_shroff; } sft, *lpCurSft;
 typedef struct { struct { UWORD reloc; } load; } exec_blk;
 static unsigned available,position,calls,largest,freed,negative;
 static void SftSeek(COUNT fd,UWORD offset,unsigned origin)
@@ -49,7 +49,8 @@ static void one(unsigned count,unsigned bytes,unsigned remote,unsigned fail,unsi
     unsigned i,complete,off,value,wanted,rc;
     for (i=0;i<sizeof(image);i++) image[i]=expected[i]=(unsigned char)(i*37+(i>>8));
     ExeHeader.exRelocItems=(UWORD)count;
-    available=bytes;calls=largest=freed=0;negative=fail;sft.sft_flags=remote?SFT_FSHARED:0;
+    available=bytes;calls=largest=freed=0;negative=fail;
+    sft.sft_flags=remote==1?SFT_FSHARED:0;sft.sft_shroff=remote==2?0:-1;
     complete=bytes/4;if (complete>count) complete=count;
     for (i=0;i<complete;i++) {
         off=get16(table+4*i)+16*get16(table+4*i+2);
@@ -74,10 +75,10 @@ int main(void)
         table[4*i+2]=(unsigned char)(i%6==3);table[4*i+3]=0;
     }
     for (i=0;i<sizeof(counts)/sizeof(counts[0]);i++)
-        for (j=0;j<2;j++) { one(counts[i],counts[i]*4,j,0,OVERLAY);n++; }
-    for (i=0;i<68;i++) for (j=0;j<2;j++) for (k=0;k<2;k++) {
+        for (j=0;j<3;j++) { one(counts[i],counts[i]*4,j,0,OVERLAY);n++; }
+    for (i=0;i<68;i++) for (j=0;j<3;j++) for (k=0;k<2;k++) {
         one(17,i,j,k,OVERLAY);one(17,i,j,k,1);n+=2;
     }
-    printf("PASS: %u actual-block cases; local/remote request sizes, prefixes, negative reads, cleanup, byte oracle\n",n);
+    printf("PASS: %u actual-block cases; local/remote/SHARE request sizes, prefixes, negative reads, cleanup, byte oracle\n",n);
     return 0;
 }

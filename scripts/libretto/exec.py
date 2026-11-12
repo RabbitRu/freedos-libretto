@@ -12,6 +12,8 @@ import shutil
 import statistics
 import struct
 import subprocess
+import urllib.request
+import zipfile
 import compare
 import chains
 import images
@@ -75,9 +77,24 @@ def fixtures(payload):
     for count, name in zip([0, 8, 128, 4096], SCENARIOS):
         fixture(payload / name, count)
     fixture(payload / 'RUN.EXE', 17)
+    fixture(payload / 'SHLOCK.EXE', 17)
     fixture(payload / 'AIO.EXE', 256, size=8160, table=0x3001, available=256)
     (payload / 'RUN.COM').write_bytes(bytes.fromhex('b8074ccd21'))
     return len(records)
+
+
+def share_runtime(tools, payload):
+    archive = images.ROOT / '_downloads/runtime/share.zip'
+    if not archive.exists():
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        with urllib.request.urlopen('https://www.ibiblio.org/pub/micro/pc-stuff/freedos/'
+                'files/repositories/1.3/base/share.zip', timeout=90) as response:
+            archive.write_bytes(response.read())
+    assert sha(archive) == 'e9dd873b3f009f723def66204668d8932a4c60e8fdc32f6f93d02983f48d9a3f'
+    with zipfile.ZipFile(archive) as z:
+        (payload / 'SHARE.COM').write_bytes(z.read('BIN/SHARE.COM'))
+    # Preserve the original package, including its complete source archive.
+    shutil.copy2(archive, tools / 'share-package.zip')
 
 
 def sha(path):
@@ -140,6 +157,7 @@ def main():
     for name in ['EXECTEST.EXE', 'POWEROFF.COM', 'MEMSTAT.COM']:
         shutil.copy2(tools / name, payload / name)
     nfixtures = fixtures(payload)
+    share_runtime(tools, payload)
     results, raw = [], []
     report = dict(baseline_commit=BASELINE, candidate_commit=subprocess.check_output(
         ['git', 'rev-parse', 'HEAD'], text=True).strip(),
@@ -166,7 +184,9 @@ def main():
             config = config.replace('BUFFERS=20\n', 'BUFFERS=-20\n')
         images.dos_text(payload / 'FDCONFIG.SYS', config)
         images.dos_text(payload / 'AUTOEXEC.BAT',
-            '@ECHO OFF\nMEMSTAT > MEMORY.TXT\nEXECTEST ' + mode + ' > EXECLOG.TXT\n'
+            '@ECHO OFF\nMEMSTAT > MEMORY.TXT\n' +
+            ('SHARE > SHARELOG.TXT\nIF ERRORLEVEL 1 GOTO FAIL\n' if mode == 'share' else '') +
+            'EXECTEST ' + mode + ' > EXECLOG.TXT\n'
             'IF ERRORLEVEL 1 GOTO FAIL\nECHO PASS > RESULT.TXT\nPOWEROFF\nGOTO END\n'
             ':FAIL\nECHO FAIL > RESULT.TXT\nPOWEROFF\n:END\n')
         shutil.copy2(output / (variant + '.sys'), payload / 'KERNEL.SYS')
@@ -245,6 +265,9 @@ def main():
             label = variant + '-io'
             if not args.cases or label in args.cases:
                 boot(variant, 'xms', 20, 'io', label)
+            label = variant + '-share'
+            if not args.cases or label in args.cases:
+                boot(variant, 'xms', 20, 'share', label)
         auto = [r['nbuffers'] for r in results if r['mode'] == 'probe']
         if len(auto) == 2:
             assert auto[0] == auto[1], 'Automatic HMA buffer capacity changed'

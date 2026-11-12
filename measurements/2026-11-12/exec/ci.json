@@ -22,7 +22,7 @@
   "measurement_boots_per_cpu": 24,
   "measurement_step": "Check MZ relocations, overlays, EXEC lifetime, stack use and fixed-buffer costs",
   "measurement_step_conclusion": "success",
-  "note": "Both measurement steps passed. The test/documentation follow-up supersedes this run; consult final PR head checks for full-suite completion.",
+  "note": "Superseded initial 24-byte-frame candidate. Its unmanaged-local measurements are retained for provenance. The final revision removes frame growth and adds SHARE fallback and regressions. Current results and full-suite status are attached to PR #6.",
   "jobs": [
     {
       "name": "build (pentium-mmx)",
