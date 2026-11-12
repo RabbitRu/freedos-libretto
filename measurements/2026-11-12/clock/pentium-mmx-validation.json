@@ -1,0 +1,372 @@
+{
+  "build_report": {
+    "commit": "70b7f0010a2a78a0b99978797907154eb9159da2",
+    "working_tree_dirty": false,
+    "compiler": "Open Watcom 2026-11-01-Build",
+    "c_cpu_target": "pentium-mmx",
+    "compiler_cpu_option": "-5",
+    "compiler_optimization": "-os",
+    "compiler_hot_optimization": "",
+    "assembly_cpu_target": "386",
+    "fat_support": "FAT12/16/32",
+    "mmx_specific_routines": false,
+    "upx": false,
+    "fat32_validation": "pass",
+    "kernel_file_bytes": 73163,
+    "kernel_sha256": "70c594ce52151c1b70e93d8c0f0756d7fa538bb93a20a0014912017e8a5f3394",
+    "boot_tests": {
+      "qemu_pentium-mmx_20_mib": "pass",
+      "qemu_pentium-mmx_32_mib": "pass"
+    },
+    "limitations": [
+      "Game compatibility and DOS extenders are not tested yet.",
+      "Memory is measured while MEMSTAT runs under FreeCOM.",
+      "Full-volume and injected I/O error cases are not tested yet.",
+      "QEMU timings are not real Libretto performance measurements."
+    ],
+    "interactive_prompt_smoke": "pass",
+    "fat32_test_runs": 6
+  },
+  "boot_profiles": [
+    {
+      "profile": "basic",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509472,
+        "largest_conventional_block_bytes_while_probe_loaded": 509328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "54",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "31",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "6",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "basic",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 509472,
+        "largest_conventional_block_bytes_while_probe_loaded": 509328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 0,
+        "xms_present": 0,
+        "xms_free_kib": 0,
+        "xms_largest_kib": 0,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "3",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "52",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "30",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "5",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    },
+    {
+      "profile": "xms",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 19169,
+        "xms_largest_kib": 19169,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "5",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "143",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "42",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "7",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "xms",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 631200,
+        "largest_conventional_block_bytes_while_probe_loaded": 631056,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 0,
+        "umb_enumeration_supported": 0,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31457,
+        "xms_largest_kib": 31457,
+        "ems_present": 0,
+        "ems_free_16k_pages": 0,
+        "ems_total_16k_pages": 0
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "145",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "42",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "7",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    },
+    {
+      "profile": "ems",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 18977,
+        "xms_largest_kib": 18977,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1188,
+        "ems_total_16k_pages": 1219
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "102",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "55",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "7",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 20
+    },
+    {
+      "profile": "ems",
+      "memory": {
+        "probe_psp_block_bytes": 3440,
+        "conventional_free_bytes_while_probe_loaded": 637472,
+        "largest_conventional_block_bytes_while_probe_loaded": 637328,
+        "umb_chain_linked": 0,
+        "umb_free_bytes_after_temporary_link": 23872,
+        "umb_enumeration_supported": 1,
+        "dos_in_hma": 1,
+        "xms_present": 1,
+        "xms_free_kib": 31265,
+        "xms_largest_kib": 31265,
+        "ems_present": 1,
+        "ems_free_16k_pages": 1956,
+        "ems_total_16k_pages": 1987
+      },
+      "fragments": {
+        "FRAGA": 256,
+        "FRAGB": 256
+      },
+      "filesystem_test": "PASS: FAT operations; 12 boundary sizes; 1288568 checks",
+      "fsck": "pass",
+      "benchmark": [
+        {
+          "scenario": "write_1m_flush",
+          "run": "1",
+          "bios_ticks": "4",
+          "bytes": "1048576",
+          "operations": "256"
+        },
+        {
+          "scenario": "repeated_read_16m",
+          "run": "1",
+          "bios_ticks": "106",
+          "bytes": "16777216",
+          "operations": "4096"
+        },
+        {
+          "scenario": "random_read_1m",
+          "run": "1",
+          "bios_ticks": "62",
+          "bytes": "1048576",
+          "operations": "2048"
+        },
+        {
+          "scenario": "small_files_100",
+          "run": "1",
+          "bios_ticks": "7",
+          "bytes": "1700",
+          "operations": "100"
+        }
+      ],
+      "benchmark_environment": "QEMU",
+      "ram_mib": 32
+    }
+  ],
+  "chain_cases": 16,
+  "edge_cases": 7,
+  "jft_install_cases": 9,
+  "comparison_boots": 4
+}

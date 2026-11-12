@@ -1,0 +1,107 @@
+{
+  "run_id": 43177370357,
+  "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357",
+  "conclusion": "success",
+  "source_commit": "32538ab29558cbedcefdc613b894073084cceaaa",
+  "tested_merge": "70b7f0010a2a78a0b99978797907154eb9159da2",
+  "tested_tree": "4da94ed5dfe2fdd34502a334ef77e3989d408502",
+  "compiler": {
+    "release": "2026-11-01-Build",
+    "archive_sha256": "89e90b7544cf3ea4a38124ec4c104a5027f31101405d7115c3f833daa465bb48",
+    "cpu_options": {
+      "486": "-4",
+      "pentium-mmx": "-5"
+    },
+    "optimization": "-os"
+  },
+  "counter": {
+    "qemu": "8.2",
+    "icount": "shift=3,align=off,sleep=off",
+    "timed_buffers": 20,
+    "auto_buffers": 41
+  },
+  "dos_boots_per_build": {
+    "fat12_smoke": 2,
+    "fat32_profiles": 6,
+    "interactive_prompt": 1,
+    "jft_install": 9,
+    "clock_checks_and_measurements": 20,
+    "clock_calibration": 4,
+    "memory": 2,
+    "filesystem_edges": 7,
+    "filesystem_comparison": 4,
+    "chains_and_media": 16
+  },
+  "diagnostic_boots_per_cpu": 1,
+  "total_dos_boots": 144,
+  "jobs": [
+    {
+      "name": "profile (486)",
+      "id": 131044904402,
+      "conclusion": "success",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/job/131044904402"
+    },
+    {
+      "name": "build (pentium-mmx)",
+      "id": 131044904476,
+      "conclusion": "success",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/job/131044904476"
+    },
+    {
+      "name": "profile (pentium-mmx)",
+      "id": 131044904537,
+      "conclusion": "success",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/job/131044904537"
+    },
+    {
+      "name": "build (486)",
+      "id": 131044904567,
+      "conclusion": "success",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/job/131044904567"
+    },
+    {
+      "name": "compiler",
+      "id": 131044905780,
+      "conclusion": "skipped",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/job/131044905780"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13926281192,
+      "name": "libretto-pentium-mmx-fat32-70b7f0010a2a78a0b99978797907154eb9159da2",
+      "digest": "sha256:3c1469b9630fcfa95867d9913c4307213da0889ffc9a3176c4b6bfc978cd39bd",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/artifacts/13926281192"
+    },
+    {
+      "id": 13925960535,
+      "name": "clock-486-70b7f0010a2a78a0b99978797907154eb9159da2",
+      "digest": "sha256:b77723ca068fdcc49a0064fd50cba64834ce23787a8f4f8bd20be986fad40ba6",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/artifacts/13925960535"
+    },
+    {
+      "id": 13925836410,
+      "name": "clock-pentium-mmx-70b7f0010a2a78a0b99978797907154eb9159da2",
+      "digest": "sha256:850ccfade11dd053aa7e7376349858bbba3ff04568bffca5e89cda9ccb00d218",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/artifacts/13925836410"
+    },
+    {
+      "id": 13925536965,
+      "name": "libretto-486-fat32-70b7f0010a2a78a0b99978797907154eb9159da2",
+      "digest": "sha256:21ba69427aac752c288e1288c997b1bc650887ddb5bdb6e2ca7aa22cffbc8650",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/artifacts/13925536965"
+    },
+    {
+      "id": 13925425080,
+      "name": "profile-486-70b7f0010a2a78a0b99978797907154eb9159da2",
+      "digest": "sha256:660050dc67d3c84763ff8c23140782dbc0a2c11fe8a01388d23cdf85a78cbe1d",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/artifacts/13925425080"
+    },
+    {
+      "id": 13923819895,
+      "name": "profile-pentium-mmx-70b7f0010a2a78a0b99978797907154eb9159da2",
+      "digest": "sha256:d8a05b4874b0a08dca0866e33173aa50c9209a6cdec701eaf453a9b0cee324eb",
+      "url": "https://github.com/RabbitRu/freedos-libretto/actions/runs/43177370357/artifacts/13923819895"
+    }
+  ]
+}

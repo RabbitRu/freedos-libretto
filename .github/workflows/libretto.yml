@@ -53,6 +53,19 @@ jobs:
         run: bash scripts/libretto/build.sh '${{ matrix.cpu }}'
       - name: Check JFT lifetime, custom tables, handle inheritance and INSTALL limits
         run: python3 scripts/libretto/kernel_checks.py '${{ matrix.cpu }}'
+      - name: Check clocks, calendar, external CLOCK$ and fixed-buffer service costs
+        run: |
+          python3 scripts/libretto/clock.py '${{ matrix.cpu }}'
+          python3 scripts/libretto/clock.py '${{ matrix.cpu }}' --calibrate --control '_output/libretto-${{ matrix.cpu }}-fat32/clock/control.sys'
+      - name: Save clock correctness, costs and calibration before remaining checks
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: clock-${{ matrix.cpu }}-${{ github.sha }}
+          path: |
+            _output/libretto-${{ matrix.cpu }}-fat32/clock/
+            _output/libretto-${{ matrix.cpu }}-fat32/clock-calibration/
+          if-no-files-found: error
       - name: Check actual memory routines, ABI, segment boundaries and REP accounting
         run: python3 scripts/libretto/memory.py '${{ matrix.cpu }}'
       - name: Check FAT16/FAT32 full-volume recovery, high clusters and injected I/O errors

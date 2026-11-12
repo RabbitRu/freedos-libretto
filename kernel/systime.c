@@ -111,18 +111,21 @@ int DosSetTime(const struct dostime *dt)
   return SUCCESS;
 }
 
-unsigned char DosGetDate(struct dosdate *dd)
+void DaysToDate(UWORD c, struct dosdate *dd)
 {
-  UWORD c;
   const UWORD *pdays;
   UWORD Year, Month;
 
-  ExecuteClockDriverRequest(C_INPUT);
+  /* Skip whole four-year cycles before the remaining (at most four)
+     year boundaries. A WORD day count cannot reach the next exception
+     in 2200. Cycles after 2100 must account for its omitted leap day. */
+  Year = c / 1461u;
+  c -= Year * 1461u;
+  Year = 1980 + 4 * Year;
+  if (Year > 2100)
+    ++c;
 
-  if (ClkReqHdr.r_status & S_ERROR)
-    return 0;
-
-  for (Year = 1980, c = ClkRecord.clkDays;;)
+  for (;;)
   {
     pdays = is_leap_year_monthdays(Year);
     if (c >= pdays[12])
@@ -145,6 +148,16 @@ unsigned char DosGetDate(struct dosdate *dd)
   dd->year = Year;
   dd->month = Month;
   dd->monthday = c - pdays[Month - 1] + 1;
+}
+
+unsigned char DosGetDate(struct dosdate *dd)
+{
+  ExecuteClockDriverRequest(C_INPUT);
+
+  if (ClkReqHdr.r_status & S_ERROR)
+    return 0;
+
+  DaysToDate(ClkRecord.clkDays, dd);
 
   /* Day of week is simple. Take mod 7, add 2 (for Tuesday        */
   /* 1-1-80) and take mod again                                   */

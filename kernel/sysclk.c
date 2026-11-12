@@ -40,6 +40,28 @@ static char *RcsId =
 UWORD ASM DaysSinceEpoch = 0;
 typedef UDWORD ticks_t;
 
+/* floor(((5 * raw) mod 2^32) * 65536 / 59659), modulo 2^32.
+   Reuse DIV's remainder instead of dividing the same value repeatedly.
+   Subtracting 59659 from the high word removes a quotient bit which
+   would disappear in the final 16-bit shift anyway. All operations
+   are 16-bit, including the full-range overflow case. */
+#if defined(__WATCOMC__)
+STATIC ticks_t ClockHundredths(ticks_t raw);
+#pragma aux ClockHundredths = \
+  "mov bx,ax" "mov cx,dx" \
+  "shl ax,1" "rcl dx,1" "shl ax,1" "rcl dx,1" \
+  "add ax,bx" "adc dx,cx" \
+  "mov bx,59659" "cmp dx,bx" "jb clock_div_low" "sub dx,bx" \
+  "clock_div_low:" "div bx" "mov cx,ax" "xor ax,ax" "div bx" "mov dx,cx" \
+  __parm [__dx __ax] __value [__dx __ax] __modify __exact [__ax __bx __cx __dx];
+#else
+STATIC ticks_t ClockHundredths(ticks_t raw)
+{
+  ticks_t scaled = 5 * raw;
+  return ((scaled / 59659u) << 16) + ((scaled % 59659u) << 16) / 59659u;
+}
+#endif
+
 STATIC int ByteToBcd(int x)
 {
   return ((x / 10) << 4) | (x % 10);
@@ -83,8 +105,7 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
         /* The scaling factor is now
            6553600/1193180 = 327680/59659 = 65536*5/59659 */
 
-        ticks = 5 * ReadPCClock();
-        ticks = ((ticks / 59659u) << 16) + ((ticks % 59659u) << 16) / 59659u;
+        ticks = ClockHundredths(ReadPCClock());
 
         tmp = (int)(ticks / 6000);
         clk.clkHours = tmp / 60;
@@ -102,8 +123,7 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
 
     case C_OUTPUT:
       {
-        const unsigned short *pdays;
-        unsigned Day, Month, Year;
+        struct dosdate date;
         struct ClockRecord clk;
         ticks_t hs, Ticks;
 
@@ -124,33 +144,9 @@ WORD ASMCFUNC FAR clk_driver(rqptr rp)
 
         WritePCClock(Ticks);
 
-        /* Now set AT clock                                     */
-        /* Fix year by looping through each year, subtracting   */
-        /* the appropriate number of days for that year.        */
-        for (Year = 1980, Day = clk.clkDays;;)
-        {
-          pdays = is_leap_year_monthdays(Year);
-          if (Day >= pdays[12])
-          {
-            ++Year;
-            Day -= pdays[12];
-          }
-          else
-            break;
-        }
-
-        /* Day contains the days left and count the number of   */
-        /* days for that year.  Use this to index the table.    */
-        for (Month = 1; Month < 13; ++Month)
-        {
-          if (pdays[Month] > Day)
-          {
-            Day = Day - pdays[Month - 1] + 1;
-            break;
-          }
-        }
-
-        DayToBcd(bcd_days, Month, Day, Year);
+        /* Use the same calendar conversion as DOS get-date. */
+        DaysToDate(clk.clkDays, &date);
+        DayToBcd(bcd_days, date.month, date.monthday, date.year);
         bcd_minutes = ByteToBcd(clk.clkMinutes);
         bcd_hours = ByteToBcd(clk.clkHours);
         bcd_seconds = ByteToBcd(clk.clkSeconds);

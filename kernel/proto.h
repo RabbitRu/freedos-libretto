@@ -364,6 +364,7 @@ int DosSetDate(const struct dosdate *dd);
 
 const UWORD *is_leap_year_monthdays(UWORD year);
 UWORD DaysFromYearMonthDay(UWORD Year, UWORD Month, UWORD DayOfMonth);
+void DaysToDate(UWORD days, struct dosdate *dd);
 
 /* task.c */
 VOID new_psp(seg para, seg cur_psp);
