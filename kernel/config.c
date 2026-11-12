@@ -2606,7 +2606,7 @@ STATIC VOID _CmdInstall(BYTE * pLine,int mode)
 
   InstallPrintf(("Installcmd %d:%s\n",numInstallCmds,pLine));
 
-  if (numInstallCmds > LENGTH(InstallCommands))
+  if (numInstallCmds >= LENGTH(InstallCommands))
   {
     printf("Too many Install commands given (%d max)\n",LENGTH(InstallCommands));
     CfgFailure(pLine);
