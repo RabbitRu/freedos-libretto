@@ -29,15 +29,16 @@
 #include        "globals.h"
 #include        "debug.h"
 
-/*
-    TE-TODO: if called repeatedly by same process, 
-    last allocation must be freed. if handle count < 20, copy back to PSP
-*/
+/* Tag only kernel-allocated JFTs. A program may supply its own table in
+   the PSP, including one inside a larger allocation: never free that. */
+STATIC const BYTE jft_name[8] = {'F', 'D', 'J', 'F', 'T', 0, 0, 0};
+
 int SetJFTSize(UWORD nHandles)
 {
-  UWORD block, maxBlock, i;
+  UWORD block, maxBlock, i, oldblock = 0;
   psp FAR *ppsp = MK_FP(cu_psp, 0);
   UBYTE FAR *newtab;
+  mcb FAR *p;
 
   if (nHandles <= ppsp->ps_maxfiles)
   {
@@ -45,10 +46,23 @@ int SetJFTSize(UWORD nHandles)
     return SUCCESS;
   }
 
+  if (FP_OFF(ppsp->ps_filetab) == 0 && FP_SEG(ppsp->ps_filetab) != 0)
+  {
+    p = MK_FP(FP_SEG(ppsp->ps_filetab) - 1, 0);
+    if ((p->m_type == MCB_NORMAL || p->m_type == MCB_LAST) &&
+        p->m_psp == cu_psp &&
+        p->m_size >= (((ULONG)ppsp->ps_maxfiles + 0xf) >> 4) &&
+        fmemcmp(p->m_name, jft_name, sizeof(jft_name)) == 0)
+      oldblock = FP_SEG(p);
+  }
+
   if ((DosMemAlloc
-       ((nHandles + 0xf) >> 4, mem_access_mode, &block, &maxBlock)) < 0)
+       ((UWORD)(((ULONG)nHandles + 0xf) >> 4),
+        mem_access_mode, &block, &maxBlock)) < 0)
     return DE_NOMEM;
 
+  p = MK_FP(block, 0);
+  fmemcpy(p->m_name, jft_name, sizeof(jft_name));
   ++block;
   newtab = MK_FP(block, 0);
 
@@ -59,6 +73,11 @@ int SetJFTSize(UWORD nHandles)
 
   ppsp->ps_maxfiles = nHandles;
   ppsp->ps_filetab = newtab;
+
+  /* Publish the replacement before releasing the old allocation. On an
+     allocation failure the old PSP fields and table remain untouched. */
+  if (oldblock)
+    DosMemFree(oldblock);
 
   return SUCCESS;
 }
